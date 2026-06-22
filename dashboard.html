@@ -403,6 +403,86 @@ hr { border:none; border-top:1px solid var(--bl); margin:12px 0; }
   .dm-row { grid-template-columns:repeat(4,1fr); }
 }
 
+/* ═══════════════════════════════════════════════════════
+   CHIEF OF STAFF — REDESIGNED CEO DASHBOARD
+   ═══════════════════════════════════════════════════════ */
+.cs-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px}
+.cs-greeting{font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.2}
+.cs-date{font-size:13px;color:var(--text2);margin-top:3px;font-weight:500}
+
+/* Strategic brief */
+.cs-brief{background:linear-gradient(120deg,var(--pk-bg),#F5F2FE);border:1px solid var(--pk-s);border-radius:var(--r);padding:18px 22px;margin-bottom:22px;font-size:14px;line-height:1.8;color:var(--text);box-shadow:var(--shadow)}
+.cs-brief strong{color:var(--pk-deep)}
+
+/* Section label */
+.cs-big3-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px}
+
+/* Big 3 grid */
+.cs-big3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:960px){.cs-big3{grid-template-columns:1fr}}
+
+/* Individual cards */
+.cs-card{background:var(--white);border-radius:16px;padding:22px 22px 18px;border:1px solid var(--border);box-shadow:0 2px 16px rgba(180,80,120,.07);display:flex;flex-direction:column;position:relative;overflow:hidden;transition:box-shadow .18s}
+.cs-card:hover{box-shadow:0 6px 28px rgba(180,80,120,.12)}
+
+/* Top colour stripe per category */
+.cs-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0}
+.cs-card--client::before{background:linear-gradient(90deg,#C9945B,#E8B870)}
+.cs-card--visibility::before{background:linear-gradient(90deg,var(--pk),#E88AB0)}
+.cs-card--team::before{background:linear-gradient(90deg,var(--gn),#8DD4AE)}
+
+/* Card category label */
+.cs-card-cat{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+.cs-card--client .cs-card-cat{color:#C9945B}
+.cs-card--visibility .cs-card-cat{color:var(--pk)}
+.cs-card--team .cs-card-cat{color:var(--gn-deep)}
+
+/* Activity text — the hero of the card */
+.cs-activity{font-size:17px;font-weight:800;color:var(--text);line-height:1.4;margin-bottom:12px;letter-spacing:-.2px}
+
+/* Time pill */
+.cs-time{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:14px;width:fit-content}
+.cs-card--client .cs-time{background:#F5E4CA;color:#9A6800}
+.cs-card--visibility .cs-time{background:var(--pk-s);color:var(--pk-deep)}
+.cs-card--team .cs-time{background:var(--gn-s);color:var(--gn-deep)}
+
+/* Why this matters */
+.cs-why{font-size:12px;color:var(--text2);line-height:1.7;flex:1}
+
+/* Swap button */
+.cs-swap{margin-top:16px;font-size:11px;font-weight:600;color:var(--text3);background:none;border:1px solid var(--bl);border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .15s;align-self:flex-start}
+.cs-swap:hover{color:var(--pk);border-color:var(--pk-s);background:var(--pk-bg)}
+
+/* Cycle phase card — compact, bottom of dashboard */
+.cs-cycle{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;box-shadow:var(--shadow);display:flex;align-items:flex-start;gap:14px}
+.cs-cycle-icon{font-size:22px;flex-shrink:0}
+.cs-cycle-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.cs-cycle-day{font-size:11px;color:var(--text2);margin-bottom:5px}
+.cs-cycle-tip{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* Utilities grid */
+.cs-utils-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:640px){.cs-utils-grid{grid-template-columns:1fr}}
+.cs-dm-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:4px}
+.cs-dm-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:var(--rs);border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:all .15s;-webkit-user-select:none;user-select:none}
+.cs-dm-btn:hover{border-color:var(--pk);background:var(--pk-bg)}
+.cs-dm-btn.done{border-color:var(--gn);background:var(--gn-bg)}
+.cs-dm-icon{font-size:18px}
+.cs-dm-label{font-size:10px;font-weight:700;color:var(--text2);text-align:center;line-height:1.3}
+.cs-dm-btn.done .cs-dm-label{color:var(--gn-deep)}
+
+/* ── App Tab Bar ── */
+.app-tab-bar{display:flex;background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.app-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 6px 8px;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;transition:all .15s;-webkit-user-select:none;user-select:none;margin-bottom:-2px}
+.app-tab:hover{background:var(--bl)}
+.app-tab.active{border-bottom-color:var(--pk);background:var(--pk-bg)}
+.app-tab-icon{font-size:20px;line-height:1}
+.app-tab-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.2px;white-space:nowrap}
+.app-tab.active .app-tab-label{color:var(--pk-deep)}
+
+/* Hide old nav since tab bar replaces it */
+nav:not(.app-tab-bar){display:none}
+
 /* ── PWA / iPhone ── */
 /* Nav scrolls horizontally on mobile without showing scrollbar */
 nav { overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:1px; }
@@ -707,18 +787,32 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 </div>
 <header>
   <div class="logo">my<span>CEO</span></div>
-  <nav>
-    <button class="active" data-view="ceo">CEO Dashboard</button>
-    <button data-view="cb">Content Bank</button>
-    <button data-view="dump">Brain Dump</button>
-    <button data-view="habit">Daily Success Tracker</button>
-  </nav>
   <div class="hdr-right">
     <span class="save-tag" id="save-tag">✓ Saved</span>
     <button class="btn-icon" onclick="openSyncModal()" title="Sync between devices" style="font-size:16px">⇄</button>
     <button class="btn-icon" onclick="switchView('settings')" title="Settings">⚙</button>
   </div>
 </header>
+
+<!-- App tab bar — sticky below header, works on all screen sizes -->
+<nav class="app-tab-bar" id="app-tab-bar">
+  <button class="app-tab active" data-view="ceo" onclick="switchView('ceo')">
+    <span class="app-tab-icon">🎯</span>
+    <span class="app-tab-label">CEO</span>
+  </button>
+  <button class="app-tab" data-view="cb" onclick="switchView('cb')">
+    <span class="app-tab-icon">📱</span>
+    <span class="app-tab-label">Content</span>
+  </button>
+  <button class="app-tab" data-view="dump" onclick="switchView('dump')">
+    <span class="app-tab-icon">🧠</span>
+    <span class="app-tab-label">Brain Dump</span>
+  </button>
+  <button class="app-tab" data-view="habit" onclick="switchView('habit')">
+    <span class="app-tab-icon">📊</span>
+    <span class="app-tab-label">Tracker</span>
+  </button>
+</nav>
 
 <main>
 
@@ -854,63 +948,33 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 <!-- ══════════════════════════════════════ CEO DASHBOARD ══════════════════════════════════════ -->
 <div class="view" id="view-ceo">
 
-  <!-- Hero greeting + affirmation -->
-  <div class="hero">
+  <!-- Greeting -->
+  <div class="cs-header">
     <div>
-      <h1 id="ceo-hero-greeting">Good morning</h1>
-      <div class="sub" id="ceo-hero-date">—</div>
+      <div class="cs-greeting" id="cs-greeting">Good morning</div>
+      <div class="cs-date" id="cs-date">—</div>
     </div>
-    <div class="phase-badge" onclick="switchView('settings')"><div class="dot"></div><span id="ceo-phase-badge">Set cycle →</span></div>
+    <div class="phase-badge" onclick="switchView('settings')" style="align-self:flex-start"><div class="dot"></div><span id="cs-phase-badge">—</span></div>
   </div>
 
-  <!-- Daily Non-Negotiables -->
-  <div class="card" style="margin-bottom:14px">
-    <div class="card-title">⚡ Daily Non-Negotiables — tap to tick off</div>
-    <div class="rituals-strip" id="ceo-rituals-strip"></div>
-  </div>
+  <!-- Strategic brief — WHY THESE THREE TODAY -->
+  <div class="cs-brief" id="cs-brief">—</div>
 
-  <!-- Chief of Staff brief -->
-  <div class="ceo-brief">
-    <div class="ceo-brief-inner" id="ceo-brief-text">Loading your briefing…</div>
-    <div class="ceo-meta-pills">
-      <span class="ceo-pill ceo-pill--month" id="ceo-month-phase">—</span>
-      <span class="ceo-pill ceo-pill--day" id="ceo-day-badge">—</span>
-      <span class="ceo-pill ceo-pill--time" id="ceo-time-badge">—</span>
-      <span class="ceo-pill ceo-pill--rhythm" id="ceo-rhythm-badge" style="display:none">—</span>
-    </div>
-  </div>
+  <!-- THE BIG 3 — one from each category, nothing else -->
+  <div class="cs-big3-label">Today's Big 3</div>
+  <div class="cs-big3" id="cs-big3"></div>
 
-  <!-- Today's Big 3 -->
-  <div class="big3-section-title">⚡ Today's Big 3</div>
-  <div class="big3-grid">
-    <div class="big3-card big3-card--client" id="ceo-big3-client"></div>
-    <div class="big3-card big3-card--visibility" id="ceo-big3-visibility"></div>
-    <div class="big3-card big3-card--team" id="ceo-big3-team"></div>
-  </div>
+  <!-- Cycle phase card -->
+  <div class="cs-cycle" id="cs-cycle" style="display:none"></div>
 
-  <!-- More For Today columns -->
-  <div class="big3-section-title" style="margin-top:4px">📋 More For Today</div>
-  <div class="ceo-cols">
-    <div class="ceo-col-card ceo-col--client">
-      <div class="ceo-col-hdr">✈️ Client Activity</div>
-      <div id="ceo-col-client"></div>
-    </div>
-    <div class="ceo-col-card ceo-col--visibility">
-      <div class="ceo-col-hdr">📱 Visibility &amp; Social</div>
-      <div id="ceo-col-visibility"></div>
-    </div>
-    <div class="ceo-col-card ceo-col--team">
-      <div class="ceo-col-hdr">👥 Team</div>
-      <div id="ceo-col-team"></div>
-    </div>
-  </div>
+  <!-- Bottom utilities: DM clear + Priorities -->
+  <div class="cs-utils-grid">
 
-  <!-- Bottom row: DM clear + Priorities + Cycle phase -->
-  <div class="overview-grid" style="margin-top:14px">
     <div class="card">
       <div class="card-title">📱 Clear Your Inboxes — tap when done</div>
-      <div class="dm-row" id="ceo-dm-row" style="grid-template-columns:repeat(4,1fr)"></div>
+      <div class="cs-dm-row" id="cs-dm-row"></div>
     </div>
+
     <div class="card">
       <div class="card-title">🎯 Today's Priorities</div>
       <div class="priority-list">
@@ -918,15 +982,8 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
         <div class="priority-item"><div class="priority-num">2</div><input class="priority-input" id="p2" placeholder="Second…"></div>
         <div class="priority-item"><div class="priority-num">3</div><input class="priority-input" id="p3" placeholder="Third…"></div>
       </div>
-      <hr>
-      <div class="phase-card" id="ceo-phase-card" style="margin-top:8px">
-        <div class="phase-name" id="ceo-sc-phase-name">Set your cycle</div>
-        <div class="phase-day" id="ceo-sc-phase-day">Add period date in Settings</div>
-        <div class="phase-tip" id="ceo-sc-phase-tip"></div>
-        <div class="soft-pills" id="ceo-sc-softnotes"></div>
-        <div class="setup-link" id="ceo-sc-setup-link" onclick="switchView('settings')">→ Go to Settings</div>
-      </div>
     </div>
+
   </div>
 
 </div>
@@ -1604,9 +1661,9 @@ let activeCat='coaching', revCat='prospecting', activeEmailTab='client', weekOff
 
 function switchView(v) {
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('nav button[data-view]').forEach(x=>x.classList.remove('active'));
-  document.getElementById('view-'+v).classList.add('active');
-  document.querySelector(`nav button[data-view="${v}"]`)?.classList.add('active');
+  document.querySelectorAll('.app-tab-bar .app-tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('view-'+v)?.classList.add('active');
+  document.querySelector(`.app-tab-bar .app-tab[data-view="${v}"]`)?.classList.add('active');
   if(v==='ceo') renderCEO();
   if(v==='cb') renderContentBank();
   if(v==='dump') renderDump();
@@ -2813,257 +2870,309 @@ function renderDump() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// CEO DASHBOARD
+// CEO DASHBOARD — CHIEF OF STAFF
+// One client activity. One visibility activity. One team activity.
+// Nothing else. Intelligently chosen. Rotates daily.
 // ─────────────────────────────────────────────────────────────
 
-const CEO_CLIENT_POOL = [
-  { text:'Spend 30 minutes following up previous travel enquiries', time:'30 min', icon:'✈️', why:'These are your warmest leads — people who already raised their hand. One personal message can reopen a booking conversation that went quiet.', when:null },
-  { text:'Spend 20 minutes contacting previous clients personally', time:'20 min', icon:'💌', why:'Previous clients convert at 3× the rate of new leads. A short personal message costs nothing and often triggers a new booking.', when:null },
-  { text:'Spend 20 minutes asking for referrals from happy clients', time:'20 min', icon:'🤝', why:'One referral request to a happy client can open 2–3 warm conversations. Your best clients know more people exactly like themselves.', when:null },
-  { text:'Spend 30 minutes reviewing and following up abandoned quotes', time:'30 min', icon:'📋', why:'Quotes go cold fast. Anyone you sent a quote to in the last 3 weeks and haven\'t heard back from is worth one follow-up today.', when:null },
-  { text:'Spend 30 minutes drafting and sending a client marketing email', time:'30 min', icon:'📧', why:'A personal, curated email to your client list — 2–3 destination ideas, one clear call to action — generates enquiries every time.', when:null },
-  { text:'Spend 45 minutes building a destination recommendation', time:'45 min', icon:'🗺️', why:'A curated destination guide positions you as the expert, not just a booking service. One good one can be repurposed across email, social, and direct messages.', when:null },
-  { text:'Spend 30 minutes creating a luxury hotel recommendation', time:'30 min', icon:'🏨', why:'Hotel recommendations create instant authority and give you something valuable to send directly — "I thought of you when I saw this property."', when:null },
-  { text:'Spend 30 minutes reviewing enquiries from earlier in the year', time:'30 min', icon:'🔍', why:'People who enquired in January–April are often ready to book by now. A seasonal reactivation message can unlock a summer booking.', when:null },
-  { text:'Spend 20 minutes reaching out to previous travellers', time:'20 min', icon:'👋', why:'Someone who has booked with you before already trusts you. A simple "Are you travelling this year?" is your easiest possible booking conversation.', when:null },
-  { text:'Spend 30 minutes creating a travel offer to share this week', time:'30 min', icon:'🎁', why:'A time-limited offer creates urgency and gives you something specific to share across email, DMs, and social. Even a simple "summer availability" hook generates responses.', when:null },
-  { text:'Spend 45 minutes researching new luxury properties to recommend', time:'45 min', icon:'🔎', why:'Your credibility is built on knowing properties your clients haven\'t discovered yet. One new property you discover today becomes a recommendation this week.', when:null },
-  { text:'Spend 30 minutes creating one sample itinerary', time:'30 min', icon:'📜', why:'A sample itinerary answers "what would a trip actually look like?" — one of the most common blockers between interest and booking.', when:null },
-  { text:'Spend 20 minutes reconnecting with clients who never booked', time:'20 min', icon:'💬', why:'They enquired once and went quiet — but timing changes. A soft check-in ("Are you still thinking about travel?") often arrives at exactly the right moment.', when:null },
-  { text:'Spend 30 minutes following up on last month\'s new enquiries', time:'30 min', icon:'📅', why:'Mid-month is the right time to chase anything that came in at the start of the month and hasn\'t converted yet. These are still warm.', when:'mid-month' },
-  { text:'Spend 20 minutes chasing open quotes before month end', time:'20 min', icon:'⏰', why:'End of month is the natural closing point. A "just checking in before the month ends" message creates real urgency without feeling pushy.', when:'month-end' },
-  { text:'Spend 30 minutes sending a personalised World Cup travel message to warm leads', time:'30 min', icon:'🏆', why:'Topical hooks make it easy to reach out without a hard sell. "Are you going?" opens a conversation that naturally leads to a booking.', when:null },
-  { text:'Spend 20 minutes following up on your last social post DMs', time:'20 min', icon:'📩', why:'People who DM\'d after your last post are warm — they already engaged. Follow up personally before the conversation goes cold.', when:null },
+const CS_CLIENT = [
+  { text:'Create 2 reels for Amy this morning', time:'30 mins', days:[1],
+    why:'Amy\'s reels are a Monday commitment. Getting this done first means it\'s off your plate before the week takes over.' },
+  { text:'Follow up travel enquiries from January to March', time:'30 mins', phase:'mid',
+    why:'People who enquired months ago are often ready now. A personal message — "are you still thinking about travel?" — costs 10 minutes and can unlock a booking.' },
+  { text:'Send a travel marketing email to your client list', time:'30 mins',
+    why:'Your client list is your most valuable asset. One well-timed email generates multiple enquiries. Your inbox should never go quiet for more than two weeks.' },
+  { text:'Review and follow up on all open travel quotes', time:'30 mins', phase:'mid',
+    why:'Quotes go cold fast. Anyone you\'ve quoted in the last three weeks hasn\'t said no — they\'ve just gone quiet. A short follow-up is all it takes.' },
+  { text:'Reconnect with clients who travelled with you last year', time:'20 mins',
+    why:'Previous clients are your most likely next booking. They already trust you. A personal message — "are you planning travel this year?" — converts better than any ad.' },
+  { text:'Ask three happy clients for a referral or testimonial', time:'20 mins',
+    why:'Your best clients know exactly who else should be booking through you. One referral request today can open two or three new conversations this week.' },
+  { text:'Build a curated hotel recommendation for a current enquiry', time:'30 mins',
+    why:'A personalised recommendation rather than a generic quote is the single biggest differentiator between you and booking direct. It shows you\'ve thought about them specifically.' },
+  { text:'Research a new luxury property to recommend this week', time:'30 mins',
+    why:'Your credibility is built on knowing properties your clients haven\'t discovered yet. One property you know well this week becomes a conversation starter next week.' },
+  { text:'Create a sample itinerary for a destination you\'re promoting', time:'30 mins',
+    why:'Clients don\'t buy destinations — they buy the feeling of a trip already planned. A sample itinerary removes the biggest barrier between interest and booking.' },
+  { text:'Follow up anyone who engaged with your last social post', time:'20 mins',
+    why:'Social engagement is intent. People who commented or DM\'d are actively thinking about travel. A personal follow-up while you\'re top of mind converts well.' },
+  { text:'Chase all open quotes before the month ends', time:'30 mins', phase:'end',
+    why:'End of month is a natural closing point. "Just checking in before the month ends" creates genuine urgency without feeling pushy. Now is the time to use it.' },
+  { text:'Contact previous clients about summer availability', time:'20 mins',
+    why:'Summer availability closes fast. Previous clients who have booked before are your easiest conversation today and the most likely to rebook quickly.' },
+  { text:'Send a personalised recommendation to a warm lead', time:'20 mins',
+    why:'Warm leads go cold when they don\'t hear from you. A specific recommendation — not a generic pitch — shows you\'ve been thinking about their trip.' },
+  { text:'Review and personally respond to new enquiries this week', time:'20 mins',
+    why:'Enquiry response time is one of the biggest conversion factors in travel. A fast, personal response doubles your chance of turning interest into a booking.' },
+  { text:'Reach out to clients who booked last year about 2026 travel', time:'20 mins',
+    why:'Last year\'s bookers are this year\'s easiest wins. They already trust you completely. A simple check-in often triggers an immediate booking conversation.' },
 ];
 
-const CEO_VISIBILITY_POOL = [
-  { text:'Spend 20 minutes engaging with story viewers', time:'20 min', icon:'👁', why:'Story viewers are your warmest audience — they chose to watch. A quick reply or question to 10 of them starts real conversations without any content creation.', when:null },
-  { text:'Spend 20 minutes engaging with new followers', time:'20 min', icon:'✨', why:'New followers are in the discovery phase — most likely to become clients. A personal welcome while they\'re new has a dramatically higher response rate.', when:null },
-  { text:'Spend 20 minutes engaging with recent commenters', time:'20 min', icon:'💬', why:'People who comment have already shown interest. Replying personally deepens the relationship and keeps you in their feed algorithmically.', when:null },
-  { text:'Spend 20 minutes engaging with mutual connections', time:'20 min', icon:'🔗', why:'Mutual connections have the lowest barrier to conversation. React to their content, reply to their stories — you already have something in common.', when:null },
-  { text:'Spend 30 minutes engaging on LinkedIn', time:'30 min', icon:'💼', why:'5 genuine comments on posts by women talking about income, freedom or travel puts you in front of exactly the right audience with zero pitch needed.', when:null },
-  { text:'Spend 20 minutes connecting with people from geotagged locations', time:'20 min', icon:'📍', why:'Search a destination hashtag or geotag and connect with people who travel. These are your exact target client — already spending on experiences.', when:null },
-  { text:'Spend 20 minutes engaging with people from recent destinations', time:'20 min', icon:'🌍', why:'People who recently visited your specialist destinations are actively thinking about travel — easy to start a conversation with and highly likely to book again.', when:null },
-  { text:'Spend 30 minutes drafting talking videos', time:'30 min', icon:'🎬', why:'Talking head videos are your highest-converting content. You don\'t need a script — just one clear hook and 45–60 seconds of your authentic expertise.', when:null },
-  { text:'Spend 30 minutes drafting story sequences', time:'30 min', icon:'📱', why:'A 3-slide story sequence — observation, reveal, soft CTA — takes 20 minutes to create and generates DM responses every time. Batch two or three today.', when:null },
-  { text:'Spend 45 minutes drafting LinkedIn posts for the week', time:'45 min', icon:'✍️', why:'One strong LinkedIn post builds professional credibility and attracts a different audience to Instagram — corporate clients, professionals, and business partners.', when:'friday' },
-  { text:'Spend 30 minutes drafting carousel concepts', time:'30 min', icon:'🖼️', why:'Carousels generate 3× more saves than single images. A "top 5 hotels in X" or "5 things I wish I\'d known" takes 30 minutes to plan and performs for months.', when:null },
-  { text:'Spend 30 minutes drafting reel concepts', time:'30 min', icon:'🎥', why:'Reels are still the fastest way to reach new audiences. Your expertise and personality are the asset. Plan three concepts in one sitting.', when:null },
-  { text:'Spend 45 minutes building next week\'s content plan', time:'45 min', icon:'📆', why:'30 minutes of planning means a week of confident, consistent content instead of scrambling each day. Do this now so Monday starts with momentum.', when:'friday' },
-  { text:'Spend 30 minutes drafting personal content for the week', time:'30 min', icon:'✏️', why:'Your personal story is your biggest differentiator. Batch 3 pieces of personal content — lifestyle, behind-the-scenes, or values — that attract both clients and team members.', when:'saturday' },
-  { text:'Spend 30 minutes drafting stories and doing weekly planning', time:'30 min', icon:'🗓️', why:'Planning your week on Sunday means Monday morning starts with clarity, not chaos. Draft your stories while you\'re in a fresh, creative headspace.', when:'sunday' },
-  { text:'Spend 30 minutes filming a talking head video today', time:'30 min', icon:'🎙️', why:'Thursday is often your best filming day — you\'re usually dressed. One video filmed today can be posted across the week. Just hit record.', when:'thursday' },
-  { text:'Spend 20 minutes reviewing LinkedIn connections and starting conversations', time:'20 min', icon:'🔍', why:'Go through connections you\'re already linked with but haven\'t spoken to. One message to a warm connection is the easiest possible conversation starter.', when:null },
-  { text:'Spend 20 minutes posting to your stories right now', time:'20 min', icon:'📸', why:'Consistency on stories builds a daily audience habit. Even one story a day keeps you visible while you build everything else.', when:null },
+const CS_VISIBILITY = [
+  { text:'Engage with everyone who viewed your stories today', time:'20 mins',
+    why:'Story viewers chose to watch you. They\'re already warm. A personal reply or question starts a real conversation without needing to create anything new.' },
+  { text:'Record talking head videos while your makeup is already done', time:'30 mins', days:[4],
+    why:'Thursday is your filming window. You\'re already camera-ready for family dinner tonight — use the morning to batch two or three talking heads before the day moves on.' },
+  { text:'Draft your LinkedIn posts for this week', time:'30 mins', days:[5],
+    why:'Friday is your LinkedIn drafting day. Writing them today means they go out next week with zero scrambling. One strong LinkedIn post opens doors that Instagram cannot.' },
+  { text:'Draft your Jet Set posts for this week', time:'30 mins', days:[5],
+    why:'Friday is your content drafting window. Getting Jet Set content written today means the week starts with clear, strategic content rather than reactive posting.' },
+  { text:'Comment on LinkedIn posts from your network for 20 minutes', time:'20 mins',
+    why:'Five genuine LinkedIn comments put you in front of exactly the right professional audience with no content needed — just visible, present, and valuable.' },
+  { text:'Engage with new Instagram followers from this week', time:'20 mins',
+    why:'New followers are in the discovery phase and most likely to become clients or recruits. A personal welcome while they\'re new converts at a significantly higher rate.' },
+  { text:'Plan and batch your personal content for the week', time:'45 mins', days:[6,0],
+    why:'Your personal story is your biggest differentiator. 45 minutes of batching today means a week of confident, consistent content rather than daily scrambling.' },
+  { text:'Draft your story sequences for the coming week', time:'30 mins', days:[6,0],
+    why:'Pre-planned stories perform better than reactive ones. A three-slide sequence — observation, reveal, soft CTA — takes 20 minutes to draft and generates DMs every time.' },
+  { text:'Reply to every comment on your last three posts', time:'20 mins',
+    why:'Your replies are visible to everyone who reads that post. Engaging with comments extends reach, deepens connection, and signals that you actually show up for your audience.' },
+  { text:'Engage with people from geotagged travel destinations', time:'20 mins',
+    why:'People geotagging luxury destinations are already spending on travel. A genuine comment from a travel expert — you — is one of the most natural conversation starters available.' },
+  { text:'Film a talking head reel — pick one hook and record it now', time:'30 mins',
+    why:'Your most converting content is your face and your expertise. One hook, one idea, one take. It doesn\'t need to be perfect — it needs to exist.' },
+  { text:'Draft carousel concepts for next week\'s content', time:'30 mins',
+    why:'Carousels generate three times more saves than single images. A good concept drafted today takes 10 minutes — execution is faster when the thinking is already done.' },
+  { text:'Review who engaged with this week\'s content and reply to them', time:'20 mins',
+    why:'People who engaged are actively telling you they\'re interested. Following up personally converts passive engagement into real conversations.' },
+  { text:'Draft reel concepts and scripts for the next seven days', time:'30 mins',
+    why:'Batching reel concepts in one sitting is one of the highest-leverage habits you can build. One session, seven days of direction. Do this before the week starts.' },
+  { text:'Engage with people who viewed but didn\'t follow your recent content', time:'20 mins',
+    why:'Non-followers who watched your content are warm — they just haven\'t committed yet. A well-timed message often triggers the follow and starts a real conversation.' },
 ];
 
-const CEO_TEAM_POOL = [
-  { text:'Spend 20 minutes checking in with this month\'s new starters', time:'20 min', icon:'🌱', why:'New reps decide in the first 7 days whether they\'re really in. A personal one-to-one — not a group message — sets the retention pattern from day one.', when:null },
-  { text:'Spend 20 minutes checking in with builders in your team', time:'20 min', icon:'🏗️', why:'The reps who are quietly building need fuel, not pressure. A personal check-in asking "what\'s feeling hard?" and listening is more effective than motivation.', when:null },
-  { text:'Spend 15 minutes sending personal recognition messages', time:'15 min', icon:'🏆', why:'Team members who don\'t get recognised feel invisible. Recognition costs nothing, retains your best people, and signals what gets rewarded here.', when:null },
-  { text:'Spend 20 minutes publicly highlighting team wins', time:'20 min', icon:'🌟', why:'A public post celebrating a team win retains the person you\'re celebrating, builds team culture, and attracts the next recruit — all in one post.', when:null },
-  { text:'Spend 20 minutes promoting upcoming events to your team', time:'20 min', icon:'📣', why:'Reps who attend events stay longer and produce more. Create genuine excitement around what\'s coming with enthusiasm about what\'s possible.', when:null },
-  { text:'Spend 30 minutes reviewing credit holds in your downline', time:'30 min', icon:'⚠️', why:'A credit hold silently removes someone from your active team. Catching it before month end gives you time to support the rep and protect your own status.', when:'month-end' },
-  { text:'Spend 20 minutes personally welcoming new members', time:'20 min', icon:'👋', why:'The quality of the first welcome determines whether a new rep becomes a long-term team member or a 30-day statistic. Make it personal and specific.', when:null },
-  { text:'Spend 30 minutes re-engaging inactive members', time:'30 min', icon:'🔄', why:'Reps go inactive quietly. A personal message asking "how are you finding things?" with no agenda sometimes saves someone you\'d otherwise lose.', when:null },
-  { text:'Spend 20 minutes sharing training resources with new reps', time:'20 min', icon:'📚', why:'Overwhelm is the #1 reason new reps quit. One focused resource removes the blank page and gets them moving without flooding them with information.', when:null },
-  { text:'Spend 15 minutes voice-noting your top performers', time:'15 min', icon:'🎙️', why:'High performers leave when they feel invisible. A personal voice note from their leader goes further than any public recognition in a group chat.', when:null },
-  { text:'Spend 20 minutes broadcasting this week\'s important announcements', time:'20 min', icon:'📢', why:'Your team can\'t act on information they don\'t have. Consistent, proactive communication keeps them aligned and reduces individual questions you\'d otherwise handle.', when:null },
-  { text:'Spend 30 minutes sending Monday motivation to both bootcamps', time:'30 min', icon:'🚀', why:'Setting the tone on Monday morning means the whole week starts with energy. One specific, personal message is worth more than any generic quote.', when:'monday' },
-  { text:'Spend 20 minutes posting Friday recognition and team wins', time:'20 min', icon:'🎉', why:'A Friday round-up celebrating specific wins keeps momentum through the weekend and provides the social proof that attracts the next recruit.', when:'friday' },
-  { text:'Spend 30 minutes doing a mid-month engagement check', time:'30 min', icon:'📊', why:'Mid-month is when momentum gaps become visible. Who has gone quiet since day one? A personal DM now costs 2 minutes. Losing them costs next month.', when:'mid-month' },
-  { text:'Spend 30 minutes doing end-of-month recognition and communication', time:'30 min', icon:'🗓️', why:'Month end is when your team needs to feel seen and celebrated. One round-up message that names specific wins sets the tone for a strong restart.', when:'month-end' },
-  { text:'Spend 20 minutes planning next week\'s bootcamp content', time:'20 min', icon:'📝', why:'Reactive bootcamps lose momentum fast. Knowing Monday\'s theme before the week starts means you lead with confidence rather than scrambling on Sunday night.', when:'friday' },
-  { text:'Spend 20 minutes sending a mid-week energy boost to your teams', time:'20 min', icon:'⚡', why:'Wednesday is where energy dips across every bootcamp. A short message calling out one specific win keeps the whole group moving through the hardest day of the week.', when:'wednesday' },
+const CS_TEAM = [
+  { text:'Check in personally with everyone who joined this month', time:'20 mins',
+    why:'New reps decide in their first two weeks whether they\'re really in. A personal one-to-one — not a group message — sets the retention pattern from day one.' },
+  { text:'Promote tonight\'s Travel Call to your team', time:'15 mins', days:[2],
+    why:'Tonight\'s Travel Call needs attention this morning. Your team needs a reminder, context, and a reason to be excited before it starts. Get this done now.' },
+  { text:'Send Monday motivation to both bootcamp teams', time:'20 mins', days:[1],
+    why:'Monday morning sets the tone for the entire week. Your team takes their cue from you. One specific, personal message is worth more than any generic quote.' },
+  { text:'Voice note your most active builders today', time:'15 mins',
+    why:'High performers leave when they feel invisible. A personal voice note from their leader — not a group message — makes them feel seen and keeps them pushing.' },
+  { text:'Post public recognition for a team win this week', time:'15 mins', days:[4,5],
+    why:'Public recognition retains the person you\'re celebrating, builds your team culture, and shows potential recruits exactly what it looks like inside your business.' },
+  { text:'Personally re-engage anyone who has gone quiet this week', time:'20 mins',
+    why:'Reps go inactive quietly. A personal message asking what\'s feeling hard — not a group motivational post — catches dropout before it becomes permanent.' },
+  { text:'Welcome this week\'s new members with a personal message', time:'15 mins',
+    why:'The quality of the first welcome determines whether someone becomes a long-term team member or a 30-day statistic. Make it specific, warm, and one-to-one.' },
+  { text:'Review credit holds across your downline', time:'20 mins', phase:'end',
+    why:'A credit hold silently removes someone from your active team. Catching it before month end gives you time to support them and protect your own status.' },
+  { text:'Send end of month team recognition and communication', time:'30 mins', phase:'end',
+    why:'End of month is when your team needs to feel seen and set up for next month. One message that names specific wins changes the energy going into a new month.' },
+  { text:'Do a mid-month engagement check across your team', time:'20 mins', phase:'mid',
+    why:'Mid-month is when momentum gaps become visible. Who has gone quiet since week one? A personal DM costs two minutes. Losing them costs the rest of the month.' },
+  { text:'Share a focused training resource with your newest reps', time:'15 mins',
+    why:'Overwhelm is the number one reason new reps quit. One specific resource — not a library — removes the blank page and gets them moving without flooding them.' },
+  { text:'Identify who is closest to their next rank and support them', time:'20 mins',
+    why:'One rep who hits their next rank creates momentum for the whole team. Find who is two or three actions away and give them a targeted push today.' },
+  { text:'Send a mid-week energy boost to your bootcamp groups', time:'15 mins', days:[3],
+    why:'Wednesday is where energy drops across every bootcamp. A message calling out one specific win keeps the whole group moving through the hardest day of the week.' },
+  { text:'Post your Friday team round-up and this week\'s wins', time:'15 mins', days:[5],
+    why:'A Friday round-up celebrating specific wins keeps momentum through the weekend, rewards people who showed up, and signals your culture to future recruits.' },
+  { text:'Ask a struggling rep what\'s feeling hard right now', time:'10 mins',
+    why:'Asking what\'s hard is more powerful than motivating. It shows you\'re listening rather than broadcasting. This is what keeps people in past the first month.' },
 ];
 
-function generateCEOBrief() {
+// ── INTELLIGENT DAILY SELECTION ─────────────────────────────
+// Same selection all day. Changes tomorrow. Day-aware. Month-aware. Rarely repeats.
+
+function _cs_pickItem(pool, secKey, excludeIdxs) {
   const dow = TODAY.getDay();
   const date = TODAY.getDate();
-  const monthDays = new Date(TODAY.getFullYear(), TODAY.getMonth()+1, 0).getDate();
-  const daysLeft = monthDays - date;
-  const isWeekend = (dow === 0 || dow === 6);
-  const availTime = isWeekend ? '3–4 hours' : '1–2 hours';
-  const isEarly = date <= 10;
-  const isMid = date > 10 && date <= 20;
-  const isEnd = date > 20;
-  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const dayName = dayNames[dow];
-  const monthPhase = isEarly ? 'Beginning of Month' : isMid ? 'Mid Month' : 'End of Month';
+  const phase = date<=10?'early':date<=20?'mid':'end';
+  const recent = _getRecentDone(secKey);
+  const excl = new Set(excludeIdxs||[]);
 
-  let focus = '', clientNote = '', visNote = '', teamNote = '';
+  const candidates = pool.map((item,i) => {
+    if (recent.has(i)||excl.has(i)) return null;
+    let score = 0;
+    if (item.days?.includes(dow))  score += 5;
+    else if (item.days)            score -= 3; // wrong day — deprioritise
+    if (item.phase === phase)       score += 3;
+    else if (item.phase)           score -= 1; // wrong phase
+    return {i, score};
+  }).filter(Boolean).sort((a,b)=>b.score-a.score);
 
-  if (isEarly) {
-    focus = 'This is your window to plant seeds. New conversations started now close in weeks 2 and 3.';
-    clientNote = 'Prioritise new outreach — reach out to previous clients and start fresh enquiry conversations.';
-    teamNote = 'Check in with new starters and set the tone for the month with your team.';
-    visNote = 'Post content that opens new conversations rather than converting existing ones.';
-  } else if (isMid) {
-    focus = 'Mid-month means conversion mode. The conversations you started are ready to close.';
-    clientNote = 'Push travel sales now — follow up warm leads and chase open quotes.';
-    teamNote = 'Check who has gone quiet and re-engage before they drift further away.';
-    visNote = 'Content that drives direct action — DMs, enquiries, and bookings — not just reach.';
-  } else {
-    focus = `${daysLeft} days left this month. Sprint mode — close what is open, recognise what has been built.`;
-    clientNote = 'Chase every open quote and run conversion-focused client activity today.';
-    teamNote = 'Recognition, credit hold reviews, and payday follow-ups are your team priorities now.';
-    visNote = 'Conversion-focused content — testimonials, results, and clear calls to action.';
+  if (!candidates.length) {
+    // All recently shown — reset, pick by date seed
+    const dy = Math.floor((TODAY-new Date(TODAY.getFullYear(),0,0))/864e5);
+    return {_idx:dy%pool.length, ...pool[dy%pool.length]};
   }
 
-  let rhythmNote = '';
-  if (dow === 1) rhythmNote = 'Monday — set the tone with a team message first.';
-  else if (dow === 2) rhythmNote = 'Tuesday — Travel Call at 7:30pm. Keep your afternoon lighter before the call.';
-  else if (dow === 3) rhythmNote = 'Wednesday — momentum dip day. Your team message today matters more than usual.';
-  else if (dow === 4) rhythmNote = 'Thursday — lighter day, but great for filming. You\'re usually camera-ready.';
-  else if (dow === 5) rhythmNote = 'Friday — prioritise drafting LinkedIn and Jet Set posts today.';
-  else if (dow === 6) rhythmNote = 'Saturday — draft personal content and stories for the week ahead.';
-  else if (dow === 0) rhythmNote = 'Sunday — draft content, stories, and do your weekly planning.';
-
-  return { focus, clientNote, visNote, teamNote, monthPhase, dayName, availTime, rhythmNote };
+  // From the top-scoring group, rotate by day-of-year for variety
+  const top = candidates[0].score;
+  const topGroup = candidates.filter(c=>c.score===top);
+  const dy = Math.floor((TODAY-new Date(TODAY.getFullYear(),0,0))/864e5);
+  const picked = topGroup[dy % topGroup.length];
+  return {_idx: picked.i, ...pool[picked.i]};
 }
 
+function _cs_getTodaySelections() {
+  const key = 'cs_b3_' + dk(TODAY);
+  const stored = JSON.parse(localStorage.getItem(key)||'null');
+  if (stored?.client && stored?.visibility && stored?.team) return stored;
+
+  const client     = _cs_pickItem(CS_CLIENT,     'cs_client',     []);
+  const visibility = _cs_pickItem(CS_VISIBILITY, 'cs_visibility', []);
+  const team       = _cs_pickItem(CS_TEAM,       'cs_team',       []);
+
+  _markRecentDone('cs_client',     client._idx);
+  _markRecentDone('cs_visibility', visibility._idx);
+  _markRecentDone('cs_team',       team._idx);
+
+  const result = {client, visibility, team, swapped:{client:[],visibility:[],team:[]}};
+  localStorage.setItem(key, JSON.stringify(result));
+  return result;
+}
+
+function swapCS(category) {
+  const key = 'cs_b3_' + dk(TODAY);
+  const stored = JSON.parse(localStorage.getItem(key)||'{}');
+  if (!stored.swapped) stored.swapped = {client:[],visibility:[],team:[]};
+  stored.swapped[category].push(stored[category]._idx);
+
+  const pool = category==='client'?CS_CLIENT:category==='visibility'?CS_VISIBILITY:CS_TEAM;
+  const newItem = _cs_pickItem(pool,'cs_'+category, stored.swapped[category]);
+  _markRecentDone('cs_'+category, newItem._idx);
+
+  stored[category] = newItem;
+  localStorage.setItem(key, JSON.stringify(stored));
+  renderCEO();
+}
+
+// ── STRATEGIC BRIEF ──────────────────────────────────────────
+function _cs_generateBrief(dow, date, daysLeft, phase) {
+  const dayCtx = {
+    0: 'Sunday — your planning session. What you do today sets up the entire week.',
+    1: 'Monday — the week starts here. Your energy and decisions today carry through the next five days.',
+    2: 'Tuesday — your Travel Call is tonight at 7:30pm. Use your morning and afternoon well.',
+    3: 'Wednesday — the mid-week dip is real. Today\'s focus is chosen to keep momentum where it matters.',
+    4: 'Thursday — lighter day with family dinner tonight. You\'re usually camera-ready. Make use of it before the day moves on.',
+    5: 'Friday — the week closes. Content drafts and team recognition now set you up for a strong restart on Monday.',
+    6: 'Saturday — your content batching morning. Build the week\'s content before anything else takes over.',
+  }[dow] || '';
+
+  const phaseCtx = phase==='early'
+    ? `Day ${date} of the month. You are in seed-planting mode. The conversations you start this week close in weeks two and three.`
+    : phase==='mid'
+    ? `Day ${date}. Mid-month means conversion. The relationships you built in week one are ready to follow through on.`
+    : `${daysLeft} day${daysLeft===1?'':'s'} left this month. Close what is open, recognise what has been built, and set next month\'s momentum.`;
+
+  return `${dayCtx} ${phaseCtx}`;
+}
+
+// ── RENDER ───────────────────────────────────────────────────
 function renderCEO() {
-  // ── Greeting ──
-  const hr=new Date().getHours(), name=S.settings.name?`, ${S.settings.name}`:'';
-  const greet=document.getElementById('ceo-hero-greeting');
-  if(greet) greet.textContent=(hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+name;
-  const hdate=document.getElementById('ceo-hero-date');
-  if(hdate) hdate.textContent=TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  // Affirmation lives on Daily Success Tracker tab
-  // ── Cycle phase ──
-  const phase=getPhase(TODAY);
-  const pb=document.getElementById('ceo-phase-badge');
-  if(pb) pb.textContent=phase?phase.name:'Set cycle →';
-  if(phase){
-    const n=document.getElementById('ceo-sc-phase-name'); if(n) n.textContent=phase.name;
-    const d=document.getElementById('ceo-sc-phase-day'); if(d) d.textContent=`Day ${phase.cycleDay} of ${phase.cycleLength}`;
-    const t=document.getElementById('ceo-sc-phase-tip'); if(t) t.textContent=PHASE_ALIGN[phase.key]?.tip||'';
-    const sl=document.getElementById('ceo-sc-setup-link'); if(sl) sl.style.display='none';
-    const sn=document.getElementById('ceo-sc-softnotes'); if(sn){sn.innerHTML='';(PHASE_ALIGN[phase.key]?.softnotes||[]).forEach(note=>{const p=document.createElement('span');p.className='soft-pill';p.textContent=note;sn.appendChild(p);});}
-  } else {
-    const sl=document.getElementById('ceo-sc-setup-link'); if(sl) sl.style.display='block';
+  const hr  = new Date().getHours();
+  const dow = TODAY.getDay();
+  const date = TODAY.getDate();
+  const monthDays = new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0).getDate();
+  const daysLeft = monthDays - date;
+  const phase = date<=10?'early':date<=20?'mid':'end';
+  const name = S.settings?.name ? `, ${S.settings.name}` : '';
+
+  // Greeting + date
+  const greet = hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+  const el_g = document.getElementById('cs-greeting'); if(el_g) el_g.textContent = greet+name;
+  const el_d = document.getElementById('cs-date');
+  if(el_d) el_d.textContent = TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  // Strategic brief
+  const briefText = _cs_generateBrief(dow, date, daysLeft, phase);
+  const el_b = document.getElementById('cs-brief'); if(el_b) el_b.innerHTML = briefText;
+
+  // Cycle phase badge + card
+  const cyclePhase = getPhase(TODAY);
+  const el_pb = document.getElementById('cs-phase-badge');
+  if(el_pb) el_pb.textContent = cyclePhase ? cyclePhase.name : 'Set cycle →';
+
+  const el_cy = document.getElementById('cs-cycle');
+  if (el_cy) {
+    if (cyclePhase) {
+      el_cy.style.display = '';
+      const phaseIcons = {menstrual:'🌑',follicular:'🌱',ovulatory:'☀️',luteal:'🌙'};
+      const tip = PHASE_ALIGN[cyclePhase.key]?.tip || '';
+      el_cy.innerHTML = `
+        <div class="cs-cycle-icon">${phaseIcons[cyclePhase.key]||'🌙'}</div>
+        <div style="flex:1">
+          <div class="cs-cycle-name">${esc(cyclePhase.name)} · Day ${cyclePhase.cycleDay}</div>
+          <div class="cs-cycle-day">Day ${cyclePhase.cycleDay} of ${cyclePhase.cycleLength} · <span style="cursor:pointer;color:var(--pk);font-weight:600" onclick="switchView('settings')">Update in Settings</span></div>
+          ${tip?`<div class="cs-cycle-tip">${esc(tip)}</div>`:''}
+        </div>`;
+    } else {
+      el_cy.style.display = '';
+      el_cy.innerHTML = `<div class="cs-cycle-icon">🌙</div><div style="flex:1"><div class="cs-cycle-name">Cycle not set</div><div class="cs-cycle-day" style="cursor:pointer;color:var(--pk);font-weight:600" onclick="switchView('settings')">→ Add your period date in Settings</div></div>`;
+    }
   }
-  // ── Non-Negotiables ──
-  const key=dk(TODAY); if(!S.reminders[key]) S.reminders[key]={};
-  const rsEl=document.getElementById('ceo-rituals-strip');
-  if(rsEl){ rsEl.innerHTML='';
-    DAILY_RITUALS.forEach(r=>{
-      const done=!!S.reminders[key][r.key];
-      const btn=document.createElement('div'); btn.className=`ritual-btn${done?' done':''}`;
-      btn.innerHTML=`<span class="ritual-icon">${r.icon}</span><span>${r.label}</span><span class="ritual-check">${done?'✓':''}</span>`;
-      btn.addEventListener('click',()=>{S.reminders[key][r.key]=!S.reminders[key][r.key];save();renderCEO();});
-      rsEl.appendChild(btn);
-    });
-  }
-  // ── DM Platform clear ──
-  if(!S.dmChecks[key]) S.dmChecks[key]={};
-  const dmEl=document.getElementById('ceo-dm-row');
-  if(dmEl){ dmEl.innerHTML='';
-    [{id:'instagram',icon:'📸',label:'Instagram DMs'},{id:'tiktok',icon:'🎵',label:'TikTok DMs'},{id:'whatsapp',icon:'💬',label:'WhatsApp'},{id:'linkedin',icon:'💼',label:'LinkedIn DMs'},{id:'ig_comments',icon:'🗨️',label:'IG Comments'},{id:'tt_comments',icon:'💬',label:'TT Comments'},{id:'li_engage',icon:'🤝',label:'LinkedIn 5min'},{id:'rem_travel',icon:'✈️',label:'Travel DMs'}].forEach(dm=>{
-      const done=!!S.dmChecks[key][dm.id];
-      const btn=document.createElement('div'); btn.className=`dm-btn${done?' done':''}`;
-      btn.innerHTML=`<div class="dm-icon">${dm.icon}</div><div class="dm-label">${dm.label}</div>`;
-      btn.addEventListener('click',()=>{S.dmChecks[key][dm.id]=!S.dmChecks[key][dm.id];save();renderCEO();});
+
+  // Get today's Big 3
+  const sels = _cs_getTodaySelections();
+
+  // Render cards
+  const container = document.getElementById('cs-big3'); if(!container) return;
+  container.innerHTML = '';
+
+  const defs = [
+    { key:'client',     label:'✈️  Client Focus',      cls:'cs-card--client',     item:sels.client },
+    { key:'visibility', label:'📱  Visibility Focus',   cls:'cs-card--visibility', item:sels.visibility },
+    { key:'team',       label:'👥  Team Focus',         cls:'cs-card--team',       item:sels.team },
+  ];
+
+  defs.forEach(def => {
+    const card = document.createElement('div');
+    card.className = `cs-card ${def.cls}`;
+    card.innerHTML = `
+      <div class="cs-card-cat">${def.label}</div>
+      <div class="cs-activity">${esc(def.item.text)}</div>
+      <div class="cs-time">⏱ ${esc(def.item.time)}</div>
+      <div class="cs-why">${esc(def.item.why)}</div>
+      <button class="cs-swap" onclick="swapCS('${def.key}')">↻ Different suggestion</button>`;
+    container.appendChild(card);
+  });
+
+  // ── DM Inboxes ───────────────────────────────────────────────
+  const DMS = [
+    {id:'ig_dms',   icon:'📸', label:'Instagram DMs'},
+    {id:'tt_dms',   icon:'🎵', label:'TikTok DMs'},
+    {id:'wa',       icon:'💬', label:'WhatsApp'},
+    {id:'li_dms',   icon:'💼', label:'LinkedIn'},
+    {id:'ig_comms', icon:'🗨️',  label:'IG Comments'},
+    {id:'tt_comms', icon:'💬', label:'TT Comments'},
+  ];
+  const dmKey = dk(TODAY);
+  if (!S.dmChecks[dmKey]) S.dmChecks[dmKey] = {};
+  const dmEl = document.getElementById('cs-dm-row');
+  if (dmEl) {
+    dmEl.innerHTML = '';
+    DMS.forEach(dm => {
+      const done = !!S.dmChecks[dmKey][dm.id];
+      const btn = document.createElement('div');
+      btn.className = `cs-dm-btn${done?' done':''}`;
+      btn.innerHTML = `<div class="cs-dm-icon">${dm.icon}</div><div class="cs-dm-label">${dm.label}</div>`;
+      btn.onclick = () => { S.dmChecks[dmKey][dm.id] = !S.dmChecks[dmKey][dm.id]; save(); btn.classList.toggle('done', !!S.dmChecks[dmKey][dm.id]); };
       dmEl.appendChild(btn);
     });
   }
-  // ── Priorities ──
-  const pris=S.priorities[key]||{};
-  ['p1','p2','p3'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=pris[id]||'';});
-  const brief = generateCEOBrief();
 
-  // Brief section
-  const briefEl = document.getElementById('ceo-brief-text');
-  briefEl.innerHTML = `<strong>${esc(brief.focus)}</strong><br><span style="color:var(--text2)">${esc(brief.clientNote)} ${esc(brief.visNote)}</span>`;
-  document.getElementById('ceo-month-phase').textContent = brief.monthPhase;
-  document.getElementById('ceo-day-badge').textContent = brief.dayName;
-  document.getElementById('ceo-time-badge').textContent = brief.availTime + ' available';
-  const rhythmBadge = document.getElementById('ceo-rhythm-badge');
-  if (brief.rhythmNote) { rhythmBadge.textContent = brief.rhythmNote; rhythmBadge.style.display = ''; }
-  else rhythmBadge.style.display = 'none';
-
-  // Initialize pools: 4 items each from each category (1 for Big 3 + 3 deeper), daily rotation
-  const clientIdxs     = _pinit('ceoClient',     CEO_CLIENT_POOL,     4, true);
-  const visIdxs        = _pinit('ceoVisibility',  CEO_VISIBILITY_POOL, 4, true);
-  const teamIdxs       = _pinit('ceoTeam',        CEO_TEAM_POOL,       4, true);
-
-  // Big 3
-  renderCEOBig3('ceo-big3-client',     'client',     CEO_CLIENT_POOL,     clientIdxs[0], 1);
-  renderCEOBig3('ceo-big3-visibility', 'visibility', CEO_VISIBILITY_POOL, visIdxs[0],    2);
-  renderCEOBig3('ceo-big3-team',       'team',       CEO_TEAM_POOL,       teamIdxs[0],   3);
-
-  // Deeper columns
-  renderCEOCol('ceo-col-client',     'client',     CEO_CLIENT_POOL,     clientIdxs.slice(1));
-  renderCEOCol('ceo-col-visibility', 'visibility', CEO_VISIBILITY_POOL, visIdxs.slice(1));
-  renderCEOCol('ceo-col-team',       'team',       CEO_TEAM_POOL,       teamIdxs.slice(1));
+  // ── Priorities ───────────────────────────────────────────────
+  const key = dk(TODAY);
+  const pris = S.priorities[key] || {};
+  const p1 = document.getElementById('p1'); if(p1) p1.value = pris.p1||'';
+  const p2 = document.getElementById('p2'); if(p2) p2.value = pris.p2||'';
+  const p3 = document.getElementById('p3'); if(p3) p3.value = pris.p3||'';
 }
 
-function renderCEOBig3(elId, type, pool, pidx, num) {
-  const el = document.getElementById(elId);
-  if (!el || pidx === undefined) return;
-  const item = pool[pidx];
-  if (!item) return;
-
-  const labels = { client:'✈️ Client Activity', visibility:'📱 Visibility', team:'👥 Team' };
-  const doneKey = `ceoBig3_${type}_${pidx}`;
-  const isDone = !!_getItemDone()[doneKey];
-
-  el.innerHTML = `
-    <div class="big3-done-mark">✓</div>
-    <div class="big3-num">${num}</div>
-    <div class="big3-category">${labels[type]}</div>
-    <div class="big3-activity">${esc(item.text)}</div>
-    <div class="big3-why">${esc(item.why)}</div>
-    <span class="big3-time-tag">⏱ ${esc(item.time)}</span>
-  `;
-  el.classList.toggle('done', isDone);
-
-  el.onclick = () => {
-    const d = _getItemDone();
-    if (d[doneKey]) { delete d[doneKey]; el.classList.remove('done'); }
-    else { d[doneKey] = true; el.classList.add('done'); _markRecentDone('ceo'+type.charAt(0).toUpperCase()+type.slice(1), pidx); }
-    localStorage.setItem(_itemDoneKey(), JSON.stringify(d));
-  };
-}
-
-function renderCEOCol(containerId, type, pool, indices) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = '';
-  const done = _getItemDone();
-  const secKey = 'ceo'+type.charAt(0).toUpperCase()+type.slice(1);
-
-  indices.forEach(pidx => {
-    if (pidx === undefined || !pool[pidx]) return;
-    const item = pool[pidx];
-    const doneKey = `ceocol_${type}_${pidx}`;
-    const isDone = !!done[doneKey];
-
-    const div = document.createElement('div');
-    div.className = `ceo-suggestion${isDone ? ' done' : ''}`;
-    div.innerHTML = `<div class="ceo-sug-chk"></div><div class="ceo-sug-inner"><div class="ceo-sug-text">${item.icon} ${esc(item.text)}</div><div class="ceo-sug-time">⏱ ${esc(item.time)}</div></div><button class="ceo-dismiss" title="Remove">✕</button>`;
-
-    div.addEventListener('click', e => {
-      if (e.target.classList.contains('ceo-dismiss')) return;
-      const d2 = _getItemDone();
-      if (d2[doneKey]) { delete d2[doneKey]; div.classList.remove('done'); }
-      else { d2[doneKey] = true; div.classList.add('done'); _markRecentDone(secKey, pidx); }
-      localStorage.setItem(_itemDoneKey(), JSON.stringify(d2));
-    });
-
-    div.querySelector('.ceo-dismiss').addEventListener('click', e => {
-      e.stopPropagation();
-      S.dismissed[secKey+'_'+pidx] = true;
-      save();
-      div.style.transition = 'opacity .2s,transform .2s';
-      div.style.opacity = '0';
-      div.style.transform = 'translateX(8px)';
-      setTimeout(() => div.remove(), 220);
-    });
-
-    el.appendChild(div);
+// Priority inputs — save on change
+['p1','p2','p3'].forEach(id => {
+  document.addEventListener('input', e => {
+    if (e.target.id !== id) return;
+    const k = dk(TODAY);
+    if (!S.priorities[k]) S.priorities[k] = {};
+    S.priorities[k][id] = e.target.value;
+    save();
   });
-}
+});
 
 // ─────────────────────────────────────────────────────────────
 // SYNC — Export / Import between devices
