@@ -511,6 +511,68 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 }
 
 /* ═══════════════════════════════════════════════════════
+   WEEKLY & MONTHLY REVIEW TABS
+   ═══════════════════════════════════════════════════════ */
+.rev-section{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.rev-section-hdr{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--pk-deep);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.rev-label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text2);margin-bottom:5px;margin-top:10px}
+.rev-label:first-child{margin-top:0}
+.rev-input{width:100%;border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;resize:vertical;min-height:60px}
+.rev-input:focus{border-color:var(--pk);background:var(--white)}
+.rev-input::placeholder{color:var(--text3)}
+.rev-num-input{width:90px;border:1px solid var(--border);border-radius:var(--rs);padding:8px 10px;font-size:14px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;text-align:center;transition:border-color .15s}
+.rev-num-input:focus{border-color:var(--pk);background:var(--white)}
+.rev-num-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:4px}
+@media(max-width:640px){.rev-num-grid{grid-template-columns:1fr}}
+.rev-num-item{display:flex;flex-direction:column;gap:4px}
+.rev-pri-item{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rev-pri-num{width:22px;height:22px;border-radius:50%;background:var(--pk-s);color:var(--pk-deep);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rev-pri-input{flex:1;border:none;border-bottom:1.5px solid var(--bl);outline:none;font-family:inherit;font-size:13px;color:var(--text);background:transparent;padding:4px 0}
+.rev-pri-input:focus{border-bottom-color:var(--pk)}
+.rev-pri-input::placeholder{color:var(--text3)}
+.rev-stat{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bl)}
+.rev-stat:last-child{border-bottom:none}
+.rev-stat-lbl{font-size:13px;color:var(--text2)}
+.rev-stat-val{font-size:14px;font-weight:800;color:var(--pk-deep)}
+.rev-habit-pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:var(--pk-s);color:var(--pk-deep);margin:2px 3px}
+.rev-habit-pill.low{background:#FFF0E4;color:#9A4010}
+.rev-audit-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--bl)}
+.rev-audit-row:last-child{border-bottom:none}
+.rev-audit-lbl{font-size:13px;color:var(--text);width:130px;flex-shrink:0}
+.rev-audit-slider{flex:1;accent-color:var(--pk)}
+.rev-audit-val{font-size:14px;font-weight:800;color:var(--pk-deep);width:26px;text-align:right;flex-shrink:0}
+.rev-compare-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bl)}
+.rev-compare-row:last-child{border-bottom:none}
+.rev-compare-lbl{font-size:12px;color:var(--text2);width:110px;flex-shrink:0}
+.rev-compare-bar-wrap{flex:1;height:8px;border-radius:4px;background:var(--bl);overflow:hidden;position:relative}
+.rev-compare-bar{height:100%;border-radius:4px;background:var(--pk);transition:width .4s}
+.rev-compare-bar.prev{background:var(--bl)}
+.rev-trend{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0}
+.rev-trend.up{background:var(--gn-s);color:var(--gn-deep)}
+.rev-trend.down{background:#FEE5EC;color:var(--pk-deep)}
+.rev-trend.flat{background:var(--bg);color:var(--text3);border:1px solid var(--border)}
+.rev-save-btn{width:100%;padding:14px;border-radius:var(--r);border:none;background:var(--gn);color:white;font-size:14px;font-weight:800;cursor:pointer;transition:opacity .15s;margin-top:6px}
+.rev-save-btn:hover{opacity:.88}
+.rev-saved-msg{text-align:center;font-size:13px;font-weight:700;color:var(--gn-deep);padding:10px 0 0;display:none}
+.rev-insight-box{background:linear-gradient(120deg,#F4F0FD,var(--pk-bg));border:1px solid #D8CFF5;border-radius:var(--r);padding:14px 18px;margin-bottom:14px;font-size:13px;color:var(--text);line-height:1.7}
+.rev-insight-box strong{color:#6040B0}
+.rev-week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.rev-week-nav-title{font-size:14px;font-weight:700;color:var(--text)}
+.rev-week-nav-btns{display:flex;gap:5px}
+.rev-week-nav-btn{width:30px;height:30px;border-radius:var(--rs);border:1px solid var(--border);background:var(--white);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .15s}
+.rev-week-nav-btn:hover{background:var(--pk-bg);border-color:var(--pk);color:var(--pk)}
+.rev-pattern-alert{background:linear-gradient(120deg,#FFF6F2,#FFF0E8);border:1px solid #F0C0A0;border-radius:var(--rs);padding:10px 14px;font-size:12px;font-weight:600;color:#7A3010;margin-top:8px;line-height:1.6}
+.rev-wins-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.rev-wins-grid{grid-template-columns:1fr}}
+.rev-social-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+@media(max-width:640px){.rev-social-grid{grid-template-columns:1fr}}
+.rev-social-platform{background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:12px}
+.rev-social-platform-name{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px}
+.rev-review-insight-card{background:linear-gradient(120deg,#F4F0FD,#EEF6FD);border:1px solid #D0C8F0;border-radius:var(--r);padding:14px 18px;margin-bottom:14px;font-size:13px;color:var(--text);line-height:1.7}
+.rev-review-insight-card strong{color:#5030A0}
+.rev-review-insight-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#5030A0;margin-bottom:8px}
+
+/* ═══════════════════════════════════════════════════════
    DAILY SUCCESS TRACKER
    ═══════════════════════════════════════════════════════ */
 .habit-metrics-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}
@@ -777,6 +839,99 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 .dump-tbtn{width:24px;height:24px;border:none;background:none;cursor:pointer;border-radius:4px;color:var(--text3);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1}
 .dump-tbtn:hover{background:var(--pk-s);color:var(--pk-deep)}
 .dump-tbtn.tbtn-del:hover{background:#FEE5EC;color:#C03050}
+
+/* ═══════════════════════════════════════════════════════
+   CEO 4-CARD DAILY GRID
+   ═══════════════════════════════════════════════════════ */
+.ceo4-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:600px){.ceo4-grid{grid-template-columns:1fr}}
+.ceo4-card{border-radius:var(--r);padding:16px 18px;border:2px solid;box-shadow:var(--shadow);position:relative;transition:all .18s;cursor:pointer}
+.ceo4-card:hover{box-shadow:var(--shadow-lg)}
+.ceo4-card.done{opacity:.55}
+.ceo4-card.done .ceo4-task{text-decoration:line-through;color:var(--text3)}
+.ceo4-card.done .ceo4-why{text-decoration:line-through;opacity:.5}
+.ceo4-card--client{border-color:#D4A05B;background:linear-gradient(135deg,#FFFBEE,#FFF8F0)}
+.ceo4-card--content{border-color:var(--pk);background:var(--pk-bg)}
+.ceo4-card--team{border-color:var(--gn);background:var(--gn-bg)}
+.ceo4-card--prospect{border-color:#5B9EC9;background:#EEF6FD}
+.ceo4-cat{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.ceo4-card--client .ceo4-cat{color:#9A6810}
+.ceo4-card--content .ceo4-cat{color:var(--pk-deep)}
+.ceo4-card--team .ceo4-cat{color:var(--gn-deep)}
+.ceo4-card--prospect .ceo4-cat{color:#2E7BAE}
+.ceo4-task{font-size:13px;font-weight:700;color:var(--text);line-height:1.45;margin-bottom:6px}
+.ceo4-time{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:7px}
+.ceo4-card--client .ceo4-time{background:#F5E4CA;color:#9A6800}
+.ceo4-card--content .ceo4-time{background:var(--pk-s);color:var(--pk-deep)}
+.ceo4-card--team .ceo4-time{background:var(--gn-s);color:var(--gn-deep)}
+.ceo4-card--prospect .ceo4-time{background:#C8E4F5;color:#2E7BAE}
+.ceo4-why{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.ceo4-foot{display:flex;align-items:center;gap:7px}
+.ceo4-tick{flex:1;padding:7px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
+.ceo4-card--client .ceo4-tick{background:#F5E4CA;color:#9A6800}
+.ceo4-card--client .ceo4-tick:hover,.ceo4-card--client.done .ceo4-tick{background:#D4A05B;color:white}
+.ceo4-card--content .ceo4-tick{background:var(--pk-s);color:var(--pk-deep)}
+.ceo4-card--content .ceo4-tick:hover,.ceo4-card--content.done .ceo4-tick{background:var(--pk);color:white}
+.ceo4-card--team .ceo4-tick{background:var(--gn-s);color:var(--gn-deep)}
+.ceo4-card--team .ceo4-tick:hover,.ceo4-card--team.done .ceo4-tick{background:var(--gn);color:white}
+.ceo4-card--prospect .ceo4-tick{background:#C8E4F5;color:#2E7BAE}
+.ceo4-card--prospect .ceo4-tick:hover,.ceo4-card--prospect.done .ceo4-tick{background:#5B9EC9;color:white}
+.ceo4-swap{background:none;border:1px solid rgba(0,0,0,.12);border-radius:20px;padding:5px 9px;font-size:10px;color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.ceo4-swap:hover{color:var(--text);border-color:var(--text3)}
+.ceo4-done-mark{position:absolute;top:12px;right:14px;font-size:15px;color:var(--gn);opacity:0;transition:opacity .2s}
+.ceo4-card.done .ceo4-done-mark{opacity:1}
+
+/* Month strip */
+.month-strip{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:20px}
+.month-dot{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;border:1.5px solid;transition:all .15s;cursor:default}
+.month-dot.md-all{background:var(--gn);border-color:var(--gn-deep);color:white}
+.month-dot.md-some{background:var(--pk-s);border-color:var(--pk);color:var(--pk-deep)}
+.month-dot.md-none{background:var(--bg);border-color:var(--bl);color:var(--text3)}
+.month-dot.md-today{box-shadow:0 0 0 2.5px var(--pk-deep)}
+.month-dot.md-future{background:transparent;border-color:var(--bl);color:var(--bl)}
+.ceo4-overdue-wrap{background:linear-gradient(135deg,#FFF6F2,#FFFAF8);border:1px solid #F0B8A0;border-radius:var(--r);padding:12px 14px;margin-bottom:4px}
+.ceo4-od-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--rs);background:white;border:1px solid #F0C0A8;margin-bottom:6px}
+.ceo4-od-item:last-child{margin-bottom:0}
+.ceo4-od-chk{width:18px;height:18px;border-radius:50%;border:2px solid #E8A090;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;background:white;font-size:8px;font-weight:900;color:transparent}
+.ceo4-od-chk:hover{background:#F5D0C0;color:#C05030}
+.ceo4-od-label{font-size:12px;flex:1;color:var(--text);line-height:1.4}
+.ceo4-od-cat{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+
+/* ═══════════════════════════════════════════════════════
+   MUST DO / OVERDUE / PRIORITY TICK (legacy — kept for priorities)
+   ═══════════════════════════════════════════════════════ */
+.cs-section-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.cs-section-lbl:first-of-type{margin-top:0}
+
+.mustdo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
+@media(max-width:640px){.mustdo-grid{grid-template-columns:1fr}}
+
+.mustdo-col{}
+.mustdo-section{margin-bottom:12px}
+.mustdo-cat-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;padding:0 2px}
+
+.mustdo-item{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--rs);border:1px solid var(--border);background:var(--white);margin-bottom:5px;cursor:pointer;transition:all .15s;box-shadow:0 1px 4px rgba(180,80,120,.04)}
+.mustdo-item:hover{border-color:var(--pk-s);background:var(--pk-bg)}
+.mustdo-item.mustdo-done{background:var(--gn-bg);border-color:var(--gn-s)}
+.mustdo-item.mustdo-done .mustdo-label{text-decoration:line-through;color:var(--text3)}
+.mustdo-item.mustdo-overdue-item{background:#FFF6F2;border-color:#F0B8A0}
+.mustdo-item.mustdo-overdue-item:hover{background:#FFF0EA}
+
+.mustdo-chk{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;flex-shrink:0;transition:all .15s;background:var(--white);color:transparent}
+.mustdo-item:hover .mustdo-chk{border-color:var(--pk)}
+.mustdo-item.mustdo-done .mustdo-chk{background:var(--gn);border-color:var(--gn);color:white}
+.mustdo-label{font-size:13px;flex:1;color:var(--text);line-height:1.4}
+.mustdo-note{font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;background:var(--pk-s);color:var(--pk-deep);margin-left:4px;white-space:nowrap;flex-shrink:0}
+.mustdo-od-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#F0C0A0;color:#7A3010;white-space:nowrap;flex-shrink:0}
+
+.cs-overdue-wrap{background:linear-gradient(135deg,#FFF6F2,#FFFAF8);border:1px solid #F0B8A0;border-radius:var(--r);padding:14px 16px;margin-bottom:4px}
+.cs-overdue-hdr{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#B04020;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+/* Priority tick */
+.pri-tick{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;cursor:pointer;flex-shrink:0;transition:all .15s}
+.pri-tick:hover{border-color:var(--gn);color:var(--gn)}
+.pri-tick.done{background:var(--gn);border-color:var(--gn);color:white}
+.priority-input.pri-struck{text-decoration:line-through;color:var(--text3)}
 </style>
 </head>
 <body>
@@ -811,6 +966,14 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
   <button class="app-tab" data-view="habit" onclick="switchView('habit')">
     <span class="app-tab-icon">📊</span>
     <span class="app-tab-label">Tracker</span>
+  </button>
+  <button class="app-tab" data-view="weekly" onclick="switchView('weekly')">
+    <span class="app-tab-icon">📋</span>
+    <span class="app-tab-label">Weekly</span>
+  </button>
+  <button class="app-tab" data-view="monthly" onclick="switchView('monthly')">
+    <span class="app-tab-icon">📅</span>
+    <span class="app-tab-label">Monthly</span>
   </button>
 </nav>
 
@@ -957,15 +1120,24 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <div class="phase-badge" onclick="switchView('settings')" style="align-self:flex-start"><div class="dot"></div><span id="cs-phase-badge">—</span></div>
   </div>
 
-  <!-- Strategic brief — WHY THESE THREE TODAY -->
+  <!-- Strategic brief -->
   <div class="cs-brief" id="cs-brief">—</div>
 
-  <!-- THE BIG 3 — one from each category, nothing else -->
-  <div class="cs-big3-label">Today's Big 3</div>
-  <div class="cs-big3" id="cs-big3"></div>
+  <!-- OVERDUE from yesterday -->
+  <div id="cs-overdue-section" style="display:none">
+    <div class="cs-section-lbl" style="color:#B04020;margin-top:0">⚠️ Overdue from yesterday</div>
+    <div class="ceo4-overdue-wrap">
+      <div id="cs-overdue-list"></div>
+    </div>
+  </div>
 
-  <!-- Cycle phase card -->
-  <div class="cs-cycle" id="cs-cycle" style="display:none"></div>
+  <!-- TODAY'S FOUR — one task per category -->
+  <div class="cs-section-lbl" style="margin-top:0">Today's Focus</div>
+  <div class="ceo4-grid" id="cs-four-grid"></div>
+
+  <!-- MONTH STRIP — completion dots -->
+  <div class="cs-section-lbl">This Month</div>
+  <div class="month-strip" id="cs-month-strip"></div>
 
   <!-- Bottom utilities: DM clear + Priorities -->
   <div class="cs-utils-grid">
@@ -977,14 +1149,13 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 
     <div class="card">
       <div class="card-title">🎯 Today's Priorities</div>
-      <div class="priority-list">
-        <div class="priority-item"><div class="priority-num">1</div><input class="priority-input" id="p1" placeholder="Most important today…"></div>
-        <div class="priority-item"><div class="priority-num">2</div><input class="priority-input" id="p2" placeholder="Second…"></div>
-        <div class="priority-item"><div class="priority-num">3</div><input class="priority-input" id="p3" placeholder="Third…"></div>
-      </div>
+      <div id="cs-priority-list"></div>
     </div>
 
   </div>
+
+  <!-- Cycle phase card -->
+  <div class="cs-cycle" id="cs-cycle" style="display:none"></div>
 
 </div>
 
@@ -1032,6 +1203,219 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
   </div>
 
   <div id="dump-list-container"></div>
+
+</div>
+
+<!-- ══════════════════════════════════════ WEEKLY REVIEW ══════════════════════════════════════ -->
+<div class="view" id="view-weekly">
+
+  <div class="rev-week-nav">
+    <div class="rev-week-nav-title" id="wr-week-title">—</div>
+    <div class="rev-week-nav-btns">
+      <button class="rev-week-nav-btn" onclick="changeRevWeek(-1)">‹</button>
+      <button class="rev-week-nav-btn" onclick="changeRevWeek(0)" style="width:auto;padding:0 10px;font-size:11px;font-weight:700">This Week</button>
+      <button class="rev-week-nav-btn" onclick="changeRevWeek(1)">›</button>
+    </div>
+  </div>
+
+  <!-- Section 1: Habit Review (AUTO) -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">📊 Habit Review — Auto</div>
+    <div id="wr-habit-stats"></div>
+  </div>
+
+  <!-- Section 2: Weekly Wins -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🏆 Weekly Wins</div>
+    <label class="rev-label">What was your biggest win this week?</label>
+    <textarea class="rev-input" id="wr-win" placeholder="e.g. Closed 2 travel bookings…"></textarea>
+    <label class="rev-label">What did you work hardest on?</label>
+    <textarea class="rev-input" id="wr-worked" placeholder="e.g. Building the bootcamp momentum…"></textarea>
+    <label class="rev-label">What are you proud of?</label>
+    <textarea class="rev-input" id="wr-proud" placeholder="e.g. Showed up every day even when tired…"></textarea>
+  </div>
+
+  <!-- Section 3: Next Week Events -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🗓️ Next Week's Events</div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:8px">Claude will use this when choosing next week's focus.</p>
+    <label class="rev-label">Events, calls, commitments next week</label>
+    <textarea class="rev-input" id="wr-events" placeholder="e.g. Travel Call Tuesday 7:30pm, photoshoot Friday…"></textarea>
+  </div>
+
+  <!-- Section 4: What Needs Attention -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🔍 What Needs Attention</div>
+    <label class="rev-label">What needs more focus or feels off-track?</label>
+    <textarea class="rev-input" id="wr-attention" placeholder="e.g. Team engagement has dropped, inbox is backed up…"></textarea>
+  </div>
+
+  <!-- Section 5: What Did I Avoid -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">😬 What Did I Avoid</div>
+    <label class="rev-label">What did you keep putting off this week?</label>
+    <textarea class="rev-input" id="wr-avoided" placeholder="e.g. Following up on the Hospes Hotels inquiry…"></textarea>
+    <div id="wr-avoid-pattern" style="display:none" class="rev-pattern-alert">⚠️ Pattern detected — Claude will prioritise this next week.</div>
+  </div>
+
+  <!-- Section 6: Next Week Priorities -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🎯 Next Week's Top 3 Priorities</div>
+    <div class="rev-pri-item"><div class="rev-pri-num">1</div><input class="rev-pri-input" id="wr-p1" type="text" placeholder="Priority #1…"></div>
+    <div class="rev-pri-item"><div class="rev-pri-num">2</div><input class="rev-pri-input" id="wr-p2" type="text" placeholder="Priority #2…"></div>
+    <div class="rev-pri-item"><div class="rev-pri-num">3</div><input class="rev-pri-input" id="wr-p3" type="text" placeholder="Priority #3…"></div>
+  </div>
+
+  <button class="rev-save-btn" onclick="saveWeeklyReview()">✓ Save This Week's Review</button>
+  <div class="rev-saved-msg" id="wr-saved-msg">✓ Saved — your CEO Dashboard will reflect these priorities.</div>
+
+</div>
+
+<!-- ══════════════════════════════════════ MONTHLY REVIEW ══════════════════════════════════════ -->
+<div class="view" id="view-monthly">
+
+  <div class="rev-week-nav">
+    <div class="rev-week-nav-title" id="mr-month-title">—</div>
+    <div class="rev-week-nav-btns">
+      <button class="rev-week-nav-btn" onclick="changeRevMonth(-1)">‹</button>
+      <button class="rev-week-nav-btn" onclick="changeRevMonth(0)" style="width:auto;padding:0 10px;font-size:11px;font-weight:700">This Month</button>
+      <button class="rev-week-nav-btn" onclick="changeRevMonth(1)">›</button>
+    </div>
+  </div>
+
+  <!-- Section 1: Monthly Scorecard -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">📈 Monthly Scorecard</div>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">✈️ Travel</div>
+    <div class="rev-num-grid">
+      <div class="rev-num-item"><label class="rev-label">Enquiries</label><input class="rev-num-input" id="mo-enquiries" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Quotes Sent</label><input class="rev-num-input" id="mo-quotes" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Bookings</label><input class="rev-num-input" id="mo-bookings" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Revenue (£)</label><input class="rev-num-input" id="mo-revenue" type="number" min="0" placeholder="0"></div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">👥 Team</div>
+    <div class="rev-num-grid">
+      <div class="rev-num-item"><label class="rev-label">New Partners</label><input class="rev-num-input" id="mo-newpartners" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Active Builders</label><input class="rev-num-input" id="mo-activebuilders" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Team Bookings</label><input class="rev-num-input" id="mo-teambookings" type="number" min="0" placeholder="0"></div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">📱 Content</div>
+    <div class="rev-num-grid">
+      <div class="rev-num-item"><label class="rev-label">Followers (total)</label><input class="rev-num-input" id="mo-followers" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Total Views</label><input class="rev-num-input" id="mo-views" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item" style="grid-column:1/-1"><label class="rev-label">Top Content Piece</label><input class="form-input" id="mo-topcontent" type="text" placeholder="e.g. 'Why I left my 9-5 for luxury travel'…"></div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">🌸 Personal</div>
+    <div class="rev-num-grid">
+      <div class="rev-num-item"><label class="rev-label">Habit Score (AUTO)</label><div id="mo-habit-auto" style="font-size:20px;font-weight:800;color:var(--gn-deep);padding:6px 0">—</div></div>
+      <div class="rev-num-item"><label class="rev-label">Books Read</label><input class="rev-num-input" id="mo-books" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Training Sessions</label><input class="rev-num-input" id="mo-training" type="number" min="0" placeholder="0"></div>
+    </div>
+  </div>
+
+  <!-- Section 2: Month-on-Month Comparison (AUTO) -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">📊 Month-on-Month Comparison — Auto</div>
+    <div id="mr-compare-body"></div>
+  </div>
+
+  <!-- Section 3: Biggest Wins -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🏆 Biggest Wins This Month</div>
+    <div class="rev-wins-grid">
+      <div>
+        <label class="rev-label">Business Win</label>
+        <textarea class="rev-input" id="mo-win-biz" placeholder="e.g. Hit revenue target…"></textarea>
+      </div>
+      <div>
+        <label class="rev-label">Team Win</label>
+        <textarea class="rev-input" id="mo-win-team" placeholder="e.g. 3 new recruits joined…"></textarea>
+      </div>
+      <div>
+        <label class="rev-label">Content Win</label>
+        <textarea class="rev-input" id="mo-win-content" placeholder="e.g. Reel went viral…"></textarea>
+      </div>
+      <div>
+        <label class="rev-label">Personal Win</label>
+        <textarea class="rev-input" id="mo-win-personal" placeholder="e.g. Read 2 books this month…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Social Media Review -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">📱 Social Media Review</div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Claude uses these patterns to improve future Content Bank suggestions.</p>
+    <div class="rev-social-grid">
+      <div class="rev-social-platform">
+        <div class="rev-social-platform-name">Instagram</div>
+        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-ig-followers" type="number" min="0" placeholder="0" style="width:100%">
+        <label class="rev-label">Views</label><input class="rev-num-input" id="mo-ig-views" type="number" min="0" placeholder="0" style="width:100%">
+        <label class="rev-label">Reach</label><input class="rev-num-input" id="mo-ig-reach" type="number" min="0" placeholder="0" style="width:100%">
+      </div>
+      <div class="rev-social-platform">
+        <div class="rev-social-platform-name">TikTok</div>
+        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-tt-followers" type="number" min="0" placeholder="0" style="width:100%">
+        <label class="rev-label">Views</label><input class="rev-num-input" id="mo-tt-views" type="number" min="0" placeholder="0" style="width:100%">
+      </div>
+      <div class="rev-social-platform">
+        <div class="rev-social-platform-name">LinkedIn</div>
+        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-li-followers" type="number" min="0" placeholder="0" style="width:100%">
+        <label class="rev-label">Impressions</label><input class="rev-num-input" id="mo-li-impressions" type="number" min="0" placeholder="0" style="width:100%">
+      </div>
+    </div>
+    <label class="rev-label">What was working?</label>
+    <textarea class="rev-input" id="mo-social-working" placeholder="e.g. Behind-the-scenes reels got 3× more reach…"></textarea>
+    <label class="rev-label">Patterns identified</label>
+    <textarea class="rev-input" id="mo-social-patterns" placeholder="e.g. Posting before 9am performed better…"></textarea>
+  </div>
+
+  <!-- Section 5: CEO Audit -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🎯 CEO Audit — Rate Yourself 1–10</div>
+    <div id="mr-audit-rows">
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Health</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_health" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Productivity</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_productivity" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Travel Business</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_travel" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Team Leadership</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_team" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Content</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_content" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Finances</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_finances" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+      <div class="rev-audit-row"><span class="rev-audit-lbl">Happiness</span><input class="rev-audit-slider" type="range" min="1" max="10" value="5" data-key="audit_happiness" oninput="this.nextElementSibling.textContent=this.value"><span class="rev-audit-val">5</span></div>
+    </div>
+  </div>
+
+  <!-- Section 6: Next Month Events -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🗓️ Next Month's Events</div>
+    <label class="rev-label">Key events, deadlines, commitments next month</label>
+    <textarea class="rev-input" id="mo-next-events" placeholder="e.g. Spain influencer trip, bootcamp launch, team training day…"></textarea>
+  </div>
+
+  <!-- Section 7: Next Month Strategy -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🚀 Next Month's Strategy</div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Claude uses your main goal and focus area to influence CEO Dashboard recommendations.</p>
+    <label class="rev-label">Main Goal — one goal only</label>
+    <input class="form-input" id="mo-main-goal" type="text" placeholder="e.g. Hit £5,000 in travel bookings">
+    <label class="rev-label">Supporting Goal 1</label>
+    <input class="form-input" id="mo-sg1" type="text" style="margin-bottom:6px" placeholder="e.g. Recruit 3 new team members">
+    <label class="rev-label">Supporting Goal 2</label>
+    <input class="form-input" id="mo-sg2" type="text" style="margin-bottom:6px" placeholder="e.g. Grow Instagram to 5k followers">
+    <label class="rev-label">Supporting Goal 3</label>
+    <input class="form-input" id="mo-sg3" type="text" style="margin-bottom:10px" placeholder="e.g. Read 2 books">
+    <div class="rev-num-grid">
+      <div><label class="rev-label">Biggest Opportunity</label><input class="form-input" id="mo-opp" type="text" placeholder="e.g. Spain campaign momentum"></div>
+      <div><label class="rev-label">Key Focus Area</label><input class="form-input" id="mo-focus" type="text" placeholder="e.g. Outbound prospecting"></div>
+      <div><label class="rev-label">Biggest Risk to Watch</label><input class="form-input" id="mo-risk" type="text" placeholder="e.g. Team disengagement"></div>
+    </div>
+  </div>
+
+  <button class="rev-save-btn" onclick="saveMonthlyReview()">✓ Save This Month's Review</button>
+  <div class="rev-saved-msg" id="mr-saved-msg">✓ Saved — your CEO Dashboard will reflect this month's strategy.</div>
 
 </div>
 
@@ -1669,6 +2053,8 @@ function switchView(v) {
   if(v==='dump') renderDump();
   if(v==='habit') renderHabit();
   if(v==='settings') renderSettings();
+  if(v==='weekly') renderWeekly();
+  if(v==='monthly') renderMonthly();
 }
 document.querySelectorAll('nav button[data-view]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
 
@@ -2044,7 +2430,9 @@ function pastMonthDates(off){ const t=dk(TODAY); return allMonthDates(off).filte
 
 function curStreak(){
   let n=0; const d=new Date(TODAY);
-  while(true){ const k=dk(d); if(dayPct(k)===100){n++;d.setDate(d.getDate()-1);}else break; }
+  // If today has no habits recorded yet, start streak count from yesterday
+  if(dayPct(dk(d))===0) d.setDate(d.getDate()-1);
+  while(true){ const k=dk(d); if(dayPct(k)>0){n++;d.setDate(d.getDate()-1);}else break; }
   return n;
 }
 function bestStreak(){
@@ -2531,18 +2919,49 @@ function generateContentBrief() {
   if (isSat) satNote = '🗓️ Saturday content morning — use this tab to pick your ideas for the week, batch what you can, and schedule. Build the week\'s content plan before anything else.';
   else if (isSun) satNote = '🗓️ Sunday — finalise your content plan for the week. What goes out Monday? Make sure it\'s ready tonight.';
   const monthLabel = isEarly?'Early Month':isMid?'Mid Month':'End of Month';
-  return { heading, body, satNote, isSat, isSun, monthLabel };
+
+  // Append review context patterns if available
+  let reviewNote = '';
+  try {
+    const rc = getReviewContext();
+    if (rc.socialPatterns) reviewNote = `From your last review: ${rc.socialPatterns.split('\n')[0].split('.')[0]}.`;
+    else if (rc.socialWorking) reviewNote = `From your last review: ${rc.socialWorking.split('\n')[0].split('.')[0]}.`;
+  } catch(e) {}
+
+  return { heading, body, satNote, isSat, isSun, monthLabel, reviewNote };
 }
 
 function renderContentBank() {
   const brief = generateContentBrief();
   const briefEl = document.getElementById('cb-brief-text');
-  if (briefEl) briefEl.innerHTML = `<strong>${esc(brief.heading)}</strong> ${esc(brief.body)}`;
+  if (briefEl) {
+    let briefHtml = `<strong>${esc(brief.heading)}</strong> ${esc(brief.body)}`;
+    if (brief.reviewNote) briefHtml += ` <strong style="color:#5030A0">${esc(brief.reviewNote)}</strong>`;
+    briefEl.innerHTML = briefHtml;
+  }
   const mp = document.getElementById('cb-month-pill'); if(mp) mp.textContent=brief.monthLabel;
   const tp = document.getElementById('cb-trend-pill'); if(tp) tp.textContent='June 2026 · Luxury Travel';
   const sp = document.getElementById('cb-sat-pill'); if(sp) sp.style.display=(brief.isSat||brief.isSun)?'':'none';
   const sn = document.getElementById('cb-sat-note');
   if (sn) { sn.style.display=brief.satNote?'':'none'; if(brief.satNote) sn.textContent=brief.satNote; }
+
+  // Review insight card — show before the week grid if monthly patterns are set
+  const cbView = document.getElementById('view-cb');
+  const existingInsight = document.getElementById('cb-review-insight');
+  if (existingInsight) existingInsight.remove();
+  try {
+    const rc = getReviewContext();
+    if (rc.socialPatterns || rc.socialWorking) {
+      const insightText = rc.socialPatterns || rc.socialWorking;
+      const card = document.createElement('div');
+      card.id = 'cb-review-insight';
+      card.className = 'rev-review-insight-card';
+      card.innerHTML = `<div class="rev-review-insight-title">📊 From your monthly review</div>${esc(insightText.split('\n')[0])}`;
+      const weekGridSection = cbView?.querySelector('.cb-section-title');
+      if (weekGridSection) cbView.insertBefore(card, weekGridSection);
+    }
+  } catch(e) {}
+
   renderCBWeekGrid();
   renderCBFilters();
   renderCBBankGrid();
@@ -2584,8 +3003,16 @@ function buildCBWeekCard(idea, idx, isDone) {
 function toggleCBWeekDone(idx) {
   const state=_pget('cbWeek',false);
   const was=state.done.includes(idx);
-  if(was){state.done=state.done.filter(i=>i!==idx);}
-  else{state.done.push(idx);_markRecentDone('cbWeek',idx);}
+  if(was){
+    state.done=state.done.filter(i=>i!==idx);
+  } else {
+    state.done.push(idx);
+    _markRecentDone('cbWeek',idx);
+    // Remove from active and immediately pull in a replacement
+    state.active=state.active.filter(i=>i!==idx);
+    const next=_pnext(CONTENT_IDEAS,state,'cbWeek');
+    if(next!==-1) state.active.push(next);
+  }
   _pset('cbWeek',state,false);
   renderCBWeekGrid();
 }
@@ -2875,6 +3302,245 @@ function renderDump() {
 // Nothing else. Intelligently chosen. Rotates daily.
 // ─────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────
+// FIXED ACTIVITIES — scheduled by day/date logic
+// ─────────────────────────────────────────────────────────────
+// biweeklyOdd:true = odd ISO weeks | false = even ISO weeks
+// days:[0..6] 0=Sun,1=Mon,...,6=Sat
+const FIXED_ACTIVITIES = [
+  // ── CONTENT ──────────────────────────────────────────────────
+  { id:'fa_amyreels',      cat:'content',     icon:'🎬', label:'Amy reels',                               days:[1] },
+  { id:'fa_talkingvid',    cat:'content',     icon:'📹', label:'Record talking video(s)',                 days:[4,6] },
+  { id:'fa_personalcont',  cat:'content',     icon:'✏️',  label:'Create personal content for the week',   days:[5,6] },
+  { id:'fa_jetsetform',    cat:'content',     icon:'✨', label:'Jet Set Formula content (team page)',     days:[5], biweekly:true, biweeklyOdd:true },
+  { id:'fa_linkedindraft', cat:'content',     icon:'💼', label:'LinkedIn post drafts',                   days:[5] },
+  { id:'fa_storydrafts',   cat:'content',     icon:'📱', label:'Create story drafts for the week',       days:[6,0] },
+  { id:'fa_contentrev',    cat:'content',     icon:'📊', label:'Review top-performing content (30 days)', monthEnd:true },
+  { id:'fa_repurpose',     cat:'content',     icon:'♻️',  label:'Repurpose a high-performing post',       monthStart:true },
+  { id:'fa_authority',     cat:'content',     icon:'✍️',  label:'Create a travel authority piece',        days:[6], biweekly:true, biweeklyOdd:false },
+  { id:'fa_trends',        cat:'content',     icon:'🔍', label:'Research content trends for next week',   days:[5] },
+  { id:'fa_PR',            cat:'content',     icon:'🤝', label:'PR / collaboration outreach',            days:[5] },
+
+  // ── BOOKINGS / CLIENTS ────────────────────────────────────────
+  { id:'fa_mktgemail',     cat:'clients',     icon:'📧', label:'Send marketing email',                   days:[3], biweekly:true, biweeklyOdd:true },
+  { id:'fa_jetsetig',      cat:'clients',     icon:'📸', label:'Create Jet Set Instagram posts',         days:[0] },
+  { id:'fa_liclient',      cat:'clients',     icon:'💼', label:'LinkedIn potential client outreach',     days:[2], biweekly:true, biweeklyOdd:true },
+  { id:'fa_whatsapp',      cat:'clients',     icon:'💬', label:'WhatsApp client outreach & follow ups',  days:[3], biweekly:true, biweeklyOdd:false },
+  { id:'fa_igclient',      cat:'clients',     icon:'📸', label:'Instagram potential client outreach',    days:[2], biweekly:true, biweeklyOdd:false },
+  { id:'fa_openquotes',    cat:'clients',     icon:'📋', label:'Follow up with all open quotes',        days:[5] },
+  { id:'fa_clientcheck',   cat:'clients',     icon:'✈️',  label:'Check in with clients who travelled recently', monthlyOnce:true },
+  { id:'fa_referrals',     cat:'clients',     icon:'⭐', label:'Ask previous clients for referrals',     bimonthly:true },
+  { id:'fa_fbtravellers',  cat:'clients',     icon:'🌍', label:'Reach out to recent travellers (Facebook / network)', days:[5], biweekly:true, biweeklyOdd:false },
+  { id:'fa_learnindustry', cat:'clients',     icon:'📚', label:'Learn something about the travel industry', rotBiweekly:true, rotDays:[2,4], rotOdd:true },
+  { id:'fa_researchdest',  cat:'clients',     icon:'🔎', label:'Research a destination / supplier / update', rotBiweekly:true, rotDays:[3,5], rotOdd:false },
+
+  // ── TEAM ──────────────────────────────────────────────────────
+  { id:'fa_travelcall',    cat:'team',        icon:'📞', label:'Tuesday night Travel Call',              days:[2], note:'7:30pm' },
+  { id:'fa_recognition',   cat:'team',        icon:'🏆', label:'Team recognition & check-ins',           days:[0] },
+  { id:'fa_creditholds',   cat:'team',        icon:'💳', label:'Check credit holds',                     dayOfMonth:3 },
+  { id:'fa_inactivemem',   cat:'team',        icon:'💬', label:'Reach out to inactive / cancelled members', monthEnd:true },
+  { id:'fa_teamcommemail', cat:'team',        icon:'📧', label:'Team community email',                   twiceMonthlyDoms:[7,21] },
+  { id:'fa_mondaycall',    cat:'team',        icon:'📞', label:'Monday night team call',                 days:[1], note:'9pm' },
+  { id:'fa_newstarters',   cat:'team',        icon:'👋', label:'Check in with this month\'s new starters', monthEnd:true },
+  { id:'fa_welcomemem',    cat:'team',        icon:'🎉', label:'Welcome new members on socials',         days:[3] },
+  { id:'fa_events',        cat:'team',        icon:'📣', label:'Promote upcoming events',               days:[5], biweekly:true, biweeklyOdd:true },
+  { id:'fa_eomrecog',      cat:'team',        icon:'🏆', label:'End of month recognition round-up',      dayOfMonth:25 },
+
+  // ── PROSPECTING ───────────────────────────────────────────────
+  { id:'fa_prospectemail', cat:'prospecting', icon:'📧', label:'Prospect email',                        twiceMonthlyDoms:[6,20] },
+  { id:'fa_followups',     cat:'prospecting', icon:'⏱',  label:'Follow ups',                            days:[3] },
+  { id:'fa_newfollowers',  cat:'prospecting', icon:'👥', label:'Engage with recent followers',           days:[1] },
+  { id:'fa_storyviewers',  cat:'prospecting', icon:'👁',  label:'Engage with story viewers',             daily:true },
+  { id:'fa_commengagers',  cat:'prospecting', icon:'💬', label:'Engage with people who commented on posts', weeklyDay:2 },
+  { id:'fa_linkedengage',  cat:'prospecting', icon:'💼', label:'Engage with LinkedIn connections',       twiceWeeklyDays:[1,4] },
+  { id:'fa_geotagging',    cat:'prospecting', icon:'📍', label:'Connect via geotagging',                weeklyDay:3 },
+  { id:'fa_destvisitors',  cat:'prospecting', icon:'🗺',  label:'Engage with destination visitors',      days:[6], biweekly:true, biweeklyOdd:true },
+  { id:'fa_fbgroups',      cat:'prospecting', icon:'👥', label:'Engage inside Facebook groups',          days:[1], biweekly:true, biweeklyOdd:false },
+  { id:'fa_netevents',     cat:'prospecting', icon:'🤝', label:'Engage with networking event contacts',  days:[2], biweekly:true, biweeklyOdd:true },
+  { id:'fa_travelcontent', cat:'prospecting', icon:'✈️',  label:'Connect with travel content engagers',  days:[3], biweekly:true, biweeklyOdd:false },
+  { id:'fa_competcontent', cat:'prospecting', icon:'👀', label:'Engage with competitor content likers',  days:[4], biweekly:true, biweeklyOdd:true },
+];
+
+// Weekly CEO Review items (Sundays only)
+const WEEKLY_REVIEW = [
+  { id:'wr_bookings',   label:'Review bookings generated this week' },
+  { id:'wr_enquiries',  label:'Review enquiries generated this week' },
+  { id:'wr_content',    label:'Review content performance' },
+  { id:'wr_team',       label:'Review team activity' },
+  { id:'wr_worked',     label:'Review what worked well' },
+  { id:'wr_repeat',     label:'What should be repeated next week?' },
+  { id:'wr_priorities', label:'Plan next week\'s priorities' },
+];
+
+// ─────────────────────────────────────────────────────────────
+// DAILY 4-CARD POOLS  (Client · Content · Team · Prospecting)
+// Each item: { text, time, why, days?, biweeklyOdd?, phase?, dayOfMonth? }
+// ─────────────────────────────────────────────────────────────
+const CEO_CLIENT = [
+  { text:'Send this week\'s marketing email to your client list', time:'30 mins', days:[3], biweeklyOdd:true,
+    why:'Your email list is your most valuable asset. One well-timed email generates multiple enquiries.' },
+  { text:'WhatsApp outreach and follow-ups with warm clients', time:'20 mins', days:[3], biweeklyOdd:false,
+    why:'Personal WhatsApp messages convert better than any broadcast. Pick 5 names and message them now.' },
+  { text:'Instagram potential client outreach', time:'20 mins', days:[2], biweeklyOdd:false,
+    why:'People who engage with your posts are already warm. A personal DM today turns interest into a booking conversation.' },
+  { text:'LinkedIn potential client outreach', time:'20 mins', days:[2], biweeklyOdd:true,
+    why:'LinkedIn clients book luxury travel too. One professional message today could open a high-value booking.' },
+  { text:'Follow up with all open quotes before the week ends', time:'25 mins', days:[5],
+    why:'Quotes go cold fast. Anyone you\'ve quoted in the last three weeks hasn\'t said no — they\'ve just gone quiet.' },
+  { text:'Create Jet Set Instagram posts for this week', time:'30 mins', days:[0],
+    why:'Sunday is your window to batch Jet Set posts. Getting them done today means the week starts with clear, strategic content.' },
+  { text:'Reach out to recent travellers in your Facebook network', time:'20 mins', days:[5],
+    why:'People travelling right now are spending money. A timely message puts you in front of them at exactly the right moment.' },
+  { text:'Message 5 previous clients — are you planning travel this summer?', time:'20 mins',
+    why:'Previous clients are your easiest wins. They already trust you completely. A simple check-in often triggers an immediate booking.' },
+  { text:'Follow up personally with every enquiry from the last 2 weeks', time:'25 mins', phase:'mid',
+    why:'Warm enquiries go cold without follow-up. Mid-month is the moment to convert interest into commitment.' },
+  { text:'Research one new luxury hotel or supplier to recommend this week', time:'25 mins',
+    why:'Your credibility is built on knowing properties your clients haven\'t discovered yet. One property per week becomes a conversation starter.' },
+  { text:'Create a personalised itinerary for a current enquiry', time:'30 mins',
+    why:'A curated itinerary rather than a generic quote converts significantly better. It shows you\'ve thought about them specifically.' },
+  { text:'Ask 3 happy clients for a referral or testimonial', time:'15 mins',
+    why:'Your best clients know exactly who else should be booking through you. One referral request opens two or three new conversations.' },
+  { text:'Send a tailored hotel recommendation to your warmest lead', time:'20 mins',
+    why:'Warm leads go cold when they don\'t hear from you. A specific recommendation shows you\'ve been thinking about their trip.' },
+  { text:'Check in with clients who travelled recently', time:'20 mins', phase:'end',
+    why:'Happy travellers refer people. A message right after their trip is the most natural moment to ask for a referral.' },
+  { text:'Chase all open travel quotes before month end', time:'25 mins', phase:'end',
+    why:'"Just checking in before the month ends" creates genuine urgency without pressure. Now is the time to use it.' },
+  { text:'Learn something new about the travel industry today', time:'20 mins',
+    why:'Your knowledge is your product. One new insight this week becomes a conversation opener next week.' },
+  { text:'Research a destination, trend or supplier update to share', time:'20 mins',
+    why:'Clients book with the agent who knows the most. Regular research keeps you ahead of what they\'re seeing online.' },
+];
+
+const CEO_CONTENT = [
+  // Day-anchored (fixed activities)
+  { text:'Film Amy\'s reels for the week', time:'30 mins', days:[1],
+    why:'Monday is Amy reel day. Getting this done first means it\'s off your plate before the week takes over.' },
+  { text:'Record at least one talking video today', time:'30 mins', days:[4,6],
+    why:'Your face and your expertise are your biggest conversion tool. One hook, one take. It doesn\'t need to be perfect.' },
+  { text:'Create your personal content for the week', time:'45 mins', days:[5,6],
+    why:'Your personal story is your biggest differentiator. 45 minutes today means a week of confident, consistent content.' },
+  { text:'Draft Jet Set Formula content for the team page', time:'30 mins', days:[5], biweeklyOdd:true,
+    why:'Your team page content plants seeds for the next recruit who finds you organically. Done every other Friday, it never piles up.' },
+  { text:'Write LinkedIn post drafts for next week', time:'30 mins', days:[5],
+    why:'Writing LinkedIn drafts on Friday means they go out next week without any scrambling. One strong post opens doors Instagram cannot.' },
+  { text:'Create story drafts and sequences for the week', time:'30 mins', days:[6,0],
+    why:'Pre-planned stories perform better than reactive ones. A three-slide sequence takes 20 minutes and generates DMs every time.' },
+  { text:'Create a travel-focused authority piece today', time:'45 mins', days:[6], biweeklyOdd:false,
+    why:'One authority piece every two weeks positions you as the expert — not just an agent. This is what attracts clients who book without asking the price.' },
+  { text:'Research and save content trends for next week', time:'20 mins', days:[5],
+    why:'Trend-aware content gets seen by people who don\'t follow you yet. 20 minutes on Friday means Monday starts with direction.' },
+  { text:'PR and collaboration outreach today', time:'20 mins', days:[5],
+    why:'Collaborations put you in front of audiences you didn\'t build. One outreach per week compounds faster than any ad.' },
+  { text:'Review your top-performing content from the last 30 days', time:'20 mins', phase:'end',
+    why:'You don\'t need new ideas — you need more of what already worked. Your best posts tell you exactly what to repeat.' },
+  { text:'Repurpose your best recent post into a new format', time:'25 mins', phase:'early',
+    why:'Start the month by getting more mileage from what already works. One carousel becomes a reel. One reel becomes a LinkedIn post.' },
+  // Lifestyle & follower growth (goal: 20k by August)
+  { text:'Film a "day in my CEO life" reel — no script needed', time:'20 mins',
+    why:'Lifestyle content is your fastest path to 20k followers. Your audience wants to see the freedom, not just hear about it. Just hit record.' },
+  { text:'Post a story sequence: lifestyle moment → travel reveal → soft CTA', time:'15 mins',
+    why:'Three stories — observation, reveal, question. Every reply is a warm lead. Takes 15 minutes and runs all day.' },
+  { text:'Film a "how I earn from luxury travel" talking head', time:'20 mins',
+    why:'This single hook brings in both clients and potential team members. Film once, post twice. It\'s your highest-converting video format.' },
+  { text:'Create a luxury travel carousel — 5 hotels you\'d book right now', time:'30 mins',
+    why:'Authority carousel content generates saves and DMs. Works as evergreen content for months and positions you over booking sites.' },
+  { text:'Write a LinkedIn post about building income on your own terms', time:'20 mins',
+    why:'LinkedIn reaches business-minded women who want what you have. One strong post brings in clients AND potential business partners.' },
+  { text:'Draft 3 story hooks — polls, questions or a lifestyle reveal', time:'20 mins',
+    why:'Story engagement tells the algorithm you\'re worth showing to new people. Planned hooks beat reactive posting every time.' },
+  { text:'Film a "behind the travel business" talking head — show your real day', time:'20 mins',
+    why:'Authentic behind-the-scenes content is what converts followers into people who DM you. Real beats polished for your audience.' },
+  { text:'Comment thoughtfully on 5 travel or lifestyle creators\' posts', time:'15 mins',
+    why:'Visible, genuine comments in the right spaces put you in front of your ideal audience. This is how you reach your next 1,000 followers.' },
+  { text:'Create a "why I chose this lifestyle" carousel or caption post', time:'25 mins',
+    why:'Personal brand content is what separates you from every other travel account. This is the content that attracts both followers and future partners.' },
+  { text:'Film a quick hotel comparison or travel tip reel', time:'20 mins',
+    why:'Short, specific travel expertise content reaches people actively researching holidays — your ideal future clients.' },
+];
+
+const CEO_TEAM = [
+  { text:'Promote tonight\'s Travel Call and send your team a reminder', time:'15 mins', days:[2],
+    why:'Tonight\'s Travel Call needs attention this morning. Your team needs a reminder, context, and a reason to show up excited.' },
+  { text:'Post team recognition and do your Sunday check-ins', time:'20 mins', days:[0],
+    why:'Sunday recognition sets the tone for the week. Who showed up? Call it out publicly and send a personal note.' },
+  { text:'Check credit holds across your downline', time:'20 mins',
+    why:'A credit hold silently removes someone from your active team. Catching it early gives you time to support them.' },
+  { text:'Reach out to inactive or cancelled members personally', time:'25 mins', phase:'end',
+    why:'People cancel for timing reasons. A personal message at month end often reopens the door before it closes permanently.' },
+  { text:'Send your team community email', time:'25 mins',
+    why:'Your community email keeps the whole team connected and builds the culture that retains people long-term.' },
+  { text:'Promote tonight\'s Monday team call', time:'15 mins', days:[1],
+    why:'A great call starts with great attendance. Send the reminder and set the context now while it\'s on your mind.' },
+  { text:'Check in with this month\'s new starters personally', time:'20 mins', phase:'end',
+    why:'New reps who haven\'t had a personal check-in by month end are at highest risk of going quiet in month two.' },
+  { text:'Welcome new members on socials today', time:'15 mins', days:[3],
+    why:'A public welcome costs 5 minutes and makes a new rep feel seen. It also signals your culture to everyone watching.' },
+  { text:'Promote an upcoming event to your team', time:'15 mins',
+    why:'Teams who know about events attend them. One message with context and excitement changes the turnout.' },
+  { text:'Post your end of month team recognition round-up', time:'25 mins',
+    why:'Month-end recognition rewards effort, builds culture, and signals to future recruits what it looks like inside your team.' },
+  { text:'Send your Monday motivation message to both bootcamp teams', time:'15 mins', days:[1],
+    why:'Monday morning sets the tone for the entire week. Your team takes their cue from you. Specific beats generic every time.' },
+  { text:'Check in personally with someone who has gone quiet this week', time:'10 mins',
+    why:'Reps go inactive quietly. A personal message asking what\'s feeling hard catches dropout before it becomes permanent.' },
+  { text:'Voice note your most active builders today', time:'10 mins',
+    why:'High performers leave when they feel invisible. A personal voice note from you — not a group message — makes them feel seen.' },
+  { text:'Mid-month check: who has slowed down this week?', time:'15 mins', phase:'mid',
+    why:'Mid-month is where momentum gaps widen. A personal DM costs 2 minutes. Losing someone costs the rest of the month.' },
+  { text:'Identify who is closest to their next rank and support them', time:'15 mins',
+    why:'One rep hitting their next rank creates momentum for the whole team. Find who is two actions away and give them a targeted push.' },
+  { text:'Check in with everyone who joined this month', time:'20 mins',
+    why:'New reps decide in their first two weeks whether they\'re really in. A personal message sets the retention pattern from day one.' },
+  { text:'Post your Friday team round-up — celebrate this week\'s wins', time:'15 mins', days:[5],
+    why:'A Friday round-up rewards people who showed up, builds culture, and signals your values to future recruits.' },
+  { text:'Send a mid-week energy boost message to your bootcamp groups', time:'10 mins', days:[3],
+    why:'Wednesday is where energy drops across every bootcamp. Calling out one specific win keeps the whole group moving.' },
+];
+
+const CEO_PROSPECT = [
+  // ── Platform sweeps (letter cycling) ─────────────────────────
+  // _sweepPlatform tells getTodayFour to bake the current letter into the text
+  { _sweepPlatform:'li', time:'25 mins', days:[1,2,3,4,5],
+    why:'With 8,000+ LinkedIn connections you have a warm database most businesses would pay for. Working through them alphabetically — 20 at a time — turns cold connections into real conversations.' },
+  { _sweepPlatform:'ig', time:'20 mins', days:[1,3,5],
+    why:'Your Instagram followers found you through content — now take it to DMs. Going through them alphabetically means no one gets missed and every conversation is one step closer to a client or referral.' },
+  { _sweepPlatform:'tt', time:'20 mins', days:[2,4,6],
+    why:'Your TikTok viewers watch you but don\'t know you personally yet. Going through followers alphabetically builds relationships that turn passive viewers into clients and future team members.' },
+  // ── Fixed schedule items ──────────────────────────────────────
+  { text:'Send your prospect email to your list', time:'25 mins',
+    why:'Twice a month to your prospect list keeps you top of mind without overwhelming people. This one email starts new conversations.' },
+  { text:'Follow ups — work every open conversation today', time:'30 mins', days:[3],
+    why:'Wednesday follow-ups convert the conversations you started on Monday and Tuesday. This is where bookings and recruits actually happen.' },
+  { text:'Engage with this week\'s new Instagram followers', time:'20 mins', days:[1],
+    why:'New followers are in the discovery phase. A personal welcome while they\'re new converts at a significantly higher rate.' },
+  { text:'Engage with your story viewers today', time:'15 mins',
+    why:'Story viewers chose to watch you. They\'re already warm. A simple reply or question starts a real conversation.' },
+  { text:'Engage with people who commented on your posts this week', time:'20 mins',
+    why:'Your replies are visible to everyone who reads that post. Engaging with comments extends your reach and deepens connection.' },
+  { text:'Engage with your LinkedIn connections today', time:'20 mins',
+    why:'Five genuine LinkedIn comments put you in front of exactly the right professional audience. No content creation needed.' },
+  { text:'Connect with people through geotagging a travel destination', time:'15 mins',
+    why:'People geotagging luxury destinations are already spending on travel. A genuine comment from a travel expert is the most natural opener.' },
+  { text:'Engage with people visiting destinations you\'ve travelled to', time:'15 mins',
+    why:'Shared destination = immediate common ground. The most natural DM you can send to start a real conversation.' },
+  { text:'Engage inside Facebook travel groups today', time:'20 mins',
+    why:'Facebook groups are full of people actively planning travel and looking for someone to trust. Show up, be helpful, be seen.' },
+  { text:'Follow up with people from recent networking events', time:'15 mins',
+    why:'People you\'ve already met convert faster than cold contacts. A follow-up within the week keeps the connection warm.' },
+  { text:'Connect with people who interact with travel content this week', time:'15 mins',
+    why:'People engaging with travel content are actively thinking about it. You\'re one relevant comment away from a conversation.' },
+  { text:'Engage with people who liked competitor content recently', time:'15 mins',
+    why:'These people are already sold on luxury travel — they just haven\'t found you yet. Be visible and be the better option.' },
+  { text:'Start 5 new conversations across Instagram, TikTok and LinkedIn', time:'20 mins',
+    why:'New conversations today become bookings and recruits in two to three weeks. This is the most important daily habit you have.' },
+  { text:'Reply to every comment on your posts from the last 48 hours', time:'15 mins',
+    why:'Your replies are visible to everyone who reads that post. Engagement extends your reach and shows you actually show up.' },
+  { text:'Follow up with 5 warm leads who enquired but haven\'t booked', time:'20 mins',
+    why:'Warm leads go cold when they don\'t hear from you. A short, personal follow-up reopens conversations that are already warm.' },
+];
+
 const CS_CLIENT = [
   { text:'Create 2 reels for Amy this morning', time:'30 mins', days:[1],
     why:'Amy\'s reels are a Monday commitment. Getting this done first means it\'s off your plate before the week takes over.' },
@@ -2974,23 +3640,505 @@ const CS_TEAM = [
     why:'Asking what\'s hard is more powerful than motivating. It shows you\'re listening rather than broadcasting. This is what keeps people in past the first month.' },
 ];
 
+// ─────────────────────────────────────────────────────────────
+// FIXED ACTIVITY SCHEDULING
+// ─────────────────────────────────────────────────────────────
+function _isoWeekNum(d) {
+  const j = new Date(d.getFullYear(), 0, 1);
+  return Math.ceil((((d - j) / 86400000) + j.getDay() + 1) / 7);
+}
+
+function getTodayFixed(date) {
+  if (!date) date = TODAY;
+  const dow  = date.getDay();
+  const dom  = date.getDate();
+  const wk   = _isoWeekNum(date);
+  const odd  = wk % 2 === 1;
+  const mLen = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
+  const isEnd   = dom >= 25;
+  const isStart = dom <= 5;
+
+  return FIXED_ACTIVITIES.filter(fa => {
+    // always-on
+    if (fa.daily) return true;
+    // specific day of month
+    if (fa.dayOfMonth !== undefined) return dom === fa.dayOfMonth;
+    // end / start of month (no day constraint means any day in that window)
+    if (fa.monthEnd)   return isEnd   && (!fa.days || fa.days.includes(dow));
+    if (fa.monthStart) return isStart && (!fa.days || fa.days.includes(dow));
+    // bimonthly (every 2 months, first week)
+    if (fa.bimonthly)  return isStart && date.getMonth() % 2 === 0;
+    // monthly once = first Sunday
+    if (fa.monthlyOnce) return dom <= 7 && dow === 0;
+    // twice-monthly on specific dates
+    if (fa.twiceMonthlyDoms) return fa.twiceMonthlyDoms.includes(dom);
+    // twice-weekly on specific days
+    if (fa.twiceWeeklyDays)  return fa.twiceWeeklyDays.includes(dow);
+    // weekly on one fixed day
+    if (fa.weeklyDay !== undefined) return dow === fa.weeklyDay;
+    // rotating biweekly (alternating odd/even weeks, on specific days)
+    if (fa.rotBiweekly) {
+      if (!fa.rotDays.includes(dow)) return false;
+      return fa.rotOdd ? odd : !odd;
+    }
+    // biweekly day-locked
+    if (fa.biweekly) {
+      if (!fa.days || !fa.days.includes(dow)) return false;
+      if (fa.biweeklyOdd === true  && !odd) return false;
+      if (fa.biweeklyOdd === false &&  odd) return false;
+      return true;
+    }
+    // plain day-of-week
+    if (fa.days) return fa.days.includes(dow);
+    return false;
+  });
+}
+
+// ── Fixed activity completion storage ────────────────────────
+function _faDoneKey(date) { return 'fa_done_' + dk(date); }
+function getFixedDone(date) { return JSON.parse(localStorage.getItem(_faDoneKey(date)) || '{}'); }
+function markFixedDone(id, date) {
+  if (!date) date = TODAY;
+  const k = _faDoneKey(date);
+  const d = getFixedDone(date);
+  if (d[id]) delete d[id]; else d[id] = true;
+  localStorage.setItem(k, JSON.stringify(d));
+}
+
+// ── Priority tick storage ─────────────────────────────────────
+function _priDoneKey(date) { return 'pri_done_' + dk(date); }
+function getPriDone(date) { return JSON.parse(localStorage.getItem(_priDoneKey(date || TODAY)) || '{}'); }
+function togglePriDone(pid) {
+  const d = getPriDone(TODAY);
+  if (d[pid]) delete d[pid]; else d[pid] = true;
+  localStorage.setItem(_priDoneKey(TODAY), JSON.stringify(d));
+  renderPriorities();
+}
+
+// ── Overdue calculation ───────────────────────────────────────
+function getOverdueFixed() {
+  const y = new Date(TODAY); y.setDate(y.getDate() - 1);
+  const yFixed = getTodayFixed(y);
+  const yDone  = getFixedDone(y);
+  // Don't carry over: daily items (already in today's list), or items already in today's must-do
+  const todayIds = new Set(getTodayFixed(TODAY).map(fa => fa.id));
+  return yFixed.filter(fa => !yDone[fa.id] && !fa.daily && !todayIds.has(fa.id));
+}
+function getOverduePriorities() {
+  const y = new Date(TODAY); y.setDate(y.getDate() - 1);
+  const yKey  = dk(y);
+  const yPris = S.priorities[yKey] || {};
+  const yDone = getPriDone(y);
+  return ['p1','p2','p3']
+    .filter(k => yPris[k]?.trim() && !yDone[k])
+    .map(k => ({ type:'priority', text: yPris[k] }));
+}
+
+// ── Render: Overdue ───────────────────────────────────────────
+function renderOverdue() {
+  const sec  = document.getElementById('cs-overdue-section');
+  const list = document.getElementById('cs-overdue-list');
+  if (!sec || !list) return;
+
+  const items = [...getOverdueFixed(), ...getOverduePriorities()];
+  if (!items.length) { sec.style.display = 'none'; return; }
+  sec.style.display = '';
+  list.innerHTML = '';
+
+  const catColors = {content:'#C86484',clients:'#C9945B',team:'#5BA47A',prospecting:'#5B9EC9'};
+  const catNames  = {content:'Content',clients:'Clients',team:'Team',prospecting:'Prospecting'};
+
+  items.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'mustdo-item mustdo-overdue-item';
+    if (item.type === 'priority') {
+      row.innerHTML = `<div class="mustdo-chk"></div><span class="mustdo-label">🎯 ${esc(item.text)}</span><span class="mustdo-od-badge">Priority</span>`;
+      // priority overdue items are informational only — user types new priorities for today
+    } else {
+      const badge = catNames[item.cat] || '';
+      const col   = catColors[item.cat] || 'var(--pk)';
+      row.innerHTML = `<div class="mustdo-chk"></div><span class="mustdo-label">${esc(item.icon)} ${esc(item.label)}</span><span class="mustdo-od-badge" style="background:${col}22;color:${col}">${badge}</span>`;
+      // Ticking dismisses it from overdue by marking done for yesterday
+      row.querySelector('.mustdo-chk').addEventListener('click', () => {
+        const y = new Date(TODAY); y.setDate(y.getDate() - 1);
+        markFixedDone(item.id, y);
+        renderOverdue();
+      });
+    }
+    list.appendChild(row);
+  });
+}
+
+// ── Render: Must Do Today ─────────────────────────────────────
+function renderMustDo() {
+  const container = document.getElementById('cs-mustdo-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const todayFixed = getTodayFixed(TODAY);
+  const todayDone  = getFixedDone(TODAY);
+
+  const catDefs = [
+    { key:'content',     label:'Content',     color:'#C86484', icon:'✏️'  },
+    { key:'clients',     label:'Clients',     color:'#C9945B', icon:'✈️'  },
+    { key:'team',        label:'Team',         color:'#5BA47A', icon:'👥' },
+    { key:'prospecting', label:'Prospecting',  color:'#5B9EC9', icon:'🔍' },
+  ];
+
+  // Build two columns for wider layout
+  const leftItems = [], rightItems = [];
+  let toggle = 0;
+  catDefs.forEach(cat => {
+    const items = todayFixed.filter(fa => fa.cat === cat.key);
+    if (!items.length) return;
+    (toggle++ % 2 === 0 ? leftItems : rightItems).push({ cat, items });
+  });
+
+  // Sunday: add weekly CEO review as a right-column section
+  if (TODAY.getDay() === 0) {
+    const wkDone = JSON.parse(localStorage.getItem('wr_done_' + dk(TODAY)) || '{}');
+    rightItems.push({ cat: { key:'review', label:'Weekly CEO Review', color:'#9B7CC9', icon:'📊' }, items: WEEKLY_REVIEW.map(r => ({...r, cat:'review', icon:'📋', isReview:true, done: !!wkDone[r.id]})) });
+  }
+
+  if (!leftItems.length && !rightItems.length) {
+    container.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:6px 0">No fixed activities scheduled for today.</div>';
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'mustdo-grid';
+
+  [leftItems, rightItems].forEach(colItems => {
+    const col = document.createElement('div');
+    col.className = 'mustdo-col';
+    colItems.forEach(({ cat, items }) => {
+      const sec = document.createElement('div');
+      sec.className = 'mustdo-section';
+      sec.innerHTML = `<div class="mustdo-cat-label" style="color:${cat.color}">${cat.icon} ${cat.label}</div>`;
+      items.forEach(fa => {
+        const done = fa.done !== undefined ? fa.done : !!todayDone[fa.id];
+        const row = document.createElement('div');
+        row.className = `mustdo-item${done ? ' mustdo-done' : ''}`;
+        row.innerHTML = `<div class="mustdo-chk">${done ? '✓' : ''}</div><span class="mustdo-label">${esc(fa.icon||'📋')} ${esc(fa.label)}${fa.note ? `<span class="mustdo-note">${esc(fa.note)}</span>` : ''}</span>`;
+        row.querySelector('.mustdo-chk').addEventListener('click', () => {
+          if (fa.isReview) {
+            const k = 'wr_done_' + dk(TODAY);
+            const d = JSON.parse(localStorage.getItem(k) || '{}');
+            if (d[fa.id]) delete d[fa.id]; else d[fa.id] = true;
+            localStorage.setItem(k, JSON.stringify(d));
+          } else {
+            markFixedDone(fa.id);
+          }
+          renderMustDo();
+        });
+        sec.appendChild(row);
+      });
+      col.appendChild(sec);
+    });
+    grid.appendChild(col);
+  });
+
+  container.appendChild(grid);
+}
+
+// ── Render: Tickable Priorities ───────────────────────────────
+function renderPriorities() {
+  const container = document.getElementById('cs-priority-list');
+  if (!container) return;
+
+  const key  = dk(TODAY);
+  const pris = S.priorities[key] || {};
+  const done = getPriDone(TODAY);
+  const overdue = getOverduePriorities();
+
+  container.innerHTML = '';
+
+  if (overdue.length) {
+    const note = document.createElement('div');
+    note.style.cssText = 'font-size:11px;font-weight:700;color:#B04020;margin-bottom:8px;line-height:1.5';
+    note.textContent = `⚠️ ${overdue.length} priorit${overdue.length > 1 ? 'ies' : 'y'} not completed yesterday`;
+    container.appendChild(note);
+  }
+
+  ['p1','p2','p3'].forEach((pid, i) => {
+    const val   = pris[pid] || '';
+    const isDone = !!done[pid];
+    const row   = document.createElement('div');
+    row.className = 'priority-item';
+    row.style.alignItems = 'center';
+
+    const num   = document.createElement('div');
+    num.className = 'priority-num'; num.textContent = i + 1;
+
+    const inp = document.createElement('input');
+    inp.className = `priority-input${isDone ? ' pri-struck' : ''}`;
+    inp.id = pid; inp.placeholder = i===0?'Most important today…':i===1?'Second…':'Third…';
+    inp.value = val;
+    if (isDone) inp.style.cssText = 'text-decoration:line-through;color:var(--text3)';
+    inp.addEventListener('input', function() {
+      const k2 = dk(TODAY);
+      if (!S.priorities[k2]) S.priorities[k2] = {};
+      S.priorities[k2][pid] = this.value;
+      save();
+    });
+
+    const tick = document.createElement('div');
+    tick.className = `pri-tick${isDone ? ' done' : ''}`;
+    tick.innerHTML = isDone ? '✓' : '';
+    tick.title = isDone ? 'Mark incomplete' : 'Mark complete';
+    tick.addEventListener('click', () => {
+      if (!inp.value.trim()) return;
+      togglePriDone(pid);
+    });
+
+    row.appendChild(num); row.appendChild(inp); row.appendChild(tick);
+    container.appendChild(row);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// PLATFORM SWEEP LETTER TRACKING (Instagram / TikTok / LinkedIn)
+// ─────────────────────────────────────────────────────────────
+const _ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function _sweepLetter(platform) {
+  const idx = parseInt(localStorage.getItem('sweep_'+platform)||'0') % 26;
+  return _ALPHA[idx];
+}
+function _advanceSweep(platform) {
+  const cur = parseInt(localStorage.getItem('sweep_'+platform)||'0');
+  localStorage.setItem('sweep_'+platform, String((cur+1)%26));
+}
+function _buildSweepItem(item) {
+  if (!item._sweepPlatform) return item;
+  const p = item._sweepPlatform;
+  const letter = _sweepLetter(p);
+  const platformName = p==='li'?'LinkedIn connections':p==='ig'?'Instagram followers':'TikTok followers';
+  return { ...item, text: `Go through ${platformName} — names beginning with ${letter}` };
+}
+
+// ─────────────────────────────────────────────────────────────
+// DAILY 4-CARD SELECTION & STORAGE
+// ─────────────────────────────────────────────────────────────
+function getTodayFour() {
+  const key = 'ceo4_' + dk(TODAY);
+  const stored = JSON.parse(localStorage.getItem(key) || 'null');
+  if (stored?.client && stored?.content && stored?.team && stored?.prospect) return stored;
+
+  const client   = _cs_pickItem(CEO_CLIENT,   'ceo_client',   []);
+  const content  = _cs_pickItem(CEO_CONTENT,  'ceo_content',  []);
+  const team     = _cs_pickItem(CEO_TEAM,     'ceo_team',     []);
+  const rawPros  = _cs_pickItem(CEO_PROSPECT, 'ceo_prospect', []);
+  const prospect = _buildSweepItem(rawPros); // bake letter into text at selection time
+
+  _markRecentDone('ceo_client',   client._idx);
+  _markRecentDone('ceo_content',  content._idx);
+  _markRecentDone('ceo_team',     team._idx);
+  _markRecentDone('ceo_prospect', rawPros._idx);
+
+  const result = { client, content, team, prospect, swapped:{} };
+  localStorage.setItem(key, JSON.stringify(result));
+  return result;
+}
+
+function swapFour(cat) {
+  const key = 'ceo4_' + dk(TODAY);
+  const stored = JSON.parse(localStorage.getItem(key) || '{}');
+  if (!stored.swapped) stored.swapped = {};
+  if (!stored.swapped[cat]) stored.swapped[cat] = [];
+  stored.swapped[cat].push(stored[cat]._idx);
+  const pools = { client:CEO_CLIENT, content:CEO_CONTENT, team:CEO_TEAM, prospect:CEO_PROSPECT };
+  const raw = _cs_pickItem(pools[cat], 'ceo_'+cat, stored.swapped[cat]);
+  const newItem = cat==='prospect' ? _buildSweepItem(raw) : raw;
+  _markRecentDone('ceo_'+cat, raw._idx);
+  stored[cat] = newItem;
+  localStorage.setItem(key, JSON.stringify(stored));
+  renderCEO();
+}
+
+function getCeo4Done(date) {
+  return JSON.parse(localStorage.getItem('ceo4done_' + dk(date||TODAY)) || '{}');
+}
+function toggleCeo4Done(cat) {
+  const d = getCeo4Done();
+  const wasUndone = !d[cat];
+  if (d[cat]) delete d[cat]; else d[cat] = true;
+  localStorage.setItem('ceo4done_' + dk(TODAY), JSON.stringify(d));
+  // Advance letter when a platform sweep prospect task is ticked done
+  if (wasUndone && cat === 'prospect') {
+    const four = getTodayFour();
+    if (four.prospect._sweepPlatform) _advanceSweep(four.prospect._sweepPlatform);
+  }
+  renderCEO();
+  renderMonthStrip();
+}
+
+function getOverdueFour() {
+  const y = new Date(TODAY); y.setDate(y.getDate() - 1);
+  const yKey = 'ceo4_' + dk(y);
+  const yStored = JSON.parse(localStorage.getItem(yKey) || 'null');
+  if (!yStored) return [];
+  const yDone = getCeo4Done(y);
+  return ['client','content','team','prospect']
+    .filter(cat => yStored[cat] && !yDone[cat])
+    .map(cat => ({ cat, ...yStored[cat] }));
+}
+
+// ── Render: Overdue (4-card system) ──────────────────────────
+function renderOverdue() {
+  const sec  = document.getElementById('cs-overdue-section');
+  const list = document.getElementById('cs-overdue-list');
+  if (!sec || !list) return;
+
+  const items = getOverdueFour();
+  const priOd = getOverduePriorities();
+
+  if (!items.length && !priOd.length) { sec.style.display = 'none'; return; }
+  sec.style.display = '';
+  list.innerHTML = '';
+
+  const catColors = { client:'#C9945B', content:'#C86484', team:'#5BA47A', prospect:'#5B9EC9' };
+  const catNames  = { client:'Client', content:'Content', team:'Team', prospect:'Prospecting' };
+
+  items.forEach(item => {
+    const col = catColors[item.cat] || 'var(--pk)';
+    const row = document.createElement('div'); row.className = 'ceo4-od-item';
+    row.innerHTML = `<div class="ceo4-od-chk" title="Mark done">✓</div><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat" style="background:${col}22;color:${col}">${catNames[item.cat]||''}</span>`;
+    row.querySelector('.ceo4-od-chk').addEventListener('click', () => {
+      // Mark done for yesterday so it disappears
+      const y = new Date(TODAY); y.setDate(y.getDate() - 1);
+      const d = getCeo4Done(y);
+      d[item.cat] = true;
+      localStorage.setItem('ceo4done_' + dk(y), JSON.stringify(d));
+      renderOverdue();
+    });
+    list.appendChild(row);
+  });
+
+  priOd.forEach(item => {
+    const row = document.createElement('div'); row.className = 'ceo4-od-item';
+    row.innerHTML = `<div class="ceo4-od-chk"></div><span class="ceo4-od-label">🎯 ${esc(item.text)}</span><span class="ceo4-od-cat" style="background:#9B7CC922;color:#9B7CC9">Priority</span>`;
+    list.appendChild(row);
+  });
+}
+
+// ── Render: Month strip ───────────────────────────────────────
+function renderMonthStrip() {
+  const el = document.getElementById('cs-month-strip'); if(!el) return;
+  const y = TODAY.getFullYear(), m = TODAY.getMonth();
+  const days = new Date(y, m+1, 0).getDate();
+  const todayDom = TODAY.getDate();
+  el.innerHTML = '';
+  for (let d=1; d<=days; d++) {
+    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const done = JSON.parse(localStorage.getItem('ceo4done_'+dateStr)||'{}');
+    const count = ['client','content','team','prospect'].filter(c=>done[c]).length;
+    const isFuture = d > todayDom;
+    const isToday  = d === todayDom;
+    let cls = 'month-dot ';
+    if (isFuture) cls += 'md-future';
+    else if (count === 4) cls += 'md-all';
+    else if (count > 0)  cls += 'md-some';
+    else                 cls += 'md-none';
+    if (isToday) cls += ' md-today';
+    const dot = document.createElement('div');
+    dot.className = cls;
+    dot.textContent = d;
+    dot.title = isFuture ? '' : `${dateStr}: ${count}/4 done`;
+    el.appendChild(dot);
+  }
+}
+
+// ── Render: 4-card daily grid ─────────────────────────────────
+function renderFourGrid() {
+  const container = document.getElementById('cs-four-grid');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const four = getTodayFour();
+  const done = getCeo4Done();
+
+  const defs = [
+    { key:'client',   label:'✈️  Client Focus',      cls:'ceo4-card--client' },
+    { key:'content',  label:'✏️  Content Focus',      cls:'ceo4-card--content' },
+    { key:'team',     label:'👥  Team Focus',         cls:'ceo4-card--team' },
+    { key:'prospect', label:'🔍  Prospecting Focus',  cls:'ceo4-card--prospect' },
+  ];
+
+  defs.forEach(def => {
+    const item  = four[def.key];
+    const isDone = !!done[def.key];
+    const card  = document.createElement('div');
+    card.className = `ceo4-card ${def.cls}${isDone?' done':''}`;
+    card.innerHTML = `
+      <div class="ceo4-done-mark">✓</div>
+      <div class="ceo4-cat">${def.label}</div>
+      <div class="ceo4-task">${esc(item.text)}</div>
+      <div class="ceo4-time">⏱ ${esc(item.time)}</div>
+      <div class="ceo4-why">${esc(item.why)}</div>
+      <div class="ceo4-foot">
+        <button class="ceo4-tick" onclick="toggleCeo4Done('${def.key}')">${isDone?'✓ Done':'Mark done'}</button>
+        ${!isDone?`<button class="ceo4-swap" onclick="swapFour('${def.key}')">↻ Different</button>`:''}
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
 // ── INTELLIGENT DAILY SELECTION ─────────────────────────────
 // Same selection all day. Changes tomorrow. Day-aware. Month-aware. Rarely repeats.
 
 function _cs_pickItem(pool, secKey, excludeIdxs) {
-  const dow = TODAY.getDay();
+  const dow  = TODAY.getDay();
   const date = TODAY.getDate();
+  const dom  = date;
   const phase = date<=10?'early':date<=20?'mid':'end';
+  const wk   = _isoWeekNum(TODAY);
+  const isOddWeek = wk % 2 === 1;
+  const monthDays = new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0).getDate();
   const recent = _getRecentDone(secKey);
   const excl = new Set(excludeIdxs||[]);
 
   const candidates = pool.map((item,i) => {
     if (recent.has(i)||excl.has(i)) return null;
     let score = 0;
-    if (item.days?.includes(dow))  score += 5;
-    else if (item.days)            score -= 3; // wrong day — deprioritise
-    if (item.phase === phase)       score += 3;
-    else if (item.phase)           score -= 1; // wrong phase
+
+    // Day-of-week match
+    if (item.days?.includes(dow)) score += 6;
+    else if (item.days)           score -= 4; // wrong day — strongly deprioritise
+
+    // Biweekly week-parity: wrong week loses points so right-week items win
+    if (item.biweeklyOdd === true  && !isOddWeek) score -= 5;
+    if (item.biweeklyOdd === false &&  isOddWeek) score -= 5;
+
+    // Specific day of month
+    if (item.dayOfMonth !== undefined) {
+      if (dom === item.dayOfMonth) score += 8;
+      else score -= 6;
+    }
+
+    // Month phase
+    if (item.phase === phase) score += 3;
+    else if (item.phase)      score -= 2;
+
+    // Twice-monthly on specific dates
+    if (item.twiceMonthlyDoms) {
+      if (item.twiceMonthlyDoms.includes(dom)) score += 7;
+      else score -= 3;
+    }
+
+    // Twice-weekly
+    if (item.twiceWeeklyDays) {
+      if (item.twiceWeeklyDays.includes(dow)) score += 5;
+      else score -= 2;
+    }
+
+    // Review context boosts
+    try {
+      const rc = getReviewContext();
+      const catName = secKey.replace('cs_','').replace('ceo_','');
+      if (rc.avoidedCats.has(catName)) score += 4;
+      if (rc.attentionCats.has(catName)) score += 3;
+    } catch(e) {}
+
     return {i, score};
   }).filter(Boolean).sort((a,b)=>b.score-a.score);
 
@@ -3059,18 +4207,31 @@ function _cs_generateBrief(dow, date, daysLeft, phase) {
     ? `Day ${date}. Mid-month means conversion. The relationships you built in week one are ready to follow through on.`
     : `${daysLeft} day${daysLeft===1?'':'s'} left this month. Close what is open, recognise what has been built, and set next month\'s momentum.`;
 
-  return `${dayCtx} ${phaseCtx}`;
+  let brief = `${dayCtx} ${phaseCtx}`;
+
+  // Append review context if available
+  try {
+    const rc = getReviewContext();
+    const extras = [];
+    if (rc.weeklyPriorities.length > 0) extras.push(`Your priority this week: ${rc.weeklyPriorities[0]}.`);
+    if (rc.attention) extras.push(`You flagged needing more: ${rc.attention.split('\n')[0].split('.')[0]}.`);
+    if (rc.monthlyGoal) extras.push(`This month's goal: ${rc.monthlyGoal}.`);
+    if (rc.avoided && rc.hasAvoidPattern) extras.push(`You keep avoiding: ${rc.avoided.split('\n')[0].split('.')[0]} — today's focus reflects that.`);
+    if (extras.length > 0) brief += ' ' + extras.join(' ');
+  } catch(e) {}
+
+  return brief;
 }
 
 // ── RENDER ───────────────────────────────────────────────────
 function renderCEO() {
-  const hr  = new Date().getHours();
-  const dow = TODAY.getDay();
+  const hr   = new Date().getHours();
+  const dow  = TODAY.getDay();
   const date = TODAY.getDate();
   const monthDays = new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0).getDate();
-  const daysLeft = monthDays - date;
+  const daysLeft  = monthDays - date;
   const phase = date<=10?'early':date<=20?'mid':'end';
-  const name = S.settings?.name ? `, ${S.settings.name}` : '';
+  const name  = S.settings?.name ? `, ${S.settings.name}` : '';
 
   // Greeting + date
   const greet = hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
@@ -3079,66 +4240,41 @@ function renderCEO() {
   if(el_d) el_d.textContent = TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
   // Strategic brief
-  const briefText = _cs_generateBrief(dow, date, daysLeft, phase);
-  const el_b = document.getElementById('cs-brief'); if(el_b) el_b.innerHTML = briefText;
+  const el_b = document.getElementById('cs-brief');
+  if(el_b) el_b.innerHTML = _cs_generateBrief(dow, date, daysLeft, phase);
 
   // Cycle phase badge + card
   const cyclePhase = getPhase(TODAY);
   const el_pb = document.getElementById('cs-phase-badge');
   if(el_pb) el_pb.textContent = cyclePhase ? cyclePhase.name : 'Set cycle →';
-
   const el_cy = document.getElementById('cs-cycle');
   if (el_cy) {
     if (cyclePhase) {
       el_cy.style.display = '';
       const phaseIcons = {menstrual:'🌑',follicular:'🌱',ovulatory:'☀️',luteal:'🌙'};
       const tip = PHASE_ALIGN[cyclePhase.key]?.tip || '';
-      el_cy.innerHTML = `
-        <div class="cs-cycle-icon">${phaseIcons[cyclePhase.key]||'🌙'}</div>
-        <div style="flex:1">
-          <div class="cs-cycle-name">${esc(cyclePhase.name)} · Day ${cyclePhase.cycleDay}</div>
-          <div class="cs-cycle-day">Day ${cyclePhase.cycleDay} of ${cyclePhase.cycleLength} · <span style="cursor:pointer;color:var(--pk);font-weight:600" onclick="switchView('settings')">Update in Settings</span></div>
-          ${tip?`<div class="cs-cycle-tip">${esc(tip)}</div>`:''}
-        </div>`;
+      el_cy.innerHTML = `<div class="cs-cycle-icon">${phaseIcons[cyclePhase.key]||'🌙'}</div><div style="flex:1"><div class="cs-cycle-name">${esc(cyclePhase.name)} · Day ${cyclePhase.cycleDay}</div><div class="cs-cycle-day">Day ${cyclePhase.cycleDay} of ${cyclePhase.cycleLength} · <span style="cursor:pointer;color:var(--pk);font-weight:600" onclick="switchView('settings')">Update in Settings</span></div>${tip?`<div class="cs-cycle-tip">${esc(tip)}</div>`:''}</div>`;
     } else {
       el_cy.style.display = '';
       el_cy.innerHTML = `<div class="cs-cycle-icon">🌙</div><div style="flex:1"><div class="cs-cycle-name">Cycle not set</div><div class="cs-cycle-day" style="cursor:pointer;color:var(--pk);font-weight:600" onclick="switchView('settings')">→ Add your period date in Settings</div></div>`;
     }
   }
 
-  // Get today's Big 3
-  const sels = _cs_getTodaySelections();
+  // Overdue strip
+  renderOverdue();
 
-  // Render cards
-  const container = document.getElementById('cs-big3'); if(!container) return;
-  container.innerHTML = '';
+  // 4-card daily grid
+  renderFourGrid();
+  renderMonthStrip();
 
-  const defs = [
-    { key:'client',     label:'✈️  Client Focus',      cls:'cs-card--client',     item:sels.client },
-    { key:'visibility', label:'📱  Visibility Focus',   cls:'cs-card--visibility', item:sels.visibility },
-    { key:'team',       label:'👥  Team Focus',         cls:'cs-card--team',       item:sels.team },
-  ];
-
-  defs.forEach(def => {
-    const card = document.createElement('div');
-    card.className = `cs-card ${def.cls}`;
-    card.innerHTML = `
-      <div class="cs-card-cat">${def.label}</div>
-      <div class="cs-activity">${esc(def.item.text)}</div>
-      <div class="cs-time">⏱ ${esc(def.item.time)}</div>
-      <div class="cs-why">${esc(def.item.why)}</div>
-      <button class="cs-swap" onclick="swapCS('${def.key}')">↻ Different suggestion</button>`;
-    container.appendChild(card);
-  });
-
-  // ── DM Inboxes ───────────────────────────────────────────────
+  // DM Inboxes
   const DMS = [
-    {id:'ig_dms',   icon:'📸', label:'Instagram DMs'},
-    {id:'tt_dms',   icon:'🎵', label:'TikTok DMs'},
-    {id:'wa',       icon:'💬', label:'WhatsApp'},
-    {id:'li_dms',   icon:'💼', label:'LinkedIn'},
-    {id:'ig_comms', icon:'🗨️',  label:'IG Comments'},
-    {id:'tt_comms', icon:'💬', label:'TT Comments'},
+    {id:'ig_dms', icon:'📸', label:'Instagram DMs'},
+    {id:'tt_dms', icon:'🎵', label:'TikTok DMs'},
+    {id:'wa',     icon:'💬', label:'WhatsApp'},
+    {id:'li_dms', icon:'💼', label:'LinkedIn'},
+    {id:'ig_comms',icon:'🗨️', label:'IG Comments'},
+    {id:'tt_comms',icon:'💬', label:'TT Comments'},
   ];
   const dmKey = dk(TODAY);
   if (!S.dmChecks[dmKey]) S.dmChecks[dmKey] = {};
@@ -3150,29 +4286,292 @@ function renderCEO() {
       const btn = document.createElement('div');
       btn.className = `cs-dm-btn${done?' done':''}`;
       btn.innerHTML = `<div class="cs-dm-icon">${dm.icon}</div><div class="cs-dm-label">${dm.label}</div>`;
-      btn.onclick = () => { S.dmChecks[dmKey][dm.id] = !S.dmChecks[dmKey][dm.id]; save(); btn.classList.toggle('done', !!S.dmChecks[dmKey][dm.id]); };
+      btn.onclick = () => { S.dmChecks[dmKey][dm.id]=!S.dmChecks[dmKey][dm.id]; save(); btn.classList.toggle('done',!!S.dmChecks[dmKey][dm.id]); };
       dmEl.appendChild(btn);
     });
   }
 
-  // ── Priorities ───────────────────────────────────────────────
-  const key = dk(TODAY);
-  const pris = S.priorities[key] || {};
-  const p1 = document.getElementById('p1'); if(p1) p1.value = pris.p1||'';
-  const p2 = document.getElementById('p2'); if(p2) p2.value = pris.p2||'';
-  const p3 = document.getElementById('p3'); if(p3) p3.value = pris.p3||'';
+  // Priorities (tickable)
+  renderPriorities();
 }
 
-// Priority inputs — save on change
-['p1','p2','p3'].forEach(id => {
-  document.addEventListener('input', e => {
-    if (e.target.id !== id) return;
-    const k = dk(TODAY);
-    if (!S.priorities[k]) S.priorities[k] = {};
-    S.priorities[k][id] = e.target.value;
-    save();
+// ─────────────────────────────────────────────────────────────
+// WEEKLY & MONTHLY REVIEW — Storage helpers
+// ─────────────────────────────────────────────────────────────
+
+let revWeekOff = 0, revMonthOff = 0;
+
+function _wkKey(d) {
+  const x = d || TODAY;
+  const y = x.getFullYear();
+  const j = new Date(y, 0, 1);
+  const wn = Math.ceil((((x - j) / 86400000) + j.getDay() + 1) / 7);
+  return `wkrev_${y}-W${String(wn).padStart(2,'0')}`;
+}
+function _moKey(d) { return `morev_${dk(d || TODAY).slice(0,7)}`; }
+function getWkRev(d) { return JSON.parse(localStorage.getItem(_wkKey(d)) || '{}'); }
+function getMoRev(d) { return JSON.parse(localStorage.getItem(_moKey(d)) || '{}'); }
+function _saveWkRev(data, d) { localStorage.setItem(_wkKey(d || TODAY), JSON.stringify(data)); }
+function _saveMoRev(data, d) { localStorage.setItem(_moKey(d || TODAY), JSON.stringify(data)); }
+
+function _revWkDate(off) { const d = new Date(TODAY); d.setDate(d.getDate() + (off || 0) * 7); return d; }
+function _revMoDate(off) { return new Date(TODAY.getFullYear(), TODAY.getMonth() + (off || 0), 1); }
+
+// Week label: "Mon 16 – Sun 22 Jun 2026"
+function _wkLabel(off) {
+  const d = _revWkDate(off);
+  const dow = d.getDay(), toMon = dow === 0 ? -6 : 1 - dow;
+  const mon = new Date(d); mon.setDate(d.getDate() + toMon);
+  const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+  const fmt = dt => dt.toLocaleDateString('en-GB', {weekday:'short', day:'numeric'});
+  const monS = fmt(mon);
+  const sunS = sun.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short', year:'numeric'});
+  return `${monS} – ${sunS}`;
+}
+// Month label: "June 2026"
+function _moLabel(off) {
+  return _revMoDate(off).toLocaleDateString('en-GB', {month:'long', year:'numeric'});
+}
+
+function changeRevWeek(dir) {
+  if (dir === 0) revWeekOff = 0;
+  else revWeekOff += dir;
+  renderWeekly();
+}
+function changeRevMonth(dir) {
+  if (dir === 0) revMonthOff = 0;
+  else revMonthOff += dir;
+  renderMonthly();
+}
+
+// ── REVIEW CONTEXT (used by CEO + Content briefs) ─────────────
+function _parseCats(text) {
+  if (!text) return new Set();
+  const t = text.toLowerCase();
+  const cats = new Set();
+  if (/travel|client|booking|quote|outreach|follow/.test(t)) cats.add('client');
+  if (/team|support|member|recruit/.test(t)) cats.add('team');
+  if (/content|post|reel|video|batch|creat/.test(t)) cats.add('content');
+  if (/prospect|linkedin|instagram|tiktok|dm|message/.test(t)) cats.add('prospect');
+  return cats;
+}
+
+function getReviewContext() {
+  const wkRev = getWkRev();                         // current week
+  const moRev = getMoRev();                          // current month
+
+  // Avoidance pattern: look at last 3 weeks
+  const avoidedTexts = [];
+  for (let i = 0; i >= -2; i--) {
+    const r = getWkRev(_revWkDate(i));
+    if (r.avoided) avoidedTexts.push(r.avoided);
+  }
+  const avoidedCombined = avoidedTexts.join(' ');
+  const avoidedCats = _parseCats(avoidedCombined);
+
+  // Attention categories from current weekly review
+  const attentionCats = _parseCats(wkRev.attention);
+
+  return {
+    weeklyPriorities: [wkRev.p1, wkRev.p2, wkRev.p3].filter(Boolean),
+    attention: wkRev.attention || '',
+    avoided: wkRev.avoided || '',
+    avoidedCats,
+    attentionCats,
+    monthlyGoal: moRev.mainGoal || '',
+    monthlyFocus: moRev.focus || '',
+    socialPatterns: moRev.socialPatterns || '',
+    socialWorking: moRev.socialWorking || '',
+    hasAvoidPattern: avoidedTexts.filter(Boolean).length >= 2,
+  };
+}
+
+// ── SAVE WEEKLY REVIEW ────────────────────────────────────────
+function saveWeeklyReview() {
+  const d = _revWkDate(revWeekOff);
+  const data = {
+    win:       document.getElementById('wr-win')?.value || '',
+    worked:    document.getElementById('wr-worked')?.value || '',
+    proud:     document.getElementById('wr-proud')?.value || '',
+    events:    document.getElementById('wr-events')?.value || '',
+    attention: document.getElementById('wr-attention')?.value || '',
+    avoided:   document.getElementById('wr-avoided')?.value || '',
+    p1:        document.getElementById('wr-p1')?.value || '',
+    p2:        document.getElementById('wr-p2')?.value || '',
+    p3:        document.getElementById('wr-p3')?.value || '',
+    savedAt:   new Date().toISOString(),
+  };
+  _saveWkRev(data, d);
+  const msg = document.getElementById('wr-saved-msg');
+  if (msg) { msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 3000); }
+}
+
+// ── SAVE MONTHLY REVIEW ───────────────────────────────────────
+function saveMonthlyReview() {
+  const d = _revMoDate(revMonthOff);
+  // Read all number/text inputs
+  const ids = ['mo-enquiries','mo-quotes','mo-bookings','mo-revenue','mo-newpartners',
+    'mo-activebuilders','mo-teambookings','mo-followers','mo-views','mo-topcontent',
+    'mo-books','mo-training','mo-win-biz','mo-win-team','mo-win-content','mo-win-personal',
+    'mo-ig-followers','mo-ig-views','mo-ig-reach','mo-tt-followers','mo-tt-views',
+    'mo-li-followers','mo-li-impressions','mo-social-working','mo-social-patterns',
+    'mo-next-events','mo-main-goal','mo-sg1','mo-sg2','mo-sg3','mo-opp','mo-focus','mo-risk'];
+  const data = { savedAt: new Date().toISOString() };
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) data[id.replace('mo-','').replace(/-([a-z])/g, (_,c) => c.toUpperCase())] = el.value || '';
   });
-});
+  // CEO Audit sliders
+  document.querySelectorAll('#mr-audit-rows .rev-audit-slider').forEach(sl => {
+    if (sl.dataset.key) data[sl.dataset.key] = sl.value;
+  });
+  // Auto habit score
+  data.habitScore = monthPct(revMonthOff);
+  _saveMoRev(data, d);
+  const msg = document.getElementById('mr-saved-msg');
+  if (msg) { msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 3000); }
+}
+
+// ── RENDER WEEKLY REVIEW ──────────────────────────────────────
+function renderWeekly() {
+  // Title
+  const titleEl = document.getElementById('wr-week-title');
+  if (titleEl) titleEl.textContent = _wkLabel(revWeekOff);
+
+  const d = _revWkDate(revWeekOff);
+  const rev = getWkRev(d);
+
+  // Load saved values into fields
+  const fields = {
+    'wr-win': rev.win, 'wr-worked': rev.worked, 'wr-proud': rev.proud,
+    'wr-events': rev.events, 'wr-attention': rev.attention,
+    'wr-avoided': rev.avoided, 'wr-p1': rev.p1, 'wr-p2': rev.p2, 'wr-p3': rev.p3,
+  };
+  Object.entries(fields).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val || '';
+  });
+
+  // Section 1: Habit Auto stats
+  const statsEl = document.getElementById('wr-habit-stats');
+  if (statsEl) {
+    const weekDates = getWeekDates(revWeekOff);
+    const todayStr = dk(TODAY);
+    const pastDates = weekDates.filter(d2 => d2 <= todayStr);
+    const wPct = weekPct(revWeekOff);
+
+    // Most / least consistent
+    let mostH = null, leastH = null, mostPct = -1, leastPct = 101;
+    const lowHabits = [];
+    HABITS.forEach(h => {
+      const p = hPct(h.id, pastDates);
+      if (p > mostPct) { mostPct = p; mostH = h; }
+      if (p < leastPct) { leastPct = p; leastH = h; }
+      if (p < 50) lowHabits.push({ h, p });
+    });
+
+    let html = `
+      <div class="rev-stat"><span class="rev-stat-lbl">Weekly consistency</span><span class="rev-stat-val">${wPct}%</span></div>
+      <div class="rev-stat"><span class="rev-stat-lbl">Most consistent habit</span><span class="rev-stat-val">${mostH ? mostH.icon + ' ' + mostH.label : '—'}</span></div>
+      <div class="rev-stat"><span class="rev-stat-lbl">Least consistent habit</span><span class="rev-stat-val">${leastH ? leastH.icon + ' ' + leastH.label : '—'}</span></div>
+      <div class="rev-stat"><span class="rev-stat-lbl">Habits under 50%</span><span class="rev-stat-val">${lowHabits.length === 0 ? '🎉 None!' : ''}</span></div>`;
+    if (lowHabits.length > 0) {
+      html += `<div style="margin-top:6px;display:flex;flex-wrap:wrap">`;
+      lowHabits.forEach(({ h }) => { html += `<span class="rev-habit-pill low">${h.icon} ${h.label}</span>`; });
+      html += `</div>`;
+    }
+    statsEl.innerHTML = html;
+  }
+
+  // Avoidance pattern detection (last 3 weeks)
+  const patternEl = document.getElementById('wr-avoid-pattern');
+  if (patternEl) {
+    const avoidedTexts = [];
+    for (let i = 0; i >= -2; i--) {
+      const r = getWkRev(_revWkDate(i));
+      if (r.avoided && r.avoided.trim()) avoidedTexts.push(r.avoided.trim());
+    }
+    patternEl.style.display = avoidedTexts.length >= 2 ? 'block' : 'none';
+  }
+}
+
+// ── RENDER MONTHLY REVIEW ─────────────────────────────────────
+function renderMonthly() {
+  // Title
+  const titleEl = document.getElementById('mr-month-title');
+  if (titleEl) titleEl.textContent = _moLabel(revMonthOff);
+
+  const d = _revMoDate(revMonthOff);
+  const rev = getMoRev(d);
+
+  // Map camelCase keys back to element IDs
+  const keyToId = {
+    enquiries:'mo-enquiries', quotes:'mo-quotes', bookings:'mo-bookings', revenue:'mo-revenue',
+    newpartners:'mo-newpartners', activebuilders:'mo-activebuilders', teambookings:'mo-teambookings',
+    followers:'mo-followers', views:'mo-views', topcontent:'mo-topcontent',
+    books:'mo-books', training:'mo-training',
+    winBiz:'mo-win-biz', winTeam:'mo-win-team', winContent:'mo-win-content', winPersonal:'mo-win-personal',
+    igFollowers:'mo-ig-followers', igViews:'mo-ig-views', igReach:'mo-ig-reach',
+    ttFollowers:'mo-tt-followers', ttViews:'mo-tt-views',
+    liFollowers:'mo-li-followers', liImpressions:'mo-li-impressions',
+    socialWorking:'mo-social-working', socialPatterns:'mo-social-patterns',
+    nextEvents:'mo-next-events', mainGoal:'mo-main-goal',
+    sg1:'mo-sg1', sg2:'mo-sg2', sg3:'mo-sg3', opp:'mo-opp', focus:'mo-focus', risk:'mo-risk',
+  };
+  Object.entries(keyToId).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = rev[key] || '';
+  });
+
+  // CEO Audit sliders — restore saved values
+  document.querySelectorAll('#mr-audit-rows .rev-audit-slider').forEach(sl => {
+    const savedVal = rev[sl.dataset.key];
+    if (savedVal !== undefined) {
+      sl.value = savedVal;
+      if (sl.nextElementSibling) sl.nextElementSibling.textContent = savedVal;
+    }
+  });
+
+  // Auto habit score
+  const habitAutoEl = document.getElementById('mo-habit-auto');
+  if (habitAutoEl) {
+    const pct = monthPct(revMonthOff);
+    habitAutoEl.textContent = pct + '%';
+    habitAutoEl.style.color = pct >= 70 ? 'var(--gn-deep)' : pct >= 40 ? '#C9945B' : 'var(--pk-deep)';
+  }
+
+  // Section 2: Month-on-Month comparison (AUTO)
+  const compareEl = document.getElementById('mr-compare-body');
+  if (compareEl) {
+    const prevRev = getMoRev(_revMoDate(revMonthOff - 1));
+    const hasPrev = prevRev && prevRev.savedAt;
+    if (!hasPrev) {
+      compareEl.innerHTML = `<p style="font-size:13px;color:var(--text2);padding:8px 0">Complete last month's review to see trends here.</p>`;
+    } else {
+      const metrics = [
+        { label:'Bookings',     cur: parseFloat(rev.bookings)||0,     prev: parseFloat(prevRev.bookings)||0 },
+        { label:'Revenue (£)', cur: parseFloat(rev.revenue)||0,      prev: parseFloat(prevRev.revenue)||0 },
+        { label:'Followers',   cur: parseFloat(rev.followers)||0,    prev: parseFloat(prevRev.followers)||0 },
+        { label:'Views',       cur: parseFloat(rev.views)||0,        prev: parseFloat(prevRev.views)||0 },
+        { label:'Team Bookings',cur: parseFloat(rev.teambookings)||0, prev: parseFloat(prevRev.teambookings)||0 },
+        { label:'Habit Score', cur: monthPct(revMonthOff),           prev: parseFloat(prevRev.habitScore)||0 },
+      ];
+      const maxVal = Math.max(...metrics.flatMap(m => [m.cur, m.prev]), 1);
+      let html = '';
+      metrics.forEach(m => {
+        const curW = Math.round((m.cur / maxVal) * 100);
+        const trend = m.cur > m.prev ? 'up' : m.cur < m.prev ? 'down' : 'flat';
+        const trendIcon = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→';
+        html += `<div class="rev-compare-row">
+          <span class="rev-compare-lbl">${esc(m.label)}</span>
+          <div class="rev-compare-bar-wrap"><div class="rev-compare-bar" style="width:${curW}%"></div></div>
+          <span class="rev-trend ${trend}">${trendIcon} ${m.cur}</span>
+        </div>`;
+      });
+      compareEl.innerHTML = html;
+    }
+  }
+}
 
 // ─────────────────────────────────────────────────────────────
 // SYNC — Export / Import between devices
@@ -3183,7 +4582,7 @@ function _getSyncKeys() {
   const keys = ['myceodash_v3', 'myceo_recentDone', 'cbWeekPlan'];
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i);
-    if (k && (k.startsWith('pool_') || k.startsWith('cb_') || k.startsWith('hint_'))) {
+    if (k && (k.startsWith('pool_') || k.startsWith('cb_') || k.startsWith('hint_') || k.startsWith('wkrev_') || k.startsWith('morev_') || k.startsWith('ceo4') || k.startsWith('fa_') || k.startsWith('sweep_'))) {
       if (!keys.includes(k)) keys.push(k);
     }
   }
