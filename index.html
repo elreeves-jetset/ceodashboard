@@ -1287,34 +1287,37 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
   <div class="rev-section">
     <div class="rev-section-hdr">📈 Monthly Scorecard</div>
 
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">✈️ Travel</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">💰 Sales</div>
     <div class="rev-num-grid">
       <div class="rev-num-item"><label class="rev-label">Enquiries</label><input class="rev-num-input" id="mo-enquiries" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item"><label class="rev-label">Quotes Sent</label><input class="rev-num-input" id="mo-quotes" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item"><label class="rev-label">Bookings</label><input class="rev-num-input" id="mo-bookings" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Booked</label><input class="rev-num-input" id="mo-bookings" type="number" min="0" placeholder="0"></div>
       <div class="rev-num-item"><label class="rev-label">Revenue (£)</label><input class="rev-num-input" id="mo-revenue" type="number" min="0" placeholder="0"></div>
     </div>
 
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">👥 Team</div>
     <div class="rev-num-grid">
-      <div class="rev-num-item"><label class="rev-label">New Partners</label><input class="rev-num-input" id="mo-newpartners" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item"><label class="rev-label">Active Builders</label><input class="rev-num-input" id="mo-activebuilders" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item"><label class="rev-label">Team Bookings</label><input class="rev-num-input" id="mo-teambookings" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Personal Sign-ups</label><input class="rev-num-input" id="mo-personal-signups" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Team Sign-ups</label><input class="rev-num-input" id="mo-team-signups" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Total Personal</label><input class="rev-num-input" id="mo-total-personal" type="number" min="0" placeholder="0"></div>
+      <div class="rev-num-item"><label class="rev-label">Total Team</label><input class="rev-num-input" id="mo-total-team" type="number" min="0" placeholder="0"></div>
     </div>
 
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">📱 Content</div>
-    <div class="rev-num-grid">
-      <div class="rev-num-item"><label class="rev-label">Followers (total)</label><input class="rev-num-input" id="mo-followers" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item"><label class="rev-label">Total Views</label><input class="rev-num-input" id="mo-views" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item" style="grid-column:1/-1"><label class="rev-label">Top Content Piece</label><input class="form-input" id="mo-topcontent" type="text" placeholder="e.g. 'Why I left my 9-5 for luxury travel'…"></div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">📱 Socials</div>
+    <div class="rev-social-grid">
+      <div class="rev-social-platform">
+        <div class="rev-social-platform-name">Instagram</div>
+        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-ig-followers" type="number" min="0" placeholder="0" style="width:100%">
+        <label class="rev-label">Views</label><input class="rev-num-input" id="mo-ig-views" type="number" min="0" placeholder="0" style="width:100%">
+      </div>
+      <div class="rev-social-platform">
+        <div class="rev-social-platform-name">TikTok</div>
+        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-tt-followers" type="number" min="0" placeholder="0" style="width:100%">
+        <label class="rev-label">Views</label><input class="rev-num-input" id="mo-tt-views" type="number" min="0" placeholder="0" style="width:100%">
+      </div>
     </div>
 
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">🌸 Personal</div>
-    <div class="rev-num-grid">
-      <div class="rev-num-item"><label class="rev-label">Habit Score (AUTO)</label><div id="mo-habit-auto" style="font-size:20px;font-weight:800;color:var(--gn-deep);padding:6px 0">—</div></div>
-      <div class="rev-num-item"><label class="rev-label">Books Read</label><input class="rev-num-input" id="mo-books" type="number" min="0" placeholder="0"></div>
-      <div class="rev-num-item"><label class="rev-label">Training Sessions</label><input class="rev-num-input" id="mo-training" type="number" min="0" placeholder="0"></div>
-    </div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">🌸 Habit Score</div>
+    <div class="rev-num-item"><label class="rev-label">Habit Score (AUTO)</label><div id="mo-habit-auto" style="font-size:20px;font-weight:800;color:var(--gn-deep);padding:6px 0">—</div></div>
   </div>
 
   <!-- Section 2: Month-on-Month Comparison (AUTO) -->
@@ -1353,14 +1356,7 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <div class="rev-social-grid">
       <div class="rev-social-platform">
         <div class="rev-social-platform-name">Instagram</div>
-        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-ig-followers" type="number" min="0" placeholder="0" style="width:100%">
-        <label class="rev-label">Views</label><input class="rev-num-input" id="mo-ig-views" type="number" min="0" placeholder="0" style="width:100%">
         <label class="rev-label">Reach</label><input class="rev-num-input" id="mo-ig-reach" type="number" min="0" placeholder="0" style="width:100%">
-      </div>
-      <div class="rev-social-platform">
-        <div class="rev-social-platform-name">TikTok</div>
-        <label class="rev-label">Followers</label><input class="rev-num-input" id="mo-tt-followers" type="number" min="0" placeholder="0" style="width:100%">
-        <label class="rev-label">Views</label><input class="rev-num-input" id="mo-tt-views" type="number" min="0" placeholder="0" style="width:100%">
       </div>
       <div class="rev-social-platform">
         <div class="rev-social-platform-name">LinkedIn</div>
@@ -1368,6 +1364,8 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
         <label class="rev-label">Impressions</label><input class="rev-num-input" id="mo-li-impressions" type="number" min="0" placeholder="0" style="width:100%">
       </div>
     </div>
+    <label class="rev-label">Top Content Piece</label>
+    <input class="form-input" id="mo-topcontent" type="text" placeholder="e.g. 'Why I left my 9-5 for luxury travel'…" style="margin-bottom:12px;width:100%">
     <label class="rev-label">What was working?</label>
     <textarea class="rev-input" id="mo-social-working" placeholder="e.g. Behind-the-scenes reels got 3× more reach…"></textarea>
     <label class="rev-label">Patterns identified</label>
@@ -4410,9 +4408,9 @@ function saveWeeklyReview() {
 function saveMonthlyReview() {
   const d = _revMoDate(revMonthOff);
   // Read all number/text inputs
-  const ids = ['mo-enquiries','mo-quotes','mo-bookings','mo-revenue','mo-newpartners',
-    'mo-activebuilders','mo-teambookings','mo-followers','mo-views','mo-topcontent',
-    'mo-books','mo-training','mo-win-biz','mo-win-team','mo-win-content','mo-win-personal',
+  const ids = ['mo-enquiries','mo-bookings','mo-revenue',
+    'mo-personal-signups','mo-team-signups','mo-total-personal','mo-total-team',
+    'mo-topcontent','mo-win-biz','mo-win-team','mo-win-content','mo-win-personal',
     'mo-ig-followers','mo-ig-views','mo-ig-reach','mo-tt-followers','mo-tt-views',
     'mo-li-followers','mo-li-impressions','mo-social-working','mo-social-patterns',
     'mo-next-events','mo-main-goal','mo-sg1','mo-sg2','mo-sg3','mo-opp','mo-focus','mo-risk'];
@@ -4506,10 +4504,10 @@ function renderMonthly() {
 
   // Map camelCase keys back to element IDs
   const keyToId = {
-    enquiries:'mo-enquiries', quotes:'mo-quotes', bookings:'mo-bookings', revenue:'mo-revenue',
-    newpartners:'mo-newpartners', activebuilders:'mo-activebuilders', teambookings:'mo-teambookings',
-    followers:'mo-followers', views:'mo-views', topcontent:'mo-topcontent',
-    books:'mo-books', training:'mo-training',
+    enquiries:'mo-enquiries', bookings:'mo-bookings', revenue:'mo-revenue',
+    personalSignups:'mo-personal-signups', teamSignups:'mo-team-signups',
+    totalPersonal:'mo-total-personal', totalTeam:'mo-total-team',
+    topcontent:'mo-topcontent',
     winBiz:'mo-win-biz', winTeam:'mo-win-team', winContent:'mo-win-content', winPersonal:'mo-win-personal',
     igFollowers:'mo-ig-followers', igViews:'mo-ig-views', igReach:'mo-ig-reach',
     ttFollowers:'mo-tt-followers', ttViews:'mo-tt-views',
@@ -4549,11 +4547,13 @@ function renderMonthly() {
       compareEl.innerHTML = `<p style="font-size:13px;color:var(--text2);padding:8px 0">Complete last month's review to see trends here.</p>`;
     } else {
       const metrics = [
-        { label:'Bookings',     cur: parseFloat(rev.bookings)||0,     prev: parseFloat(prevRev.bookings)||0 },
+        { label:'Booked',       cur: parseFloat(rev.bookings)||0,     prev: parseFloat(prevRev.bookings)||0 },
         { label:'Revenue (£)', cur: parseFloat(rev.revenue)||0,      prev: parseFloat(prevRev.revenue)||0 },
-        { label:'Followers',   cur: parseFloat(rev.followers)||0,    prev: parseFloat(prevRev.followers)||0 },
-        { label:'Views',       cur: parseFloat(rev.views)||0,        prev: parseFloat(prevRev.views)||0 },
-        { label:'Team Bookings',cur: parseFloat(rev.teambookings)||0, prev: parseFloat(prevRev.teambookings)||0 },
+        { label:'Followers',   cur: (parseFloat(rev.igFollowers)||0) + (parseFloat(rev.ttFollowers)||0),
+                                prev: (parseFloat(prevRev.igFollowers)||0) + (parseFloat(prevRev.ttFollowers)||0) },
+        { label:'Views',       cur: (parseFloat(rev.igViews)||0) + (parseFloat(rev.ttViews)||0),
+                                prev: (parseFloat(prevRev.igViews)||0) + (parseFloat(prevRev.ttViews)||0) },
+        { label:'Team Sign-ups',cur: parseFloat(rev.teamSignups)||0,  prev: parseFloat(prevRev.teamSignups)||0 },
         { label:'Habit Score', cur: monthPct(revMonthOff),           prev: parseFloat(prevRev.habitScore)||0 },
       ];
       const maxVal = Math.max(...metrics.flatMap(m => [m.cur, m.prev]), 1);
