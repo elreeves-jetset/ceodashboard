@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jet Set Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6F2;
+    --white:#FFFFFF;
+    --blush:#F3D9D9;
+    --rose:#C98A93;
+    --rose-dark:#A9636F;
+    --gold:#C9A76B;
+    --charcoal:#33302E;
+    --grey:#8A8380;
+    --grey-light:#B8B0AB;
+    --border:#ECE2DC;
+    --green:#5F8F73;
+    --green-bg:#E7F2EA;
+    --amber:#B8862E;
+    --amber-bg:#FBF0DC;
+    --red:#B75C4F;
+    --red-bg:#FBE7E3;
+    --blue:#5E82A0;
+    --blue-bg:#E7EEF4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--charcoal);
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{max-width:1300px;margin:0 auto;padding:32px 24px 80px;}
+  .app-header{text-align:center;margin-bottom:28px;}
+  .app-header h1{
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem;
+    font-weight:600;
+    margin:0 0 4px;
+    color:var(--rose-dark);
+    letter-spacing:0.5px;
+  }
+  .app-header p{margin:0;color:var(--grey);font-size:0.95rem;letter-spacing:0.5px;}
+
+  .tabs{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+  .tab-btn{
+    background:var(--white);
+    border:1px solid var(--border);
+    color:var(--grey);
+    padding:10px 20px;
+    border-radius:999px;
+    font-family:'Inter',sans-serif;
+    font-size:0.88rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .tab-btn:hover{border-color:var(--rose);color:var(--rose-dark);}
+  .tab-btn.active{background:var(--rose);border-color:var(--rose);color:#fff;}
+
+  .tab-section{display:none;}
+  .tab-section.active{display:block;animation:fade 0.2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px 18px 20px;
+    box-shadow:0 4px 20px rgba(60,40,40,0.04);
+  }
+
+  .toolbar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .toolbar .search-input{
+    flex:1 1 220px;
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    font-family:'Inter',sans-serif;
+    font-size:0.9rem;
+    background:var(--cream);
+  }
+  .toolbar select{
+    padding:9px 12px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    font-family:'Inter',sans-serif;
+    font-size:0.85rem;
+    background:var(--cream);
+    color:var(--charcoal);
+  }
+  .btn-add{
+    margin-left:auto;
+    background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:0.87rem;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(169,99,111,0.3);
+    transition:transform 0.1s ease;
+    white-space:nowrap;
+  }
+  .btn-add:hover{transform:translateY(-1px);}
+
+  .section-count{font-size:0.78rem;color:var(--grey-light);margin-bottom:8px;}
+
+  /* ---- spreadsheet grid ---- */
+  .grid-wrap{
+    overflow:auto;
+    max-height:68vh;
+    border:1px solid var(--border);
+    border-radius:12px;
+  }
+  table{border-collapse:separate;border-spacing:0;width:100%;font-size:0.84rem;min-width:600px;}
+  thead th{
+    position:sticky;
+    top:0;
+    z-index:2;
+    background:var(--blush);
+    color:var(--rose-dark);
+    text-transform:uppercase;
+    font-size:0.66rem;
+    font-weight:700;
+    letter-spacing:0.5px;
+    padding:9px 10px;
+    border-bottom:1px solid var(--border);
+    border-right:1px solid rgba(169,99,111,0.15);
+    text-align:left;
+    white-space:nowrap;
+  }
+  thead th:last-child{border-right:none;}
+  thead th.col-rownum{
+    position:sticky;
+    left:0;
+    z-index:3;
+    width:32px;
+    text-align:center;
+  }
+  tbody td{
+    border-bottom:1px solid var(--border);
+    border-right:1px solid var(--border);
+    padding:0;
+    height:38px;
+    background:#fff;
+  }
+  tbody tr:hover td{background:#FDF9F7;}
+  tbody tr:last-child td{border-bottom:none;}
+  .col-rownum{
+    width:32px;
+    text-align:center;
+    color:var(--grey-light);
+    font-size:0.72rem;
+    background:#FAF6F3;
+    position:sticky;
+    left:0;
+    z-index:1;
+    user-select:none;
+  }
+  tbody tr:hover .col-rownum{background:#F5EEEA;}
+  .col-action{width:34px;text-align:center;border-right:none;}
+
+  .cell-input{
+    width:100%;
+    height:38px;
+    border:none;
+    background:transparent;
+    padding:0 10px;
+    font-family:'Inter',sans-serif;
+    font-size:0.84rem;
+    color:var(--charcoal);
+    outline:none;
+    box-sizing:border-box;
+    display:block;
+  }
+  .cell-input::placeholder{color:var(--grey-light);}
+  .cell-input:focus{
+    outline:2px solid var(--rose);
+    outline-offset:-2px;
+    background:#fff;
+    position:relative;
+    z-index:1;
+  }
+  select.cell-input{appearance:none;cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238A8380'/></svg>");background-repeat:no-repeat;background-position:right 8px center;padding-right:22px;}
+  input[type=date].cell-input,input[type=time].cell-input{cursor:pointer;}
+
+  .row-delete{
+    opacity:0.22;
+    border:none;
+    background:none;
+    cursor:pointer;
+    color:var(--red);
+    font-size:0.85rem;
+    padding:4px 6px;
+    border-radius:6px;
+    transition:opacity 0.1s ease, background 0.1s ease;
+  }
+  tr:hover .row-delete{opacity:0.75;}
+  .row-delete:hover{opacity:1 !important;background:var(--red-bg);}
+
+  .add-row-line td{
+    border-right:none;
+    border-bottom:none;
+    background:#FDFBFA;
+    color:var(--grey-light);
+    padding:10px 12px;
+    cursor:pointer;
+    font-size:0.82rem;
+    font-weight:500;
+    transition:background 0.1s ease,color 0.1s ease;
+  }
+  .add-row-line:hover td{background:var(--blush);color:var(--rose-dark);}
+
+  .no-match-row td{
+    border-right:none;
+    border-bottom:none;
+    text-align:center;
+    color:var(--grey-light);
+    padding:24px;
+    font-size:0.86rem;
+  }
+
+  @media(max-width:640px){
+    .app-header h1{font-size:1.7rem;}
+    .card{padding:12px;}
+    .btn-add{margin-left:0;width:100%;}
+    .toolbar{flex-direction:column;align-items:stretch;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="app-header">
+    <h1>Jet Set Tracker</h1>
+    <p>Team &middot; Prospecting &middot; Trainings &middot; Events</p>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="team">Team Tracker</button>
+    <button class="tab-btn" data-tab="prospects">Prospecting / Hotlist</button>
+    <button class="tab-btn" data-tab="trainings">Trainings This Week</button>
+    <button class="tab-btn" data-tab="events">Events</button>
+  </nav>
+
+  <main>
+    <section id="section-team" class="tab-section active"></section>
+    <section id="section-prospects" class="tab-section"></section>
+    <section id="section-trainings" class="tab-section"></section>
+    <section id="section-events" class="tab-section"></section>
+  </main>
+</div>
+
+<script>
+(function(){
+
+  const SECTIONS = {
+    team: {
+      title: 'Team Tracker',
+      addLabel: '+ Add Team Member',
+      storageKey: 'jetset_team_v1',
+      searchKeys: ['name','location','rank','focus','assignment'],
+      fields: [
+        {key:'name', label:'Name', type:'text'},
+        {key:'location', label:'Location', type:'text'},
+        {key:'launchCall', label:'Launch Call?', type:'select', options:['Yes','No']},
+        {key:'rank', label:'Current Rank', type:'text'},
+        {key:'focus', label:'Current Focus', type:'text'},
+        {key:'social', label:'Social Media', type:'text'},
+        {key:'bookings', label:'Bookings This Month', type:'text'},
+        {key:'assignment', label:'Current Assignment', type:'text'},
+        {key:'notes', label:'Notes', type:'text'}
+      ],
+      filters: [
+        {key:'location', label:'Location', dynamic:true},
+        {key:'launchCall', label:'Launch Call', options:['Yes','No']}
+      ]
+    },
+    prospects: {
+      title: 'Prospecting / Hotlist',
+      addLabel: '+ Add Prospect',
+      storageKey: 'jetset_prospects_v1',
+      searchKeys: ['name','location','objection'],
+      fields: [
+        {key:'name', label:'Name', type:'text'},
+        {key:'location', label:'Location', type:'text'},
+        {key:'source', label:'Source', type:'select', options:['Instagram','LinkedIn','WhatsApp','TikTok','Referral','Event','Other']},
+        {key:'exposure', label:'Exposure Given', type:'select', options:['None yet','Video','Webinar','3-Way Call','Info Pack','Other']},
+        {key:'lastMessage', label:'Last Message', type:'date'},
+        {key:'nextFollowUp', label:'Next Follow-Up', type:'date'},
+        {key:'objection', label:'Objection / Concern', type:'text'},
+        {key:'notes', label:'Notes', type:'text'}
+      ],
+      filters: [
+        {key:'location', label:'Location', dynamic:true},
+        {key:'source', label:'Source', options:['Instagram','LinkedIn','WhatsApp','TikTok','Referral','Event','Other']},
+        {key:'nextFollowUp', label:'Follow-Up', options:['Overdue','Today','This Week','Upcoming','Not Set'], isUrgency:true}
+      ]
+    },
+    trainings: {
+      title: 'Team Trainings This Week',
+      addLabel: '+ Add Training',
+      storageKey: 'jetset_trainings_v1',
+      searchKeys: ['title','host','topic','audience'],
+      fields: [
+        {key:'title', label:'Training Title', type:'text'},
+        {key:'date', label:'Date', type:'date'},
+        {key:'time', label:'Time', type:'time'},
+        {key:'host', label:'Host', type:'text'},
+        {key:'topic', label:'Topic', type:'text'},
+        {key:'audience', label:'For Who?', type:'text'},
+        {key:'notes', label:'Notes', type:'text'}
+      ],
+      filters: []
+    },
+    events: {
+      title: 'Events for Team & Prospects',
+      addLabel: '+ Add Event',
+      storageKey: 'jetset_events_v1',
+      searchKeys: ['name','location','invites'],
+      fields: [
+        {key:'name', label:'Event', type:'text'},
+        {key:'date', label:'Date', type:'date'},
+        {key:'location', label:'Location', type:'text'},
+        {key:'invites', label:'Invites', type:'text'}
+      ],
+      filters: []
+    }
+  };
+
+  const state = {};
+  Object.keys(SECTIONS).forEach(k=>{ state[k] = { search:'', filters:{} }; });
+
+  function loadData(key){
+    try{ return JSON.parse(localStorage.getItem(key)) || []; }
+    catch(e){ return []; }
+  }
+  function saveData(key, arr){
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+
+  function todayStr(){
+    return new Date().toISOString().slice(0,10);
+  }
+  function daysFromToday(dateStr){
+    if(!dateStr) return null;
+    const today = new Date(todayStr());
+    const d = new Date(dateStr);
+    if(isNaN(d)) return null;
+    return Math.round((d - today) / (1000*60*60*24));
+  }
+
+  function urgencyLabel(dateStr){
+    if(!dateStr) return 'Not Set';
+    const d = daysFromToday(dateStr);
+    if(d === null) return 'Not Set';
+    if(d < 0) return 'Overdue';
+    if(d === 0) return 'Today';
+    if(d <= 7) return 'This Week';
+    return 'Upcoming';
+  }
+
+  function escapeHtml(str){
+    if(str === null || str === undefined) return '';
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function escapeAttr(str){
+    return escapeHtml(str).replace(/`/g, '&#96;');
+  }
+
+  function getDistinctValues(data, key){
+    const set = new Set();
+    data.forEach(r => { if(r[key]) set.add(r[key]); });
+    return Array.from(set).sort();
+  }
+
+  /* ---- conditional formatting (inline "badge" colors applied straight to the cell) ---- */
+  function selectCellStyle(fieldKey, value){
+    if(fieldKey === 'launchCall'){
+      if(value === 'Yes') return 'background:var(--green-bg);color:var(--green);font-weight:600;';
+      if(value === 'No') return 'background:#F1ECE8;color:var(--grey);font-weight:600;';
+      return '';
+    }
+    if(fieldKey === 'source' && value){
+      const map = {
+        Instagram:['var(--blush)','var(--rose-dark)'],
+        LinkedIn:['var(--blue-bg)','var(--blue)'],
+        WhatsApp:['var(--green-bg)','var(--green)'],
+        TikTok:['var(--amber-bg)','var(--amber)'],
+        Referral:['#F1ECE8','var(--grey)'],
+        Event:['var(--blue-bg)','var(--blue)'],
+        Other:['#F1ECE8','var(--grey)']
+      };
+      const pair = map[value] || ['#F1ECE8','var(--grey)'];
+      return `background:${pair[0]};color:${pair[1]};font-weight:600;`;
+    }
+    return '';
+  }
+
+  function dateCellStyle(sectionKey, fieldKey, value){
+    if(!value) return '';
+    const d = daysFromToday(value);
+    if(d === null) return '';
+    if(fieldKey === 'nextFollowUp'){
+      if(d < 0) return 'background:var(--red-bg);color:var(--red);font-weight:600;';
+      if(d === 0) return 'background:var(--amber-bg);color:var(--amber);font-weight:600;';
+      if(d <= 7) return 'background:var(--blue-bg);color:var(--blue);font-weight:600;';
+      return '';
+    }
+    if(fieldKey === 'date' && (sectionKey === 'trainings' || sectionKey === 'events')){
+      if(d < 0) return 'color:var(--grey-light);';
+      if(d === 0) return 'background:var(--amber-bg);color:var(--amber);font-weight:600;';
+      if(d <= 7) return 'background:var(--blue-bg);color:var(--blue);font-weight:600;';
+      return '';
+    }
+    return '';
+  }
+
+  function applyFilters(sectionKey, data){
+    const cfg = SECTIONS[sectionKey];
+    const st = state[sectionKey];
+    let result = data;
+
+    if(st.search){
+      const q = st.search.toLowerCase();
+      result = result.filter(r => cfg.searchKeys.some(k => (r[k]||'').toLowerCase().includes(q)));
+    }
+
+    Object.keys(st.filters).forEach(fKey => {
+      const fVal = st.filters[fKey];
+      if(!fVal) return;
+      const filterCfg = cfg.filters.find(f => f.key === fKey);
+      if(filterCfg && filterCfg.isUrgency){
+        result = result.filter(r => urgencyLabel(r[fKey]) === fVal);
+      } else {
+        result = result.filter(r => r[fKey] === fVal);
+      }
+    });
+
+    return result;
+  }
+
+  function renderCellInput(sectionKey, field, record, rowIndex){
+    const val = record[field.key] || '';
+    const common = `data-id="${record.id}" data-field="${field.key}" data-row-index="${rowIndex}" class="cell-input"`;
+
+    if(field.type === 'select'){
+      const style = selectCellStyle(field.key, val);
+      return `<select ${common} style="${style}">
+        <option value=""></option>
+        ${field.options.map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}
+      </select>`;
+    }
+    if(field.type === 'date'){
+      const style = dateCellStyle(sectionKey, field.key, val);
+      return `<input type="date" ${common} value="${val}" style="${style}">`;
+    }
+    if(field.type === 'time'){
+      return `<input type="time" ${common} value="${val}">`;
+    }
+    return `<input type="text" ${common} value="${escapeAttr(val)}" placeholder="&ndash;">`;
+  }
+
+  function renderSection(sectionKey){
+    const cfg = SECTIONS[sectionKey];
+    const container = document.getElementById('section-' + sectionKey);
+    const data = loadData(cfg.storageKey);
+    const st = state[sectionKey];
+
+    let filterHtml = '';
+    cfg.filters.forEach(f => {
+      const opts = f.dynamic ? getDistinctValues(data, f.key) : f.options;
+      filterHtml += `<select data-filter-key="${f.key}">
+        <option value="">${f.label}: All</option>
+        ${opts.map(o => `<option value="${escapeAttr(o)}" ${st.filters[f.key]===o?'selected':''}>${escapeHtml(o)}</option>`).join('')}
+      </select>`;
+    });
+
+    const filtered = applyFilters(sectionKey, data);
+
+    let rowsHtml = '';
+    if(filtered.length === 0 && data.length > 0){
+      rowsHtml = `<tr class="no-match-row"><td colspan="${cfg.fields.length + 2}">No matches. Try adjusting your search or filters.</td></tr>`;
+    } else {
+      rowsHtml = filtered.map((record, i) => `
+        <tr>
+          <td class="col-rownum">${i + 1}</td>
+          ${cfg.fields.map(f => `<td>${renderCellInput(sectionKey, f, record, i)}</td>`).join('')}
+          <td class="col-action"><button class="row-delete" data-id="${record.id}" title="Delete row">&#10005;</button></td>
+        </tr>
+      `).join('');
+    }
+
+    const addRowLine = `<tr class="add-row-line"><td colspan="${cfg.fields.length + 2}">${cfg.addLabel}</td></tr>`;
+
+    container.innerHTML = `
+      <div class="card">
+        <div class="toolbar">
+          <input type="text" class="search-input" placeholder="Search ${cfg.title.toLowerCase()}..." value="${escapeAttr(st.search)}" data-search="1">
+          ${filterHtml}
+          <button class="btn-add" data-add="1">${cfg.addLabel}</button>
+        </div>
+        <div class="section-count">${filtered.length} of ${data.length} shown</div>
+        <div class="grid-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-rownum">#</th>
+                ${cfg.fields.map(f => `<th>${f.label}</th>`).join('')}
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+              ${addRowLine}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('[data-search]').addEventListener('input', e => {
+      state[sectionKey].search = e.target.value;
+      renderSection(sectionKey);
+    });
+    container.querySelectorAll('[data-filter-key]').forEach(sel => {
+      sel.addEventListener('change', e => {
+        state[sectionKey].filters[e.target.dataset.filterKey] = e.target.value;
+        renderSection(sectionKey);
+      });
+    });
+    container.querySelector('[data-add]').addEventListener('click', () => addRow(sectionKey));
+    container.querySelector('.add-row-line').addEventListener('click', () => addRow(sectionKey));
+
+    container.querySelectorAll('.cell-input').forEach(el => {
+      const evtType = (el.tagName === 'SELECT' || el.type === 'date' || el.type === 'time') ? 'change' : 'blur';
+      el.addEventListener(evtType, e => commitEdit(sectionKey, el.dataset.id, el.dataset.field, el.value));
+      el.addEventListener('keydown', e => handleCellKeydown(e, sectionKey));
+    });
+    container.querySelectorAll('.row-delete').forEach(btn => {
+      btn.addEventListener('click', () => deleteRecord(sectionKey, btn.dataset.id));
+    });
+  }
+
+  function commitEdit(sectionKey, id, fieldKey, value){
+    const cfg = SECTIONS[sectionKey];
+    const data = loadData(cfg.storageKey);
+    const rec = data.find(r => String(r.id) === String(id));
+    if(!rec) return false;
+    if((rec[fieldKey] || '') === value) return false;
+    rec[fieldKey] = value;
+    saveData(cfg.storageKey, data);
+    renderSection(sectionKey);
+    return true;
+  }
+
+  function addRow(sectionKey, focusField){
+    const cfg = SECTIONS[sectionKey];
+    const data = loadData(cfg.storageKey);
+    const rec = { id: Date.now() + '_' + Math.random().toString(36).slice(2, 7) };
+    cfg.fields.forEach(f => { rec[f.key] = ''; });
+    data.push(rec);
+    saveData(cfg.storageKey, data);
+    renderSection(sectionKey);
+
+    const container = document.getElementById('section-' + sectionKey);
+    const fKey = focusField || cfg.fields[0].key;
+    const input = container.querySelector(`[data-id="${rec.id}"][data-field="${fKey}"]`);
+    if(input) input.focus();
+    return rec.id;
+  }
+
+  function deleteRecord(sectionKey, id){
+    const cfg = SECTIONS[sectionKey];
+    const data = loadData(cfg.storageKey);
+    const record = data.find(r => String(r.id) === String(id));
+    const label = record ? (record.name || record.title || 'this row') : 'this row';
+    if(!confirm(`Delete ${label}? This can't be undone.`)) return;
+    const updated = data.filter(r => String(r.id) !== String(id));
+    saveData(cfg.storageKey, updated);
+    renderSection(sectionKey);
+  }
+
+  function handleCellKeydown(e, sectionKey){
+    if(e.key !== 'Enter') return;
+    e.preventDefault();
+    const el = e.target;
+    const id = el.dataset.id, field = el.dataset.field, rowIndex = parseInt(el.dataset.rowIndex, 10);
+    commitEdit(sectionKey, id, field, el.value);
+
+    const container = document.getElementById('section-' + sectionKey);
+    let next = container.querySelector(`[data-field="${field}"][data-row-index="${rowIndex + 1}"]`);
+    if(!next){
+      addRow(sectionKey, field);
+    } else {
+      next.focus();
+      if(typeof next.select === 'function') next.select();
+    }
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('section-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  Object.keys(SECTIONS).forEach(renderSection);
+
+})();
+</script>
+
+</body>
+</html>

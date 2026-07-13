@@ -775,7 +775,13 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 .cb-mini.pri-future{border-left:3px solid #7A90A8}
 .cb-mini-hook{font-size:12px;font-weight:700;color:var(--text);line-height:1.45;margin:8px 0 5px;font-style:italic}
 .cb-mini-why{font-size:11px;color:var(--text2);line-height:1.45}
-.cb-mini-pillar{font-size:10px;font-weight:700;margin-top:6px}
+.cb-mini-pillar{font-size:10px;font-weight:700}
+.cb-mini.cb-mini-done{opacity:.5}
+.cb-mini.cb-mini-done .cb-mini-hook{text-decoration:line-through;color:var(--text3)}
+.cb-mini-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:8px}
+.cb-mini-done-btn{font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.cb-mini-done-btn:hover{border-color:var(--gn);color:var(--gn-deep);background:var(--gn-bg)}
+.cb-mini.cb-mini-done .cb-mini-done-btn{border-color:var(--gn);color:var(--gn-deep);background:var(--gn-bg)}
 .cb-bank-empty{text-align:center;color:var(--text3);font-size:13px;padding:30px 0;grid-column:1/-1}
 
 /* ═══════════════════════════════════════════════════════
@@ -1266,6 +1272,12 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <div class="rev-pri-item"><div class="rev-pri-num">3</div><input class="rev-pri-input" id="wr-p3" type="text" placeholder="Priority #3…"></div>
   </div>
 
+  <!-- Section 7: Your Focus (AUTO — synthesised from everything above) -->
+  <div class="rev-review-insight-card" id="wr-focus-section">
+    <div class="rev-review-insight-title">🧭 Your Focus For Next Week</div>
+    <div id="wr-focus-text">Fill in your wins, what needs attention, and next week's priorities above — this will pull it together into a clear focus for the week ahead.</div>
+  </div>
+
   <button class="rev-save-btn" onclick="saveWeeklyReview()">✓ Save This Week's Review</button>
   <div class="rev-saved-msg" id="wr-saved-msg">✓ Saved — your CEO Dashboard will reflect these priorities.</div>
 
@@ -1410,6 +1422,12 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
       <div><label class="rev-label">Key Focus Area</label><input class="form-input" id="mo-focus" type="text" placeholder="e.g. Outbound prospecting"></div>
       <div><label class="rev-label">Biggest Risk to Watch</label><input class="form-input" id="mo-risk" type="text" placeholder="e.g. Team disengagement"></div>
     </div>
+  </div>
+
+  <!-- Section 8: Your Focus (AUTO — synthesised from everything above) -->
+  <div class="rev-review-insight-card" id="mr-focus-section">
+    <div class="rev-review-insight-title">🧭 Your Focus For Next Month</div>
+    <div id="mr-focus-text">Fill in next month's main goal, biggest opportunity, focus area and risk above — this will turn it into a clear set of intentions for the month ahead.</div>
   </div>
 
   <button class="rev-save-btn" onclick="saveMonthlyReview()">✓ Save This Month's Review</button>
@@ -2403,7 +2421,6 @@ const HABITS = [
   {id:'meditate', icon:'🧘', label:'Meditation',                cat:'Health'},
   {id:'reading',  icon:'📚', label:'Read 10 Pages',             cat:'Health'},
   {id:'convos',   icon:'💬', label:'Started New Conversations', cat:'Business'},
-  {id:'inbox',    icon:'📥', label:'Cleared Inbox & DMs',       cat:'Business'},
   {id:'journal',  icon:'✍️',  label:'Journaled',                cat:'Personal'},
   {id:'outside',  icon:'🌿', label:'Outside Time',              cat:'Lifestyle'},
 ];
@@ -3039,32 +3056,45 @@ function renderCBFilters() {
     cbPillarFilter, v=>cbPillarFilter=v);
 }
 
+function _cbBankDoneGet(){ try{return new Set(JSON.parse(localStorage.getItem('cbBankDone')||'[]'));}catch(e){return new Set();} }
+function _cbBankDoneSet(set){ localStorage.setItem('cbBankDone', JSON.stringify([...set])); }
+function toggleCBBankDone(idx){
+  const set=_cbBankDoneGet();
+  if(set.has(idx)) set.delete(idx); else set.add(idx);
+  _cbBankDoneSet(set);
+  renderCBBankGrid();
+}
+
 function renderCBBankGrid() {
   const container=document.getElementById('cb-bank-grid'); if(!container) return;
   container.innerHTML='';
-  let ideas=[...CONTENT_IDEAS];
-  if(cbFormatFilter!=='all') ideas=ideas.filter(i=>i.format===cbFormatFilter);
-  if(cbPriorityFilter!=='all') ideas=ideas.filter(i=>i.priority===cbPriorityFilter);
-  if(cbPillarFilter!=='all') ideas=ideas.filter(i=>i.pillar===cbPillarFilter);
+  let ideas=CONTENT_IDEAS.map((idea,idx)=>({idea,idx}));
+  if(cbFormatFilter!=='all') ideas=ideas.filter(x=>x.idea.format===cbFormatFilter);
+  if(cbPriorityFilter!=='all') ideas=ideas.filter(x=>x.idea.priority===cbPriorityFilter);
+  if(cbPillarFilter!=='all') ideas=ideas.filter(x=>x.idea.pillar===cbPillarFilter);
   const priOrder={high:0,test:1,future:2};
-  ideas.sort((a,b)=>(priOrder[a.priority]??1)-(priOrder[b.priority]??1));
+  ideas.sort((a,b)=>(priOrder[a.idea.priority]??1)-(priOrder[b.idea.priority]??1));
   if(!ideas.length){container.innerHTML='<div class="cb-bank-empty">No ideas match this filter — try a different combination</div>';return;}
-  ideas.forEach(idea=>container.appendChild(buildCBMiniCard(idea)));
+  const doneSet=_cbBankDoneGet();
+  ideas.forEach(({idea,idx})=>container.appendChild(buildCBMiniCard(idea,idx,doneSet.has(idx))));
 }
 
-function buildCBMiniCard(idea) {
+function buildCBMiniCard(idea, idx, isDone) {
   const fmt=CB_FORMATS[idea.format]||CB_FORMATS.talking;
   const pri=CB_PRI[idea.priority]||CB_PRI.test;
   const pil=CB_PILLARS[idea.pillar]||CB_PILLARS.travel;
   const div=document.createElement('div');
-  div.className=`cb-mini pri-${idea.priority}`;
+  div.className=`cb-mini pri-${idea.priority}${isDone?' cb-mini-done':''}`;
   div.innerHTML=`<div class="cb-card-top">
     <span class="cb-pri-badge" style="background:${pri.soft};color:${pri.color};font-size:9px">${pri.label}</span>
     <span class="cb-format-badge" style="background:${fmt.soft};color:${fmt.color};font-size:9px">${fmt.icon} ${fmt.label}</span>
   </div>
   <div class="cb-mini-hook">${esc(idea.hook)}</div>
   <div class="cb-mini-why">${esc(idea.why.length>100?idea.why.slice(0,97)+'…':idea.why)}</div>
-  <div class="cb-mini-pillar" style="color:${pil.color}">${pil.label}</div>`;
+  <div class="cb-mini-foot">
+    <div class="cb-mini-pillar" style="color:${pil.color}">${pil.label}</div>
+    <button class="cb-mini-done-btn" onclick="toggleCBBankDone(${idx})">${isDone?'✓ Filmed':'○ Mark filmed'}</button>
+  </div>`;
   return div;
 }
 
@@ -4400,8 +4430,49 @@ function saveWeeklyReview() {
     savedAt:   new Date().toISOString(),
   };
   _saveWkRev(data, d);
+  renderWeeklyFocus();
   const msg = document.getElementById('wr-saved-msg');
   if (msg) { msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 3000); }
+}
+
+// ── FOCUS SYNTHESIS — Weekly ───────────────────────────────────
+function renderWeeklyFocus() {
+  const el = document.getElementById('wr-focus-text'); if (!el) return;
+  const win       = document.getElementById('wr-win')?.value.trim() || '';
+  const proud     = document.getElementById('wr-proud')?.value.trim() || '';
+  const attention = document.getElementById('wr-attention')?.value.trim() || '';
+  const avoided   = document.getElementById('wr-avoided')?.value.trim() || '';
+  const priorities = ['wr-p1','wr-p2','wr-p3'].map(id => document.getElementById(id)?.value.trim() || '').filter(Boolean);
+
+  if (!priorities.length && !attention && !avoided && !win) {
+    el.innerHTML = 'Fill in your wins, what needs attention, and next week\'s priorities above — this will pull it together into a clear focus for the week ahead.';
+    return;
+  }
+
+  const parts = [];
+  if (priorities.length) parts.push(`Your focus for the week ahead: <strong>${esc(priorities.join(', '))}</strong>.`);
+
+  const avoidedTexts = [];
+  for (let i = 0; i >= -2; i--) {
+    const r = getWkRev(_revWkDate(i));
+    if (r.avoided && r.avoided.trim()) avoidedTexts.push(r.avoided.trim());
+  }
+  if (avoided) {
+    parts.push(avoidedTexts.length >= 2
+      ? `You've now put off <strong>"${esc(avoided)}"</strong> multiple weeks running — make it the first thing you do this week, before anything else on your list.`
+      : `You've been avoiding <strong>"${esc(avoided)}"</strong> — block time for it early this week so it doesn't linger.`);
+  }
+  if (attention) parts.push(`Keep a close eye on <strong>${esc(attention)}</strong> — it's what's felt off-track.`);
+
+  const weekDates = getWeekDates(revWeekOff);
+  const todayStr = dk(TODAY);
+  const pastDates = weekDates.filter(d2 => d2 <= todayStr);
+  const lowHabits = HABITS.filter(h => hPct(h.id, pastDates) < 50);
+  if (lowHabits.length) parts.push(`${lowHabits.map(h => h.icon + ' ' + h.label).join(', ')} slipped below 50% this week — build in a specific time block for ${lowHabits.length > 1 ? 'these' : 'this'} next week.`);
+
+  if (proud) parts.push(`Carry the energy from being proud of <strong>"${esc(proud)}"</strong> into next week.`);
+
+  el.innerHTML = parts.join(' ');
 }
 
 // ── SAVE MONTHLY REVIEW ───────────────────────────────────────
@@ -4426,8 +4497,44 @@ function saveMonthlyReview() {
   // Auto habit score
   data.habitScore = monthPct(revMonthOff);
   _saveMoRev(data, d);
+  renderMonthlyFocus();
   const msg = document.getElementById('mr-saved-msg');
   if (msg) { msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 3000); }
+}
+
+// ── FOCUS SYNTHESIS — Monthly ──────────────────────────────────
+const _AUDIT_LABELS = { audit_health:'Health', audit_productivity:'Productivity', audit_travel:'Travel Business', audit_team:'Team Leadership', audit_content:'Content', audit_finances:'Finances', audit_happiness:'Happiness' };
+function renderMonthlyFocus() {
+  const el = document.getElementById('mr-focus-text'); if (!el) return;
+  const mainGoal = document.getElementById('mo-main-goal')?.value.trim() || '';
+  const supporting = ['mo-sg1','mo-sg2','mo-sg3'].map(id => document.getElementById(id)?.value.trim() || '').filter(Boolean);
+  const opp    = document.getElementById('mo-opp')?.value.trim() || '';
+  const focus  = document.getElementById('mo-focus')?.value.trim() || '';
+  const risk   = document.getElementById('mo-risk')?.value.trim() || '';
+  const winBiz = document.getElementById('mo-win-biz')?.value.trim() || '';
+
+  if (!mainGoal && !opp && !focus && !risk) {
+    el.innerHTML = 'Fill in next month\'s main goal, biggest opportunity, focus area and risk above — this will turn it into a clear set of intentions for the month ahead.';
+    return;
+  }
+
+  const parts = [];
+  if (mainGoal) parts.push(`Your main goal this month: <strong>${esc(mainGoal)}</strong>.`);
+  if (supporting.length) parts.push(`Supporting that: ${esc(supporting.join(', '))}.`);
+  if (opp) parts.push(`Lean into <strong>${esc(opp)}</strong> — it's your biggest opportunity right now, so make it central to the first two weeks.`);
+  if (focus) parts.push(`Keep your day-to-day energy on <strong>${esc(focus)}</strong>.`);
+  if (risk) parts.push(`Watch for <strong>${esc(risk)}</strong> — name it now so it doesn't quietly derail the month.`);
+
+  let lowestKey = null, lowestVal = 11;
+  document.querySelectorAll('#mr-audit-rows .rev-audit-slider').forEach(sl => {
+    const v = parseInt(sl.value, 10);
+    if (v < lowestVal) { lowestVal = v; lowestKey = sl.dataset.key; }
+  });
+  if (lowestKey && lowestVal <= 6) parts.push(`Your lowest self-rating was <strong>${_AUDIT_LABELS[lowestKey]}</strong> (${lowestVal}/10) — that's the growth edge to prioritise next month.`);
+
+  if (winBiz) parts.push(`Remember what worked: <strong>"${esc(winBiz)}"</strong> — do more of that.`);
+
+  el.innerHTML = parts.join(' ');
 }
 
 // ── RENDER WEEKLY REVIEW ──────────────────────────────────────
@@ -4491,6 +4598,8 @@ function renderWeekly() {
     }
     patternEl.style.display = avoidedTexts.length >= 2 ? 'block' : 'none';
   }
+
+  renderWeeklyFocus();
 }
 
 // ── RENDER MONTHLY REVIEW ─────────────────────────────────────
@@ -4571,6 +4680,8 @@ function renderMonthly() {
       compareEl.innerHTML = html;
     }
   }
+
+  renderMonthlyFocus();
 }
 
 // ─────────────────────────────────────────────────────────────
