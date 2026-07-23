@@ -562,6 +562,7 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 .rev-week-nav-btn{width:30px;height:30px;border-radius:var(--rs);border:1px solid var(--border);background:var(--white);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .15s}
 .rev-week-nav-btn:hover{background:var(--pk-bg);border-color:var(--pk);color:var(--pk)}
 .rev-pattern-alert{background:linear-gradient(120deg,#FFF6F2,#FFF0E8);border:1px solid #F0C0A0;border-radius:var(--rs);padding:10px 14px;font-size:12px;font-weight:600;color:#7A3010;margin-top:8px;line-height:1.6}
+.rev-positive-alert{background:linear-gradient(120deg,var(--gn-bg),#F0FAF4);border:1px solid var(--gn-s);border-radius:var(--rs);padding:10px 14px;font-size:12px;font-weight:600;color:var(--gn-deep);margin-top:8px;line-height:1.6}
 .rev-wins-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:640px){.rev-wins-grid{grid-template-columns:1fr}}
 .rev-social-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
@@ -872,6 +873,11 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 .ceo4-card--team .ceo4-time{background:var(--gn-s);color:var(--gn-deep)}
 .ceo4-card--prospect .ceo4-time{background:#C8E4F5;color:#2E7BAE}
 .ceo4-why{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.ceo4-va{font-size:11px;font-weight:600;color:#C2185B;background:#FDE4EF;border-radius:20px;padding:5px 11px;margin-bottom:10px;line-height:1.4}
+.ceo4-trialreel{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:10px}
+.tr-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);cursor:pointer;transition:all .15s;display:inline-block}
+.tr-dot:hover{border-color:var(--pk)}
+.tr-dot.done{background:var(--pk);border-color:var(--pk)}
 .ceo4-foot{display:flex;align-items:center;gap:7px}
 .ceo4-tick{flex:1;padding:7px 10px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
 .ceo4-card--client .ceo4-tick{background:#F5E4CA;color:#9A6800}
@@ -1077,6 +1083,14 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <div><label class="form-label">Last period start date</label><input class="form-input" id="s-period" type="date"></div>
     <div><label class="form-label">Cycle length: <strong id="s-cl-val">28</strong> days</label><input class="range-input" id="s-cl" type="range" min="21" max="40" value="28"></div>
     <div><label class="form-label">Period length: <strong id="s-pl-val">2</strong> days</label><input class="range-input" id="s-pl" type="range" min="2" max="10" value="2"></div>
+    <div class="settings-h">Recovery</div>
+    <div>
+      <label class="form-label" style="display:flex;align-items:center;gap:9px;cursor:pointer;font-weight:600">
+        <input type="checkbox" id="s-recovery" style="width:17px;height:17px;accent-color:var(--pk)">
+        🧳 I've just been travelling — go easy on me for a few days
+      </label>
+      <div id="s-recovery-note" style="font-size:11px;color:var(--text2);margin-top:5px"></div>
+    </div>
     <div class="settings-h">Cycle Phase Guide</div>
     <div class="phase-guide">
       <div class="pg-card" style="background:#FEF2F6;border:1px solid var(--pk-s)"><div class="pg-title" style="color:var(--pk-deep)">🌑 Menstrual</div><div class="pg-days" style="color:var(--pk-deep)">Days 1–3 + 3 pre</div><ul class="pg-list"><li>Rest &amp; restore</li><li>Reflect &amp; review</li><li>Light admin only</li><li>Fewer meetings</li><li>Raw dark chocolate 🍫</li><li>Gentle movement</li></ul></div>
@@ -1150,6 +1164,7 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 
     <div class="card">
       <div class="card-title">📱 Clear Your Inboxes — tap when done</div>
+      <div style="font-size:11px;color:#C2185B;font-weight:600;margin:-4px 0 10px">🩷 VA triages these first — this is just your final sweep</div>
       <div class="cs-dm-row" id="cs-dm-row"></div>
     </div>
 
@@ -1228,6 +1243,14 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
   <div class="rev-section">
     <div class="rev-section-hdr">📊 Habit Review — Auto</div>
     <div id="wr-habit-stats"></div>
+  </div>
+
+  <!-- Section 1b: Accountability (AUTO — planned vs. done, no manual input needed) -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🎯 Accountability — Auto</div>
+    <div id="wr-acct-stats"></div>
+    <div id="wr-acct-escalations"></div>
+    <div id="wr-acct-positives"></div>
   </div>
 
   <!-- Section 2: Weekly Wins -->
@@ -2371,11 +2394,26 @@ function renderSettings() {
   document.getElementById('s-cl-val').textContent=S.settings.cycleLength||28;
   document.getElementById('s-pl').value=S.settings.periodLength||2;
   document.getElementById('s-pl-val').textContent=S.settings.periodLength||2;
+  const recOn = isInRecoveryMode();
+  document.getElementById('s-recovery').checked = recOn;
+  const note = document.getElementById('s-recovery-note');
+  if (note) note.textContent = recOn
+    ? `Active until ${new Date(S.settings.recoveryUntil).toLocaleDateString('en-GB',{day:'numeric',month:'short'})} — today's picks are softened.`
+    : '';
 }
 document.getElementById('s-name').addEventListener('input',function(){S.settings.name=this.value;save();});
 document.getElementById('s-period').addEventListener('input',function(){S.settings.lastPeriodDate=this.value;save();});
 document.getElementById('s-cl').addEventListener('input',function(){S.settings.cycleLength=parseInt(this.value);document.getElementById('s-cl-val').textContent=this.value;save();});
 document.getElementById('s-pl').addEventListener('input',function(){S.settings.periodLength=parseInt(this.value);document.getElementById('s-pl-val').textContent=this.value;save();});
+document.getElementById('s-recovery').addEventListener('change',function(){
+  if (this.checked) {
+    const until = new Date(TODAY); until.setDate(until.getDate()+4);
+    S.settings.recoveryUntil = dk(until);
+  } else {
+    S.settings.recoveryUntil = null;
+  }
+  save(); renderSettings(); renderCEO();
+});
 
 // ─────────────────────────────────────────────────────────────
 // PROJECT MODAL
@@ -2418,11 +2456,13 @@ const HABITS = [
   {id:'protein',  icon:'🥩', label:'Hit Protein Goal',          cat:'Health'},
   {id:'water',    icon:'💧', label:'Hit Water Goal',            cat:'Health'},
   {id:'movement', icon:'🏃', label:'Movement',                  cat:'Health'},
+  {id:'strength', icon:'🏋️', label:'Pilates / Gym',             cat:'Health'},
   {id:'meditate', icon:'🧘', label:'Meditation',                cat:'Health'},
   {id:'reading',  icon:'📚', label:'Read 10 Pages',             cat:'Health'},
   {id:'convos',   icon:'💬', label:'Started New Conversations', cat:'Business'},
   {id:'journal',  icon:'✍️',  label:'Journaled',                cat:'Personal'},
-  {id:'outside',  icon:'🌿', label:'Outside Time',              cat:'Lifestyle'},
+  {id:'screenFree', icon:'📵', label:'Off Phone This Evening',  cat:'Personal'},
+  {id:'outside',  icon:'🌿', label:'Outside Time / Walk',       cat:'Lifestyle'},
 ];
 const HABIT_CATS = ['Health','Business','Personal','Lifestyle'];
 
@@ -3219,6 +3259,9 @@ function buildDumpTask(task, isArchived) {
     actions = `<button class="dump-tbtn tbtn-del" onclick="dumpDelete('${task.id}')" title="Delete">×</button>`;
   }
 
+  const vaHint = (task.cat === 'admin' && !isDone)
+    ? `<span class="dump-cat-badge" style="background:#FDE4EF;color:#C2185B">🩷 Consider delegating to VA</span>` : '';
+
   div.innerHTML = `
     <div class="dump-cb" onclick="dumpToggle('${task.id}')"></div>
     <div class="dump-task-body">
@@ -3227,6 +3270,7 @@ function buildDumpTask(task, isArchived) {
         <span class="dump-cat-badge" style="background:${cat.soft};color:${cat.color}">${cat.icon} ${cat.label}</span>
         <span class="dump-pri-badge" style="background:${pri.soft};color:${pri.color}">${pri.label}</span>
         <span class="dump-date-lbl">${dateStr}</span>
+        ${vaHint}
       </div>
     </div>
     <div class="dump-task-actions">${actions}</div>`;
@@ -3401,19 +3445,24 @@ const WEEKLY_REVIEW = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// DAILY 4-CARD POOLS  (Client · Content · Team · Prospecting)
-// Each item: { text, time, why, days?, biweeklyOdd?, phase?, dayOfMonth? }
+// DAILY 4-CARD POOLS  (Content · Prospecting · Team · Client — priority order)
+// Each item: { text, time, why, days?, biweeklyOdd?, phase?, dayOfMonth?,
+//              delegateNote?  — VA is involved; shown as a pink pill on the card
+//              soft?          — lighter/admin task; boosted on menstrual/luteal + recovery mode
+//              crm?           — counts toward the Weekly Accountability CRM metric }
 // ─────────────────────────────────────────────────────────────
 const CEO_CLIENT = [
   { text:'Send this week\'s marketing email to your client list', time:'30 mins', days:[3], biweeklyOdd:true,
     why:'Your email list is your most valuable asset. One well-timed email generates multiple enquiries.' },
-  { text:'WhatsApp outreach and follow-ups with warm clients', time:'20 mins', days:[3], biweeklyOdd:false,
+  { text:'Personal WhatsApp follow-ups with your warmest clients', time:'20 mins', days:[3], biweeklyOdd:false,
+    delegateNote:'VA runs the standard email follow-up sequence — this is just your personal WhatsApp touches.',
     why:'Personal WhatsApp messages convert better than any broadcast. Pick 5 names and message them now.' },
   { text:'Instagram potential client outreach', time:'20 mins', days:[2], biweeklyOdd:false,
     why:'People who engage with your posts are already warm. A personal DM today turns interest into a booking conversation.' },
   { text:'LinkedIn potential client outreach', time:'20 mins', days:[2], biweeklyOdd:true,
     why:'LinkedIn clients book luxury travel too. One professional message today could open a high-value booking.' },
-  { text:'Follow up with all open quotes before the week ends', time:'25 mins', days:[5],
+  { text:'WhatsApp your warmest open quotes personally before the week ends', time:'20 mins', days:[5],
+    delegateNote:'VA has already chased everything by email — these are just the ones worth your personal touch.',
     why:'Quotes go cold fast. Anyone you\'ve quoted in the last three weeks hasn\'t said no — they\'ve just gone quiet.' },
   { text:'Create Jet Set Instagram posts for this week', time:'30 mins', days:[0],
     why:'Sunday is your window to batch Jet Set posts. Getting them done today means the week starts with clear, strategic content.' },
@@ -3421,9 +3470,9 @@ const CEO_CLIENT = [
     why:'People travelling right now are spending money. A timely message puts you in front of them at exactly the right moment.' },
   { text:'Message 5 previous clients — are you planning travel this summer?', time:'20 mins',
     why:'Previous clients are your easiest wins. They already trust you completely. A simple check-in often triggers an immediate booking.' },
-  { text:'Follow up personally with every enquiry from the last 2 weeks', time:'25 mins', phase:'mid',
+  { text:'Follow up personally with every enquiry from the last 2 weeks', time:'25 mins', phase:'mid', crm:true,
     why:'Warm enquiries go cold without follow-up. Mid-month is the moment to convert interest into commitment.' },
-  { text:'Research one new luxury hotel or supplier to recommend this week', time:'25 mins',
+  { text:'Research one new luxury hotel or supplier to recommend this week', time:'25 mins', soft:true,
     why:'Your credibility is built on knowing properties your clients haven\'t discovered yet. One property per week becomes a conversation starter.' },
   { text:'Create a personalised itinerary for a current enquiry', time:'30 mins',
     why:'A curated itinerary rather than a generic quote converts significantly better. It shows you\'ve thought about them specifically.' },
@@ -3433,38 +3482,50 @@ const CEO_CLIENT = [
     why:'Warm leads go cold when they don\'t hear from you. A specific recommendation shows you\'ve been thinking about their trip.' },
   { text:'Check in with clients who travelled recently', time:'20 mins', phase:'end',
     why:'Happy travellers refer people. A message right after their trip is the most natural moment to ask for a referral.' },
-  { text:'Chase all open travel quotes before month end', time:'25 mins', phase:'end',
+  { text:'WhatsApp-chase your warmest open quotes before month end', time:'25 mins', phase:'end', crm:true,
+    delegateNote:'VA is chasing everything else by email — this is just the ones that need your voice.',
     why:'"Just checking in before the month ends" creates genuine urgency without pressure. Now is the time to use it.' },
-  { text:'Learn something new about the travel industry today', time:'20 mins',
+  { text:'Learn something new about the travel industry today', time:'20 mins', soft:true,
     why:'Your knowledge is your product. One new insight this week becomes a conversation opener next week.' },
-  { text:'Research a destination, trend or supplier update to share', time:'20 mins',
+  { text:'Research a destination, trend or supplier update to share', time:'20 mins', soft:true,
     why:'Clients book with the agent who knows the most. Regular research keeps you ahead of what they\'re seeing online.' },
+  { text:'Review overdue follow-ups in your CRM — anyone gone quiet who shouldn\'t have?', time:'10 mins', days:[3], crm:true, soft:true,
+    why:'Enquiries slip through when they\'re not tracked. Ten minutes in the CRM catches what memory alone would miss.' },
+  { text:'10-minute CRM pipeline review — what\'s stalling and needs a nudge?', time:'10 mins', days:[5], crm:true, soft:true,
+    why:'Your pipeline tells you exactly where the next booking is stuck. A quick weekly look keeps nothing quietly dying in the middle.' },
 ];
 
 const CEO_CONTENT = [
   // Day-anchored (fixed activities)
   { text:'Film Amy\'s reels for the week', time:'30 mins', days:[1],
+    delegateNote:'VA edits and assembles — you just need the hook and a quick take.',
     why:'Monday is Amy reel day. Getting this done first means it\'s off your plate before the week takes over.' },
   { text:'Record at least one talking video today', time:'30 mins', days:[4,6],
     why:'Your face and your expertise are your biggest conversion tool. One hook, one take. It doesn\'t need to be perfect.' },
   { text:'Create your personal content for the week', time:'45 mins', days:[5,6],
     why:'Your personal story is your biggest differentiator. 45 minutes today means a week of confident, consistent content.' },
-  { text:'Draft Jet Set Formula content for the team page', time:'30 mins', days:[5], biweeklyOdd:true,
-    why:'Your team page content plants seeds for the next recruit who finds you organically. Done every other Friday, it never piles up.' },
-  { text:'Write LinkedIn post drafts for next week', time:'30 mins', days:[5],
+  { text:'Approve and post this week\'s LinkedIn draft', time:'15 mins', days:[5],
+    delegateNote:'Claude already wrote the draft — this is just reviewing and posting.',
     why:'Writing LinkedIn drafts on Friday means they go out next week without any scrambling. One strong post opens doors Instagram cannot.' },
-  { text:'Create story drafts and sequences for the week', time:'30 mins', days:[6,0],
+  { text:'Review this week\'s story plan and post today\'s story', time:'20 mins', days:[6,0],
+    delegateNote:'Claude preps the prompts/sequence — you just post them.',
     why:'Pre-planned stories perform better than reactive ones. A three-slide sequence takes 20 minutes and generates DMs every time.' },
   { text:'Create a travel-focused authority piece today', time:'45 mins', days:[6], biweeklyOdd:false,
     why:'One authority piece every two weeks positions you as the expert — not just an agent. This is what attracts clients who book without asking the price.' },
-  { text:'Research and save content trends for next week', time:'20 mins', days:[5],
+  { text:'Research and save content trends for next week', time:'20 mins', days:[5], soft:true,
     why:'Trend-aware content gets seen by people who don\'t follow you yet. 20 minutes on Friday means Monday starts with direction.' },
   { text:'PR and collaboration outreach today', time:'20 mins', days:[5],
     why:'Collaborations put you in front of audiences you didn\'t build. One outreach per week compounds faster than any ad.' },
-  { text:'Review your top-performing content from the last 30 days', time:'20 mins', phase:'end',
+  { text:'Review your top-performing content from the last 30 days', time:'20 mins', phase:'end', soft:true,
     why:'You don\'t need new ideas — you need more of what already worked. Your best posts tell you exactly what to repeat.' },
-  { text:'Repurpose your best recent post into a new format', time:'25 mins', phase:'early',
+  { text:'Repurpose your best recent post into a new format', time:'25 mins', phase:'early', soft:true,
     why:'Start the month by getting more mileage from what already works. One carousel becomes a reel. One reel becomes a LinkedIn post.' },
+  { text:'Film 2 trial reels today — test a new hook, no pressure for it to be perfect', time:'20 mins',
+    why:'Trial reels are your fastest read on what the algorithm and your audience actually want right now. Volume beats polish here.' },
+  { text:'Film a quick comparison or "which would you pick" trial reel', time:'15 mins',
+    why:'Low-stakes trial content compounds — it\'s how you find your next big hook without overthinking a single post.' },
+  { text:'Film a hotel or destination piece if you\'re somewhere worth filming this week', time:'20 mins',
+    why:'Opportunistic, not forced — if you\'re at a property worth showing, film it. If not, skip this one guilt-free.' },
   // Lifestyle & follower growth (goal: 20k by August)
   { text:'Film a "day in my CEO life" reel — no script needed', time:'20 mins',
     why:'Lifestyle content is your fastest path to 20k followers. Your audience wants to see the freedom, not just hear about it. Just hit record.' },
@@ -3489,15 +3550,17 @@ const CEO_CONTENT = [
 ];
 
 const CEO_TEAM = [
-  { text:'Promote tonight\'s Travel Call and send your team a reminder', time:'15 mins', days:[2],
-    why:'Tonight\'s Travel Call needs attention this morning. Your team needs a reminder, context, and a reason to show up excited.' },
+  { text:'Review who launched over the weekend and follow up personally', time:'15 mins', days:[1],
+    delegateNote:'VA already compiled who launched — this is just your personal follow-up.',
+    why:'Weekend momentum dies fast without acknowledgement. A personal note on Monday morning keeps new launchers moving.' },
   { text:'Post team recognition and do your Sunday check-ins', time:'20 mins', days:[0],
     why:'Sunday recognition sets the tone for the week. Who showed up? Call it out publicly and send a personal note.' },
-  { text:'Check credit holds across your downline', time:'20 mins',
+  { text:'Check credit holds across your downline', time:'20 mins', soft:true,
+    delegateNote:'VA flags anyone on hold — you\'re just deciding how to support them.',
     why:'A credit hold silently removes someone from your active team. Catching it early gives you time to support them.' },
   { text:'Reach out to inactive or cancelled members personally', time:'25 mins', phase:'end',
     why:'People cancel for timing reasons. A personal message at month end often reopens the door before it closes permanently.' },
-  { text:'Send your team community email', time:'25 mins',
+  { text:'Send your team community email', time:'25 mins', soft:true,
     why:'Your community email keeps the whole team connected and builds the culture that retains people long-term.' },
   { text:'Promote tonight\'s Monday team call', time:'15 mins', days:[1],
     why:'A great call starts with great attendance. Send the reminder and set the context now while it\'s on your mind.' },
@@ -3511,41 +3574,47 @@ const CEO_TEAM = [
     why:'Month-end recognition rewards effort, builds culture, and signals to future recruits what it looks like inside your team.' },
   { text:'Send your Monday motivation message to both bootcamp teams', time:'15 mins', days:[1],
     why:'Monday morning sets the tone for the entire week. Your team takes their cue from you. Specific beats generic every time.' },
-  { text:'Check in personally with someone who has gone quiet this week', time:'10 mins',
+  { text:'Check in personally with someone who has gone quiet this week', time:'10 mins', soft:true,
     why:'Reps go inactive quietly. A personal message asking what\'s feeling hard catches dropout before it becomes permanent.' },
   { text:'Voice note your most active builders today', time:'10 mins',
     why:'High performers leave when they feel invisible. A personal voice note from you — not a group message — makes them feel seen.' },
   { text:'Mid-month check: who has slowed down this week?', time:'15 mins', phase:'mid',
     why:'Mid-month is where momentum gaps widen. A personal DM costs 2 minutes. Losing someone costs the rest of the month.' },
-  { text:'Identify who is closest to their next rank and support them', time:'15 mins',
-    why:'One rep hitting their next rank creates momentum for the whole team. Find who is two actions away and give them a targeted push.' },
-  { text:'Check in with everyone who joined this month', time:'20 mins',
+  { text:'Identify who is closest to their next rank and give them a targeted push', time:'15 mins', phase:'end',
+    why:'Rank advancement is an end-of-month lever — one rep hitting their next rank creates momentum for the whole team.' },
+  { text:'Check in with everyone who joined this month', time:'20 mins', phase:'mid',
     why:'New reps decide in their first two weeks whether they\'re really in. A personal message sets the retention pattern from day one.' },
   { text:'Post your Friday team round-up — celebrate this week\'s wins', time:'15 mins', days:[5],
     why:'A Friday round-up rewards people who showed up, builds culture, and signals your values to future recruits.' },
   { text:'Send a mid-week energy boost message to your bootcamp groups', time:'10 mins', days:[3],
     why:'Wednesday is where energy drops across every bootcamp. Calling out one specific win keeps the whole group moving.' },
+  { text:'Send a personal kickoff message to set the tone for the new month', time:'15 mins', phase:'early',
+    why:'The first week sets the energy for the whole month. Your team takes their cue directly from you.' },
+  { text:'Review last month\'s momentum and publicly recognise your top 3 movers', time:'20 mins', phase:'early',
+    why:'Starting the month by naming who\'s building creates visible proof of what\'s possible — and pulls the rest of the team up with them.' },
 ];
 
 const CEO_PROSPECT = [
   // ── Platform sweeps (letter cycling) ─────────────────────────
   // _sweepPlatform tells getTodayFour to bake the current letter into the text
   { _sweepPlatform:'li', time:'25 mins', days:[1,2,3,4,5],
+    delegateNote:'VA can send the opening message from this list — save your energy for replying once it goes warm.',
     why:'With 8,000+ LinkedIn connections you have a warm database most businesses would pay for. Working through them alphabetically — 20 at a time — turns cold connections into real conversations.' },
   { _sweepPlatform:'ig', time:'20 mins', days:[1,3,5],
+    delegateNote:'VA can send the opening message from this list — save your energy for replying once it goes warm.',
     why:'Your Instagram followers found you through content — now take it to DMs. Going through them alphabetically means no one gets missed and every conversation is one step closer to a client or referral.' },
   { _sweepPlatform:'tt', time:'20 mins', days:[2,4,6],
     why:'Your TikTok viewers watch you but don\'t know you personally yet. Going through followers alphabetically builds relationships that turn passive viewers into clients and future team members.' },
   // ── Fixed schedule items ──────────────────────────────────────
-  { text:'Send your prospect email to your list', time:'25 mins',
+  { text:'Send your prospect email to your list', time:'25 mins', crm:true,
     why:'Twice a month to your prospect list keeps you top of mind without overwhelming people. This one email starts new conversations.' },
-  { text:'Follow ups — work every open conversation today', time:'30 mins', days:[3],
+  { text:'Follow ups — work every open conversation today', time:'30 mins', days:[3], crm:true,
     why:'Wednesday follow-ups convert the conversations you started on Monday and Tuesday. This is where bookings and recruits actually happen.' },
   { text:'Engage with this week\'s new Instagram followers', time:'20 mins', days:[1],
     why:'New followers are in the discovery phase. A personal welcome while they\'re new converts at a significantly higher rate.' },
-  { text:'Engage with your story viewers today', time:'15 mins',
+  { text:'Engage with your story viewers today', time:'15 mins', soft:true,
     why:'Story viewers chose to watch you. They\'re already warm. A simple reply or question starts a real conversation.' },
-  { text:'Engage with people who commented on your posts this week', time:'20 mins',
+  { text:'Engage with people who commented on your posts this week', time:'20 mins', soft:true,
     why:'Your replies are visible to everyone who reads that post. Engaging with comments extends your reach and deepens connection.' },
   { text:'Engage with your LinkedIn connections today', time:'20 mins',
     why:'Five genuine LinkedIn comments put you in front of exactly the right professional audience. No content creation needed.' },
@@ -3563,10 +3632,21 @@ const CEO_PROSPECT = [
     why:'These people are already sold on luxury travel — they just haven\'t found you yet. Be visible and be the better option.' },
   { text:'Start 5 new conversations across Instagram, TikTok and LinkedIn', time:'20 mins',
     why:'New conversations today become bookings and recruits in two to three weeks. This is the most important daily habit you have.' },
-  { text:'Reply to every comment on your posts from the last 48 hours', time:'15 mins',
+  { text:'Reply to every comment on your posts from the last 48 hours', time:'15 mins', soft:true,
     why:'Your replies are visible to everyone who reads that post. Engagement extends your reach and shows you actually show up.' },
-  { text:'Follow up with 5 warm leads who enquired but haven\'t booked', time:'20 mins',
-    why:'Warm leads go cold when they don\'t hear from you. A short, personal follow-up reopens conversations that are already warm.' },
+  { text:'Follow up with 5 warm business-partner conversations who haven\'t decided yet', time:'20 mins', phase:'mid',
+    delegateNote:'VA runs the standard follow-up sequence — step in personally once someone\'s close to deciding.',
+    why:'Warm conversations go cold when they don\'t hear from you. A short, personal follow-up reopens people who are already close.' },
+  { text:'Close the loop with anyone in your pipeline who\'s ready to join', time:'20 mins', phase:'end',
+    why:'This is the biggest lever on your weekly business-partner goal — someone ready just needs you to ask.' },
+  { text:'Push 5 new conversations to kick off the month strong', time:'20 mins', phase:'early',
+    why:'The conversations you start in week one are the ones that close in weeks two and three. Start now, not later.' },
+  { text:'Final follow-up push — chase every open conversation before the month closes', time:'25 mins', phase:'end', crm:true,
+    why:'Open conversations that go quiet at month end rarely restart on their own. One more nudge now is worth more than three next month.' },
+  { text:'Check your CRM hotlist — anyone gone quiet who\'s worth a nudge?', time:'10 mins', days:[3], crm:true, soft:true,
+    why:'A hotlist only works if you look at it. Ten minutes catches anyone who\'s slipped through before they go cold for good.' },
+  { text:'10-minute look at this week\'s conversion numbers in your CRM', time:'10 mins', days:[5], crm:true, soft:true,
+    why:'Knowing your real conversion rate — not a guess — tells you whether to change your approach or just do more of it.' },
 ];
 
 const CS_CLIENT = [
@@ -4077,6 +4157,16 @@ function renderMonthStrip() {
 }
 
 // ── Render: 4-card daily grid ─────────────────────────────────
+// ── Trial reel micro-checklist (2 taps/day, feeds Weekly Accountability) ──
+function _trKey(d) { return 'trialreel_' + dk(d || TODAY); }
+function getTrialReel(d) { return JSON.parse(localStorage.getItem(_trKey(d)) || '{}'); }
+function toggleTrialReel(slot) {
+  const s = getTrialReel();
+  s[slot] = !s[slot];
+  localStorage.setItem(_trKey(TODAY), JSON.stringify(s));
+  renderFourGrid();
+}
+
 function renderFourGrid() {
   const container = document.getElementById('cs-four-grid');
   if (!container) return;
@@ -4085,11 +4175,12 @@ function renderFourGrid() {
   const four = getTodayFour();
   const done = getCeo4Done();
 
+  // Priority order: Content > Sales (prospecting) > Leadership (team) > Luxury Travel (client)
   const defs = [
-    { key:'client',   label:'✈️  Client Focus',      cls:'ceo4-card--client' },
-    { key:'content',  label:'✏️  Content Focus',      cls:'ceo4-card--content' },
-    { key:'team',     label:'👥  Team Focus',         cls:'ceo4-card--team' },
-    { key:'prospect', label:'🔍  Prospecting Focus',  cls:'ceo4-card--prospect' },
+    { key:'content',  label:'✏️  Content Focus',         cls:'ceo4-card--content' },
+    { key:'prospect', label:'🔍  Sales Focus',            cls:'ceo4-card--prospect' },
+    { key:'team',     label:'👥  Leadership Focus',       cls:'ceo4-card--team' },
+    { key:'client',   label:'✈️  Luxury Travel Focus',    cls:'ceo4-card--client' },
   ];
 
   defs.forEach(def => {
@@ -4097,12 +4188,21 @@ function renderFourGrid() {
     const isDone = !!done[def.key];
     const card  = document.createElement('div');
     card.className = `ceo4-card ${def.cls}${isDone?' done':''}`;
+    const trWidget = def.key === 'content' ? (() => {
+      const tr = getTrialReel();
+      return `<div class="ceo4-trialreel">🎥 Trial reels today
+        <span class="tr-dot${tr.a?' done':''}" onclick="event.stopPropagation();toggleTrialReel('a')"></span>
+        <span class="tr-dot${tr.b?' done':''}" onclick="event.stopPropagation();toggleTrialReel('b')"></span>
+      </div>`;
+    })() : '';
     card.innerHTML = `
       <div class="ceo4-done-mark">✓</div>
       <div class="ceo4-cat">${def.label}</div>
       <div class="ceo4-task">${esc(item.text)}</div>
       <div class="ceo4-time">⏱ ${esc(item.time)}</div>
       <div class="ceo4-why">${esc(item.why)}</div>
+      ${item.delegateNote ? `<div class="ceo4-va">🩷 ${esc(item.delegateNote)}</div>` : ''}
+      ${trWidget}
       <div class="ceo4-foot">
         <button class="ceo4-tick" onclick="toggleCeo4Done('${def.key}')">${isDone?'✓ Done':'Mark done'}</button>
         ${!isDone?`<button class="ceo4-swap" onclick="swapFour('${def.key}')">↻ Different</button>`:''}
@@ -4114,6 +4214,14 @@ function renderFourGrid() {
 // ── INTELLIGENT DAILY SELECTION ─────────────────────────────
 // Same selection all day. Changes tomorrow. Day-aware. Month-aware. Rarely repeats.
 
+// Card category → PHASE_ALIGN bucket (same 4 buckets PHASE_ALIGN already scores tips against)
+const _CARD_TO_ALIGN_CAT = { ceo_client:'jetset', ceo_content:'content', ceo_team:'coaching', ceo_prospect:'prospecting' };
+
+function isInRecoveryMode() {
+  const until = S.settings?.recoveryUntil;
+  return !!until && dk(TODAY) <= until;
+}
+
 function _cs_pickItem(pool, secKey, excludeIdxs) {
   const dow  = TODAY.getDay();
   const date = TODAY.getDate();
@@ -4124,6 +4232,11 @@ function _cs_pickItem(pool, secKey, excludeIdxs) {
   const monthDays = new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0).getDate();
   const recent = _getRecentDone(secKey);
   const excl = new Set(excludeIdxs||[]);
+
+  const cyclePhase = getPhase(TODAY);
+  const alignCat = _CARD_TO_ALIGN_CAT[secKey];
+  const align = cyclePhase ? PHASE_ALIGN[cyclePhase.key] : null;
+  const recoveryOn = isInRecoveryMode();
 
   const candidates = pool.map((item,i) => {
     if (recent.has(i)||excl.has(i)) return null;
@@ -4146,6 +4259,22 @@ function _cs_pickItem(pool, secKey, excludeIdxs) {
     // Month phase
     if (item.phase === phase) score += 3;
     else if (item.phase)      score -= 2;
+
+    // Cycle-phase alignment — actively shifts which tasks surface, not just describes the phase
+    if (align && alignCat) {
+      if (align.best.includes(alignCat)) score += 5;
+      else if (align.ok.includes(alignCat)) score += 2;
+      else if (align.rest.includes(alignCat)) {
+        score -= 5;
+        if (item.soft) score += 6; // lighter/admin alternative wins out on rest phases
+      }
+    }
+
+    // Manual recovery mode (just back from travel) — treat like a rest phase regardless of cycle
+    if (recoveryOn) {
+      if (item.soft) score += 6;
+      else score -= 3;
+    }
 
     // Twice-monthly on specific dates
     if (item.twiceMonthlyDoms) {
@@ -4236,6 +4365,21 @@ function _cs_generateBrief(dow, date, daysLeft, phase) {
     : `${daysLeft} day${daysLeft===1?'':'s'} left this month. Close what is open, recognise what has been built, and set next month\'s momentum.`;
 
   let brief = `${dayCtx} ${phaseCtx}`;
+
+  // Recovery mode overrides/adds to the cycle line — manual "just travelled" toggle
+  if (isInRecoveryMode()) {
+    brief += ' 🧳 Recovery mode is on — today\'s picks lean lighter so you can land before ramping back up.';
+  } else {
+    // Cycle-phase framing — only mention it when it's actually softening or sharpening today's picks
+    const cyclePhase = getPhase(TODAY);
+    if (cyclePhase?.key === 'menstrual') {
+      brief += ' Lighter cycle-aligned day — today\'s picks lean toward admin, CRM and reflection rather than creation.';
+    } else if (cyclePhase?.key === 'luteal') {
+      brief += ' Luteal phase — today favours finishing and following up over starting anything new.';
+    } else if (cyclePhase?.key === 'ovulatory') {
+      brief += ' You\'re in your peak phase — today\'s picks lean into visibility, content and bold conversations.';
+    }
+  }
 
   // Append review context if available
   try {
@@ -4538,6 +4682,100 @@ function renderMonthlyFocus() {
 }
 
 // ── RENDER WEEKLY REVIEW ──────────────────────────────────────
+// ── ACCOUNTABILITY — planned vs. actually done, computed live from what's already tracked ──
+const _ACCT_CATS = ['content','prospect','team','client'];
+const _ACCT_LABELS = { content:'Content', prospect:'Sales / Prospecting', team:'Leadership / Team', client:'Luxury Travel Clients' };
+const _ACCT_IMPACT = {
+  content: { why:'Content is priority #1 right now — every quiet week here slows follower growth and the trial-reel testing that\'s meant to find your next big hook.', fix:'Block one no-phone hour this week purely for filming — 2-3 quick pieces is enough to restart momentum.' },
+  prospect: { why:'Sales conversations today are bookings and new business partners in two to three weeks — a quiet week here shows up as a quiet month later.', fix:'Start with just 5 conversations tomorrow — the smallest version of this habit still counts.' },
+  team: { why:'Your team takes its cue from your presence — when check-ins go quiet, momentum and retention quietly slip with them.', fix:'One voice note to your most active builder this week is enough to restart the pattern.' },
+  client: { why:'This is billable, revenue-generating work — a quiet week here shows up directly in bookings.', fix:'Pick your single warmest open quote and follow up on it first thing tomorrow.' },
+};
+
+function computeWeekAccountability(off) {
+  const dates = getWeekDates(off);
+  const todayStr = dk(TODAY);
+  const pastDates = dates.filter(d => d <= todayStr);
+  const catCounts = {};
+  _ACCT_CATS.forEach(c => catCounts[c] = { done:0, total: pastDates.length });
+  let crmDone = 0, crmTotal = 0, trialReelDone = 0;
+
+  pastDates.forEach(d => {
+    const stored = JSON.parse(localStorage.getItem('ceo4_' + d) || 'null');
+    const done = JSON.parse(localStorage.getItem('ceo4done_' + d) || '{}');
+    _ACCT_CATS.forEach(c => {
+      if (done[c]) catCounts[c].done++;
+      if (stored?.[c]?.crm) { crmTotal++; if (done[c]) crmDone++; }
+    });
+    const tr = JSON.parse(localStorage.getItem('trialreel_' + d) || '{}');
+    if (tr.a) trialReelDone++;
+    if (tr.b) trialReelDone++;
+  });
+
+  const catPcts = _ACCT_CATS.map(c => ({
+    cat: c, label: _ACCT_LABELS[c],
+    pct: catCounts[c].total ? Math.round(catCounts[c].done / catCounts[c].total * 100) : 0,
+  }));
+  const ranked = [...catPcts].sort((a,b) => a.pct - b.pct);
+
+  return {
+    pastDatesLen: pastDates.length, catCounts, catPcts,
+    lowest: ranked[0], highest: ranked[ranked.length - 1],
+    crmDone, crmTotal, trialReelDone, trialReelTarget: pastDates.length * 2,
+  };
+}
+
+function renderAccountability() {
+  const statsEl = document.getElementById('wr-acct-stats');
+  const escEl = document.getElementById('wr-acct-escalations');
+  const posEl = document.getElementById('wr-acct-positives');
+  if (!statsEl) return;
+
+  const cur = computeWeekAccountability(revWeekOff);
+
+  let html = '';
+  cur.catPcts.forEach(c => {
+    html += `<div class="rev-stat"><span class="rev-stat-lbl">${esc(c.label)}</span><span class="rev-stat-val">${c.pct}% (${cur.catCounts[c.cat].done}/${cur.catCounts[c.cat].total})</span></div>`;
+  });
+  html += `<div class="rev-stat"><span class="rev-stat-lbl">CRM tasks surfaced this week</span><span class="rev-stat-val">${cur.crmTotal ? `${cur.crmDone}/${cur.crmTotal}` : '—'}</span></div>`;
+  html += `<div class="rev-stat"><span class="rev-stat-lbl">Trial reels (2/day target)</span><span class="rev-stat-val">${cur.trialReelDone}/${cur.trialReelTarget}</span></div>`;
+  statsEl.innerHTML = html;
+
+  // 3-week trailing history for recurring-neglect detection
+  const trail = [0,-1,-2].map(o => computeWeekAccountability(revWeekOff + o));
+
+  const escalations = [];
+  _ACCT_CATS.forEach(c => {
+    const recurring = trail.every(t => t.catCounts[c].total > 0 && (t.catCounts[c].done / t.catCounts[c].total) < 0.4);
+    if (recurring) {
+      const imp = _ACCT_IMPACT[c];
+      escalations.push(`🔴 Priority Attention Area: ${_ACCT_LABELS[c]} has been under 40% for three weeks running. ${imp.why} ${imp.fix}`);
+    }
+  });
+  const trTwoWeeksLow = trail.slice(0,2).every(t => t.trialReelTarget > 0 && (t.trialReelDone / t.trialReelTarget) < 0.3);
+  if (trTwoWeeksLow) escalations.push('🔴 Priority Attention Area: Trial reels have been deprioritised for two weeks running — this is meant to be your fastest growth lever right now. Even one imperfect trial reel a day rebuilds the habit faster than waiting for a "good" one.');
+  const crmTwoWeeksNone = trail.slice(0,2).every(t => t.crmTotal > 0 && t.crmDone === 0);
+  if (crmTwoWeeksNone) escalations.push('🔴 Priority Attention Area: You\'ve skipped CRM updates for two weeks running — enquiries and follow-ups may be quietly slipping through the cracks. Ten minutes on your next CRM task fixes it before it compounds.');
+
+  escEl.innerHTML = escalations.length
+    ? escalations.map(e => `<div class="rev-pattern-alert">${e}</div>`).join('')
+    : '';
+
+  // Positive pattern recognition
+  const positives = [];
+  if (cur.highest && cur.highest.pct >= 85 && cur.catCounts[cur.highest.cat].total > 0) {
+    positives.push(`✅ ${_ACCT_LABELS[cur.highest.cat]}: ${cur.highest.pct}% (${cur.catCounts[cur.highest.cat].done}/${cur.catCounts[cur.highest.cat].total}) this week — this is working, keep going.`);
+  }
+  const weekDatesForHabits = getWeekDates(revWeekOff).filter(d => d <= dk(TODAY));
+  let bestHabit = null, bestHabitPct = -1;
+  HABITS.forEach(h => { const p = hPct(h.id, weekDatesForHabits); if (p > bestHabitPct) { bestHabitPct = p; bestHabit = h; } });
+  if (bestHabit && bestHabitPct >= 85) positives.push(`✅ ${bestHabit.icon} ${bestHabit.label}: ${bestHabitPct}% this week — great consistency, don't lose it.`);
+
+  posEl.innerHTML = positives.length
+    ? positives.map(p => `<div class="rev-positive-alert">${p}</div>`).join('')
+    : '';
+}
+
 function renderWeekly() {
   // Title
   const titleEl = document.getElementById('wr-week-title');
@@ -4599,6 +4837,7 @@ function renderWeekly() {
     patternEl.style.display = avoidedTexts.length >= 2 ? 'block' : 'none';
   }
 
+  renderAccountability();
   renderWeeklyFocus();
 }
 
