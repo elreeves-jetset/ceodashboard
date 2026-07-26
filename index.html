@@ -411,8 +411,7 @@ hr { border:none; border-top:1px solid var(--bl); margin:12px 0; }
 .cs-date{font-size:13px;color:var(--text2);margin-top:3px;font-weight:500}
 
 /* Strategic brief */
-.cs-brief{background:linear-gradient(120deg,var(--pk-bg),#F5F2FE);border:1px solid var(--pk-s);border-radius:var(--r);padding:18px 22px;margin-bottom:22px;font-size:14px;line-height:1.8;color:var(--text);box-shadow:var(--shadow)}
-.cs-brief strong{color:var(--pk-deep)}
+.cs-slowdown{margin-bottom:22px}
 
 /* Section label */
 .cs-big3-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px}
@@ -463,7 +462,7 @@ hr { border:none; border-top:1px solid var(--bl); margin:12px 0; }
 /* Utilities grid */
 .cs-utils-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
 @media(max-width:640px){.cs-utils-grid{grid-template-columns:1fr}}
-.cs-dm-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:4px}
+.cs-dm-row{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:4px}
 .cs-dm-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:var(--rs);border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:all .15s;-webkit-user-select:none;user-select:none}
 .cs-dm-btn:hover{border-color:var(--pk);background:var(--pk-bg)}
 .cs-dm-btn.done{border-color:var(--gn);background:var(--gn-bg)}
@@ -1140,8 +1139,17 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <div class="phase-badge" onclick="switchView('settings')" style="align-self:flex-start"><div class="dot"></div><span id="cs-phase-badge">—</span></div>
   </div>
 
-  <!-- Strategic brief -->
-  <div class="cs-brief" id="cs-brief">—</div>
+  <!-- Slow Down -->
+  <div class="card cs-slowdown">
+    <div class="card-title">🕯️ Slow Down</div>
+    <div class="cs-dm-row" id="cs-slow-row"></div>
+    <div style="margin-top:14px">
+      <label class="rev-label">Grateful for today</label>
+      <div class="rev-pri-item"><div class="rev-pri-num">1</div><input class="rev-pri-input" id="cs-grat-1" type="text" placeholder="Something you're grateful for…"></div>
+      <div class="rev-pri-item"><div class="rev-pri-num">2</div><input class="rev-pri-input" id="cs-grat-2" type="text" placeholder="Something you're grateful for…"></div>
+      <div class="rev-pri-item"><div class="rev-pri-num">3</div><input class="rev-pri-input" id="cs-grat-3" type="text" placeholder="Something you're grateful for…"></div>
+    </div>
+  </div>
 
   <!-- OVERDUE from yesterday -->
   <div id="cs-overdue-section" style="display:none">
@@ -1164,7 +1172,6 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 
     <div class="card">
       <div class="card-title">📱 Clear Your Inboxes — tap when done</div>
-      <div style="font-size:11px;color:#C2185B;font-weight:600;margin:-4px 0 10px">🩷 VA triages these first — this is just your final sweep</div>
       <div class="cs-dm-row" id="cs-dm-row"></div>
     </div>
 
@@ -1928,7 +1935,7 @@ const AFFIRMATIONS = [
 const S = {
   settings: { name:'Ela', lastPeriodDate:'2026-06-02', cycleLength:28, periodLength:2 },
   tasks:{}, projects:[], priorities:{}, pd:{}, monthGoals:{}, affIdx:null, reminders:{}, dmChecks:{}, dismissed:{},
-  habits:{}, dump:[],
+  habits:{}, dump:[], slowChecks:{}, gratitude:{},
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -2039,6 +2046,8 @@ function load() {
     Object.assign(S.reminders, p.reminders||{});
     Object.assign(S.dmChecks, p.dmChecks||{});
     Object.assign(S.dismissed, p.dismissed||{});
+    Object.assign(S.slowChecks, p.slowChecks||{});
+    Object.assign(S.gratitude, p.gratitude||{});
     if(p.habits) S.habits=p.habits;
     if(p.dump) S.dump=p.dump;
     if (p.affIdx != null) S.affIdx = p.affIdx;
@@ -2206,6 +2215,7 @@ function renderCOS() {
 // Priority save — elements now live in CEO Dashboard
 ['p1','p2','p3'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',function(){const k=dk(TODAY);if(!S.priorities[k])S.priorities[k]={};S.priorities[k][id]=this.value;save();});});
 const _pdInp=document.getElementById('pd-input');if(_pdInp)_pdInp.addEventListener('input',function(){S.pd[dk(TODAY)]=this.value;save();});
+[1,2,3].forEach(n=>{const el=document.getElementById('cs-grat-'+n);if(el)el.addEventListener('input',function(){const k=dk(TODAY);if(!S.gratitude)S.gratitude={};if(!S.gratitude[k])S.gratitude[k]={};S.gratitude[k]['g'+n]=this.value;save();});});
 
 // ─────────────────────────────────────────────────────────────
 // SOCIAL MEDIA
@@ -2453,18 +2463,11 @@ document.getElementById('modal-del').addEventListener('click',()=>{
 // DAILY SUCCESS TRACKER
 // ─────────────────────────────────────────────────────────────
 const HABITS = [
-  {id:'protein',  icon:'🥩', label:'Hit Protein Goal',          cat:'Health'},
-  {id:'water',    icon:'💧', label:'Hit Water Goal',            cat:'Health'},
-  {id:'movement', icon:'🏃', label:'Movement',                  cat:'Health'},
-  {id:'strength', icon:'🏋️', label:'Pilates / Gym',             cat:'Health'},
-  {id:'meditate', icon:'🧘', label:'Meditation',                cat:'Health'},
-  {id:'reading',  icon:'📚', label:'Read 10 Pages',             cat:'Health'},
-  {id:'convos',   icon:'💬', label:'Started New Conversations', cat:'Business'},
-  {id:'journal',  icon:'✍️',  label:'Journaled',                cat:'Personal'},
-  {id:'screenFree', icon:'📵', label:'Off Phone This Evening',  cat:'Personal'},
-  {id:'outside',  icon:'🌿', label:'Outside Time / Walk',       cat:'Lifestyle'},
+  {id:'movement',  icon:'🏃', label:'Movement',                              cat:'Wellbeing'},
+  {id:'winddown',  icon:'🌙', label:'Wind-Down Ritual (read / journal / meditate)', cat:'Wellbeing'},
+  {id:'prospecting', icon:'🔍', label:'Prospecting',                         cat:'Business'},
 ];
-const HABIT_CATS = ['Health','Business','Personal','Lifestyle'];
+const HABIT_CATS = ['Wellbeing','Business'];
 
 let habitSubtab='today', habitWkOff=0, habitMoOff=0;
 
@@ -4346,63 +4349,9 @@ function swapCS(category) {
   renderCEO();
 }
 
-// ── STRATEGIC BRIEF ──────────────────────────────────────────
-function _cs_generateBrief(dow, date, daysLeft, phase) {
-  const dayCtx = {
-    0: 'Sunday — your planning session. What you do today sets up the entire week.',
-    1: 'Monday — the week starts here. Your energy and decisions today carry through the next five days.',
-    2: 'Tuesday — your Travel Call is tonight at 7:30pm. Use your morning and afternoon well.',
-    3: 'Wednesday — the mid-week dip is real. Today\'s focus is chosen to keep momentum where it matters.',
-    4: 'Thursday — lighter day with family dinner tonight. You\'re usually camera-ready. Make use of it before the day moves on.',
-    5: 'Friday — the week closes. Content drafts and team recognition now set you up for a strong restart on Monday.',
-    6: 'Saturday — your content batching morning. Build the week\'s content before anything else takes over.',
-  }[dow] || '';
-
-  const phaseCtx = phase==='early'
-    ? `Day ${date} of the month. You are in seed-planting mode. The conversations you start this week close in weeks two and three.`
-    : phase==='mid'
-    ? `Day ${date}. Mid-month means conversion. The relationships you built in week one are ready to follow through on.`
-    : `${daysLeft} day${daysLeft===1?'':'s'} left this month. Close what is open, recognise what has been built, and set next month\'s momentum.`;
-
-  let brief = `${dayCtx} ${phaseCtx}`;
-
-  // Recovery mode overrides/adds to the cycle line — manual "just travelled" toggle
-  if (isInRecoveryMode()) {
-    brief += ' 🧳 Recovery mode is on — today\'s picks lean lighter so you can land before ramping back up.';
-  } else {
-    // Cycle-phase framing — only mention it when it's actually softening or sharpening today's picks
-    const cyclePhase = getPhase(TODAY);
-    if (cyclePhase?.key === 'menstrual') {
-      brief += ' Lighter cycle-aligned day — today\'s picks lean toward admin, CRM and reflection rather than creation.';
-    } else if (cyclePhase?.key === 'luteal') {
-      brief += ' Luteal phase — today favours finishing and following up over starting anything new.';
-    } else if (cyclePhase?.key === 'ovulatory') {
-      brief += ' You\'re in your peak phase — today\'s picks lean into visibility, content and bold conversations.';
-    }
-  }
-
-  // Append review context if available
-  try {
-    const rc = getReviewContext();
-    const extras = [];
-    if (rc.weeklyPriorities.length > 0) extras.push(`Your priority this week: ${rc.weeklyPriorities[0]}.`);
-    if (rc.attention) extras.push(`You flagged needing more: ${rc.attention.split('\n')[0].split('.')[0]}.`);
-    if (rc.monthlyGoal) extras.push(`This month's goal: ${rc.monthlyGoal}.`);
-    if (rc.avoided && rc.hasAvoidPattern) extras.push(`You keep avoiding: ${rc.avoided.split('\n')[0].split('.')[0]} — today's focus reflects that.`);
-    if (extras.length > 0) brief += ' ' + extras.join(' ');
-  } catch(e) {}
-
-  return brief;
-}
-
 // ── RENDER ───────────────────────────────────────────────────
 function renderCEO() {
   const hr   = new Date().getHours();
-  const dow  = TODAY.getDay();
-  const date = TODAY.getDate();
-  const monthDays = new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0).getDate();
-  const daysLeft  = monthDays - date;
-  const phase = date<=10?'early':date<=20?'mid':'end';
   const name  = S.settings?.name ? `, ${S.settings.name}` : '';
 
   // Greeting + date
@@ -4411,9 +4360,34 @@ function renderCEO() {
   const el_d = document.getElementById('cs-date');
   if(el_d) el_d.textContent = TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  // Strategic brief
-  const el_b = document.getElementById('cs-brief');
-  if(el_b) el_b.innerHTML = _cs_generateBrief(dow, date, daysLeft, phase);
+  // Slow Down — gentle self-care ticks + gratitude
+  const SLOWDOWN = [
+    {id:'candle',    icon:'🕯️', label:'Light a candle'},
+    {id:'podcast',   icon:'🎧', label:'Listen to a podcast'},
+    {id:'meditate',  icon:'🧘', label:'Meditate / breathe'},
+    {id:'offscreen', icon:'📵', label:'Screen-free 10 mins'},
+  ];
+  const slowKey = dk(TODAY);
+  if (!S.slowChecks) S.slowChecks = {};
+  if (!S.slowChecks[slowKey]) S.slowChecks[slowKey] = {};
+  const slowEl = document.getElementById('cs-slow-row');
+  if (slowEl) {
+    slowEl.innerHTML = '';
+    SLOWDOWN.forEach(sd => {
+      const done = !!S.slowChecks[slowKey][sd.id];
+      const btn = document.createElement('div');
+      btn.className = `cs-dm-btn${done?' done':''}`;
+      btn.innerHTML = `<div class="cs-dm-icon">${sd.icon}</div><div class="cs-dm-label">${sd.label}</div>`;
+      btn.onclick = () => { S.slowChecks[slowKey][sd.id]=!S.slowChecks[slowKey][sd.id]; save(); btn.classList.toggle('done',!!S.slowChecks[slowKey][sd.id]); };
+      slowEl.appendChild(btn);
+    });
+  }
+  if (!S.gratitude) S.gratitude = {};
+  if (!S.gratitude[slowKey]) S.gratitude[slowKey] = {};
+  [1,2,3].forEach(n => {
+    const inp = document.getElementById('cs-grat-'+n);
+    if (inp) inp.value = S.gratitude[slowKey]['g'+n] || '';
+  });
 
   // Cycle phase badge + card
   const cyclePhase = getPhase(TODAY);
@@ -4441,12 +4415,10 @@ function renderCEO() {
 
   // DM Inboxes
   const DMS = [
-    {id:'ig_dms', icon:'📸', label:'Instagram DMs'},
-    {id:'tt_dms', icon:'🎵', label:'TikTok DMs'},
-    {id:'wa',     icon:'💬', label:'WhatsApp'},
-    {id:'li_dms', icon:'💼', label:'LinkedIn'},
-    {id:'ig_comms',icon:'🗨️', label:'IG Comments'},
-    {id:'tt_comms',icon:'💬', label:'TT Comments'},
+    {id:'ig_all', icon:'📸', label:'Instagram inbox & engagement'},
+    {id:'tt_all', icon:'🎵', label:'TikTok inbox & engagement'},
+    {id:'li_all', icon:'💼', label:'LinkedIn inbox & engagement'},
+    {id:'wa_all', icon:'💬', label:'WhatsApp inbox & engagement'},
   ];
   const dmKey = dk(TODAY);
   if (!S.dmChecks[dmKey]) S.dmChecks[dmKey] = {};
