@@ -913,6 +913,8 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
    ═══════════════════════════════════════════════════════ */
 .cs-section-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
 .cs-section-lbl:first-of-type{margin-top:0}
+.cs-month-reset{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:none;color:var(--pk);cursor:pointer;text-decoration:underline}
+.cs-month-reset:hover{color:var(--pk-deep)}
 
 .mustdo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
 @media(max-width:640px){.mustdo-grid{grid-template-columns:1fr}}
@@ -1164,7 +1166,7 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
   <div class="ceo4-grid" id="cs-four-grid"></div>
 
   <!-- MONTH STRIP — completion dots -->
-  <div class="cs-section-lbl">This Month</div>
+  <div class="cs-section-lbl">This Month <span class="cs-month-reset" onclick="resetMonthStrip()">↺ Reset</span></div>
   <div class="month-strip" id="cs-month-strip"></div>
 
   <!-- Bottom utilities: DM clear + Priorities -->
@@ -4130,6 +4132,18 @@ function renderOverdue() {
     row.innerHTML = `<div class="ceo4-od-chk"></div><span class="ceo4-od-label">🎯 ${esc(item.text)}</span><span class="ceo4-od-cat" style="background:#9B7CC922;color:#9B7CC9">Priority</span>`;
     list.appendChild(row);
   });
+}
+
+// ── Reset: Month strip ────────────────────────────────────────
+function resetMonthStrip() {
+  if (!confirm('Clear this month\'s tracker and start fresh? This can\'t be undone.')) return;
+  const y = TODAY.getFullYear(), m = TODAY.getMonth();
+  const days = new Date(y, m+1, 0).getDate();
+  for (let d=1; d<=days; d++) {
+    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    localStorage.removeItem('ceo4done_'+dateStr);
+  }
+  renderCEO();
 }
 
 // ── Render: Month strip ───────────────────────────────────────
