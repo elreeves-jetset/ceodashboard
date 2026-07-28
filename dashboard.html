@@ -976,10 +976,6 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <span class="app-tab-icon">🧠</span>
     <span class="app-tab-label">Brain Dump</span>
   </button>
-  <button class="app-tab" data-view="habit" onclick="switchView('habit')">
-    <span class="app-tab-icon">📊</span>
-    <span class="app-tab-label">Tracker</span>
-  </button>
   <button class="app-tab" data-view="weekly" onclick="switchView('weekly')">
     <span class="app-tab-icon">📋</span>
     <span class="app-tab-label">Weekly</span>
@@ -992,89 +988,6 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 
 <main>
 
-
-<!-- ══════════════════════════════════════ DAILY SUCCESS TRACKER ══════════════════════════════════════ -->
-<div class="view" id="view-habit">
-
-  <!-- Daily affirmation — auto-rotates each day, no buttons needed -->
-  <div class="aff-card" style="margin-bottom:14px">
-    <div style="flex:1">
-      <div class="aff-cat" id="habit-aff-cat">Today's affirmation</div>
-      <div class="aff-text" id="habit-aff-text">—</div>
-    </div>
-  </div>
-
-  <div class="hero" style="margin-bottom:14px">
-    <div>
-      <h1>Daily Success Tracker</h1>
-      <div class="sub" id="habit-date">—</div>
-    </div>
-    <div class="phase-badge" id="habit-pct-badge">—</div>
-  </div>
-
-  <div class="habit-metrics-grid" id="habit-metrics"></div>
-
-  <div class="tab-sub-row">
-    <button class="tab-sub active" id="hst-today" onclick="setHabitSubtab('today')">Today</button>
-    <button class="tab-sub" id="hst-week" onclick="setHabitSubtab('week')">This Week</button>
-    <button class="tab-sub" id="hst-month" onclick="setHabitSubtab('month')">This Month</button>
-  </div>
-
-  <!-- TODAY PANEL -->
-  <div id="hpanel-today">
-    <div class="habit-layout">
-      <div id="habit-left"></div>
-      <div id="habit-right"></div>
-    </div>
-  </div>
-
-  <!-- WEEK PANEL -->
-  <div id="hpanel-week" style="display:none">
-    <div class="habit-layout">
-      <div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="wnav">
-            <div class="wnav-title" id="habit-wk-title">—</div>
-            <div class="wnav-btns">
-              <button class="wnav-btn" onclick="changeHabitWeek(-1)">‹</button>
-              <button class="wnav-btn mid" onclick="changeHabitWeek(0)">This Week</button>
-              <button class="wnav-btn" onclick="changeHabitWeek(1)">›</button>
-            </div>
-          </div>
-          <div class="wgrid" id="habit-wk-grid"></div>
-          <div id="habit-wk-bars"></div>
-        </div>
-      </div>
-      <div>
-        <div class="ins-card" id="habit-wk-ins"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MONTH PANEL -->
-  <div id="hpanel-month" style="display:none">
-    <div class="habit-layout">
-      <div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="wnav">
-            <div class="wnav-title" id="habit-mo-title">—</div>
-            <div class="wnav-btns">
-              <button class="wnav-btn" onclick="changeHabitMonth(-1)">‹</button>
-              <button class="wnav-btn mid" onclick="changeHabitMonth(0)">This Month</button>
-              <button class="wnav-btn" onclick="changeHabitMonth(1)">›</button>
-            </div>
-          </div>
-          <div class="mgrid" id="habit-mo-grid"></div>
-          <div id="habit-mo-bars"></div>
-        </div>
-      </div>
-      <div>
-        <div class="ins-card" id="habit-mo-ins"></div>
-      </div>
-    </div>
-  </div>
-
-</div>
 
 <!-- ══════════════════════════════════════ SETTINGS ══════════════════════════════════════ -->
 <div class="view" id="view-settings">
@@ -1141,21 +1054,25 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
     <div class="phase-badge" onclick="switchView('settings')" style="align-self:flex-start"><div class="dot"></div><span id="cs-phase-badge">—</span></div>
   </div>
 
-  <!-- Slow Down -->
-  <div class="card cs-slowdown">
-    <div class="card-title">🕯️ Slow Down</div>
-    <div class="cs-dm-row" id="cs-slow-row"></div>
-    <div style="margin-top:14px">
-      <label class="rev-label">Grateful for today</label>
-      <div class="rev-pri-item"><div class="rev-pri-num">1</div><input class="rev-pri-input" id="cs-grat-1" type="text" placeholder="Something you're grateful for…"></div>
-      <div class="rev-pri-item"><div class="rev-pri-num">2</div><input class="rev-pri-input" id="cs-grat-2" type="text" placeholder="Something you're grateful for…"></div>
-      <div class="rev-pri-item"><div class="rev-pri-num">3</div><input class="rev-pri-input" id="cs-grat-3" type="text" placeholder="Something you're grateful for…"></div>
+  <!-- Daily affirmation — auto-rotates each day -->
+  <div class="aff-card">
+    <div style="flex:1">
+      <div class="aff-cat" id="cs-aff-cat">Today's affirmation</div>
+      <div class="aff-text" id="cs-aff-text">—</div>
     </div>
   </div>
 
-  <!-- OVERDUE from yesterday -->
+  <!-- Gratitude -->
+  <div class="card cs-slowdown">
+    <div class="card-title">🙏 Grateful For Today</div>
+    <div class="rev-pri-item"><div class="rev-pri-num">1</div><input class="rev-pri-input" id="cs-grat-1" type="text" placeholder="Something you're grateful for…"></div>
+    <div class="rev-pri-item"><div class="rev-pri-num">2</div><input class="rev-pri-input" id="cs-grat-2" type="text" placeholder="Something you're grateful for…"></div>
+    <div class="rev-pri-item"><div class="rev-pri-num">3</div><input class="rev-pri-input" id="cs-grat-3" type="text" placeholder="Something you're grateful for…"></div>
+  </div>
+
+  <!-- OVERDUE from the last 48 hours -->
   <div id="cs-overdue-section" style="display:none">
-    <div class="cs-section-lbl" style="color:#B04020;margin-top:0">⚠️ Overdue from yesterday</div>
+    <div class="cs-section-lbl" style="color:#B04020;margin-top:0">⚠️ Overdue (last 48 hours)</div>
     <div class="ceo4-overdue-wrap">
       <div id="cs-overdue-list"></div>
     </div>
@@ -1164,6 +1081,12 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
   <!-- TODAY'S FOUR — one task per category -->
   <div class="cs-section-lbl" style="margin-top:0">Today's Focus</div>
   <div class="ceo4-grid" id="cs-four-grid"></div>
+
+  <!-- DAILY HABITS -->
+  <div class="card" style="margin-bottom:22px">
+    <div class="card-title">✅ Daily Habits</div>
+    <div class="cs-dm-row" id="cs-habit-row" style="grid-template-columns:repeat(3,1fr)"></div>
+  </div>
 
   <!-- MONTH STRIP — completion dots -->
   <div class="cs-section-lbl">This Month <span class="cs-month-reset" onclick="resetMonthStrip()">↺ Reset</span></div>
@@ -1360,8 +1283,19 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
       </div>
     </div>
 
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">🌸 Habit Score</div>
-    <div class="rev-num-item"><label class="rev-label">Habit Score (AUTO)</label><div id="mo-habit-auto" style="font-size:20px;font-weight:800;color:var(--gn-deep);padding:6px 0">—</div></div>
+  </div>
+
+  <!-- Section 1b: Habit Tracker — Auto (percentage trackers, moved from the old Tracker tab) -->
+  <div class="rev-section">
+    <div class="rev-section-hdr">🌸 Habit Tracker — Auto</div>
+    <div class="rev-num-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="rev-num-item"><label class="rev-label">This Month</label><div id="mo-habit-auto" style="font-size:20px;font-weight:800;color:var(--gn-deep);padding:6px 0">—</div></div>
+      <div class="rev-num-item"><label class="rev-label">Current Streak 🔥</label><div id="mo-habit-streak" style="font-size:20px;font-weight:800;padding:6px 0">—</div></div>
+      <div class="rev-num-item"><label class="rev-label">Best Streak 🏆</label><div id="mo-habit-best" style="font-size:20px;font-weight:800;padding:6px 0">—</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin:14px 0 8px">Per Habit This Month</div>
+    <div id="mo-habit-bars"></div>
+    <div class="ins-card" id="mo-habit-ins" style="margin-top:14px"></div>
   </div>
 
   <!-- Section 2: Month-on-Month Comparison (AUTO) -->
@@ -2101,7 +2035,6 @@ function switchView(v) {
   if(v==='ceo') renderCEO();
   if(v==='cb') renderContentBank();
   if(v==='dump') renderDump();
-  if(v==='habit') renderHabit();
   if(v==='settings') renderSettings();
   if(v==='weekly') renderWeekly();
   if(v==='monthly') renderMonthly();
@@ -2469,10 +2402,6 @@ const HABITS = [
   {id:'winddown',  icon:'🌙', label:'Wind-Down Ritual (read / journal / meditate)', cat:'Wellbeing'},
   {id:'prospecting', icon:'🔍', label:'Prospecting',                         cat:'Business'},
 ];
-const HABIT_CATS = ['Wellbeing','Business'];
-
-let habitSubtab='today', habitWkOff=0, habitMoOff=0;
-
 function hDay(dateKey){ if(!S.habits)S.habits={}; return S.habits[dateKey]||{}; }
 function dayPct(dateKey){ return Math.round(HABITS.filter(x=>hDay(dateKey)[x.id]).length/HABITS.length*100); }
 function hPct(hid,dates){ return dates.length?Math.round(dates.filter(d=>hDay(d)[hid]).length/dates.length*100):0; }
@@ -2517,155 +2446,17 @@ function longestMoStreak(off){ const t=dk(TODAY); let best=0,cur=0; allMonthDate
 function toggleHabit(hid){
   const k=dk(TODAY); if(!S.habits)S.habits={}; if(!S.habits[k])S.habits[k]={};
   S.habits[k][hid]=!S.habits[k][hid]; save();
-  renderHabitMetrics(); renderTodayPanel();
+  renderCEO();
 }
 
-function setHabitSubtab(tab){
-  habitSubtab=tab;
-  ['today','week','month'].forEach(t=>{
-    document.getElementById('hst-'+t).classList.toggle('active',t===tab);
-    document.getElementById('hpanel-'+t).style.display=t===tab?'':'none';
-  });
-  if(tab==='today')renderTodayPanel();
-  else if(tab==='week')renderWeekPanel();
-  else renderMonthPanel();
-}
-function changeHabitWeek(dir){ habitWkOff=dir===0?0:habitWkOff+dir; renderWeekPanel(); }
-function changeHabitMonth(dir){ habitMoOff=dir===0?0:habitMoOff+dir; renderMonthPanel(); }
-
-function renderHabit(){
-  // Daily affirmation — pure date-based rotation, changes automatically each day
-  const dayIdx = Math.floor((TODAY - new Date(TODAY.getFullYear(),0,1)) / 86400000) % AFFIRMATIONS.length;
-  const aCat = AFF_CATS.find(c=>dayIdx>=c.start&&dayIdx<=c.end) || AFF_CATS[0];
-  const hac=document.getElementById('habit-aff-cat'); if(hac) hac.textContent=aCat.label;
-  const hat=document.getElementById('habit-aff-text'); if(hat) hat.textContent=AFFIRMATIONS[dayIdx];
-  document.getElementById('habit-date').textContent=TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const pct=dayPct(dk(TODAY)), badge=document.getElementById('habit-pct-badge');
-  badge.textContent='Today: '+pct+'%';
-  badge.style.background=pct===100?'var(--gn-s)':'var(--pk-s)';
-  badge.style.color=pct===100?'var(--gn-deep)':'var(--pk-deep)';
-  renderHabitMetrics();
-  setHabitSubtab(habitSubtab);
-}
-
-function renderHabitMetrics(){
-  const pct=dayPct(dk(TODAY)), streak=curStreak(), best=bestStreak(), wp=weekPct(0), mp=monthPct(0), mt=monthTotal(0);
-  const metrics=[
-    {val:pct+'%',     lbl:"Today's Completion",  cls:pct===100?'hm-green':''},
-    {val:streak+(streak===1?' day':' days'), lbl:'Current Streak 🔥', cls:streak>=3?'hm-gold':''},
-    {val:best+(best===1?' day':' days'),   lbl:'Best Streak 🏆',     cls:''},
-    {val:wp+'%',      lbl:'This Week',            cls:wp>=80?'hm-green':''},
-    {val:mp+'%',      lbl:'This Month',           cls:mp>=80?'hm-green':''},
-    {val:mt,          lbl:'Total This Month',     cls:mt>0?'hm-green':''},
-  ];
-  document.getElementById('habit-metrics').innerHTML=metrics.map(m=>`<div class="habit-metric ${m.cls}"><div class="habit-metric-val">${m.val}</div><div class="habit-metric-lbl">${m.lbl}</div></div>`).join('');
-}
-
-function renderTodayPanel(){
-  const todayKey=dk(TODAY), h=hDay(todayKey), pct=dayPct(todayKey), done=HABITS.filter(x=>h[x.id]).length;
-  const left=document.getElementById('habit-left');
-  left.innerHTML=`<div class="card" style="margin-bottom:14px"><div class="card-title">Today — ${done} of ${HABITS.length} habits complete</div><div class="hbar"><div class="hbar-fill" style="width:${pct}%;background:${pct===100?'linear-gradient(90deg,var(--gn),#8DD4AE)':'linear-gradient(90deg,var(--pk),#E8A0BC)'}"></div></div></div>`;
-  HABIT_CATS.forEach(cat=>{
-    const catHabits=HABITS.filter(x=>x.cat===cat); if(!catHabits.length)return;
-    const sec=document.createElement('div'); sec.className='card'; sec.style.marginBottom='14px';
-    sec.innerHTML=`<div class="card-title">${cat}</div>`;
-    catHabits.forEach(habit=>{
-      const checked=!!h[habit.id], hs=hStreak(habit.id);
-      const item=document.createElement('div'); item.className=`habit-item${checked?' checked':''}`;
-      item.innerHTML=`<div class="habit-cb"><span class="habit-cb-tick">✓</span></div><span class="habit-icon">${habit.icon}</span><span class="habit-lbl">${habit.label}</span>${hs>=2?`<span class="habit-streak-pill${hs>=5?' hot':''}">${hs>=5?'🔥':'⭐'} ${hs}d</span>`:''}`;
-      item.addEventListener('click',()=>toggleHabit(habit.id));
-      sec.appendChild(item);
-    });
-    left.appendChild(sec);
-  });
-
-  const right=document.getElementById('habit-right'); right.innerHTML='';
-  const mDates=pastMonthDates(0);
-  const mCard=document.createElement('div'); mCard.className='card'; mCard.style.marginBottom='14px';
-  mCard.innerHTML='<div class="card-title">This Month — Per Habit</div>';
-  HABITS.forEach(habit=>{
-    const p2=hPct(habit.id,mDates), col=p2>=80?'var(--gn)':p2>=50?'var(--pk)':'#E8A060';
-    mCard.innerHTML+=`<div class="hap-row"><div class="hap-lbl" title="${habit.label}">${habit.icon} ${habit.label}</div><div class="hap-barwrap"><div class="hap-barfill" style="width:${p2}%;background:${col}"></div></div><div class="hap-pct">${p2}%</div></div>`;
-  });
-  right.appendChild(mCard);
-  const insCard=document.createElement('div'); insCard.className='ins-card';
-  buildWeekInsights(insCard,0); right.appendChild(insCard);
-}
-
-function buildWeekInsights(el, off){
-  const t=dk(TODAY), dates=getWeekDates(off).filter(d=>d<=t);
-  el.innerHTML=`<div class="ins-title">✨ Weekly Insights</div>`;
-  if(!dates.length){el.innerHTML+=`<div class="ins-row"><div class="ins-txt">No habit data recorded yet this week.</div></div>`;return;}
-  const wp2=weekPct(off);
-  const hpcts=HABITS.map(h=>({h,p:hPct(h.id,dates)})).sort((a,b)=>b.p-a.p);
-  const strongest=hpcts[0], weakest=hpcts[hpcts.length-1];
-  const perfect=hpcts.filter(x=>x.p===100).map(x=>x.h.label);
-  const needs=hpcts.filter(x=>x.p<50).map(x=>x.h.label);
-  const rows=[
-    {i:'📊', t:`Overall: <strong>${wp2}%</strong> completion this week`},
-    {i:'⭐', t:`Strongest habit: <strong>${strongest.h.icon} ${strongest.h.label}</strong> (${strongest.p}%)`},
-    {i:'👀', t:`Needs focus: <strong>${weakest.h.icon} ${weakest.h.label}</strong> (${weakest.p}%)`},
-  ];
-  if(perfect.length) rows.push({i:'🏆', t:`Perfect this week: <strong>${perfect.slice(0,3).join(', ')}</strong>${perfect.length>3?` +${perfect.length-3} more`:''}`});
-  if(needs.length) rows.push({i:'💪', t:`Intention for next week: <strong>${needs.slice(0,2).join(', ')}</strong>`});
-  el.innerHTML+=rows.map(r=>`<div class="ins-row"><div class="ins-ico">${r.i}</div><div class="ins-txt">${r.t}</div></div>`).join('');
-}
-
-function renderWeekPanel(){
-  const dates=getWeekDates(habitWkOff), t=dk(TODAY);
-  const d0=new Date(dates[0]), d6=new Date(dates[6]);
-  document.getElementById('habit-wk-title').textContent=`${d0.toLocaleDateString('en-GB',{day:'numeric',month:'short'})} – ${d6.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}`;
-
-  const grid=document.getElementById('habit-wk-grid'); grid.innerHTML='';
-  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach((name,i)=>{
-    const dk2=dates[i], isFut=dk2>t, pct2=isFut?-1:dayPct(dk2), isToday=dk2===t;
-    const date=new Date(dk2);
-    let rcls=isFut?'rfut':pct2===0?'r0':pct2===100?'r100':pct2>=70?'rhi':pct2>=40?'rmid':'rlo';
-    const cell=document.createElement('div'); cell.className=`wday${isToday?' is-today':''}`;
-    cell.innerHTML=`<div class="wday-name">${name}</div><div class="wday-date">${date.getDate()}</div><div class="wday-ring ${rcls}">${isFut?'·':pct2===0?'—':pct2+'%'}</div>`;
-    grid.appendChild(cell);
-  });
-
-  const barsEl=document.getElementById('habit-wk-bars');
-  barsEl.innerHTML='<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:10px">Per Habit This Week</div>';
-  const past=dates.filter(d=>d<=t);
+// Per-habit monthly % bars — used in Monthly Review ("percentage trackers")
+function renderHabitBars(el, off){
+  el.innerHTML='';
+  const past=pastMonthDates(off);
   HABITS.forEach(habit=>{
     const p2=hPct(habit.id,past), col=p2>=80?'var(--gn)':p2>=50?'var(--pk)':'#E8A060';
-    barsEl.innerHTML+=`<div class="hap-row"><div class="hap-lbl">${habit.icon} ${habit.label}</div><div class="hap-barwrap"><div class="hap-barfill" style="width:${p2}%;background:${col}"></div></div><div class="hap-pct">${p2}%</div></div>`;
+    el.innerHTML+=`<div class="hap-row"><div class="hap-lbl" title="${habit.label}">${habit.icon} ${habit.label}</div><div class="hap-barwrap"><div class="hap-barfill" style="width:${p2}%;background:${col}"></div></div><div class="hap-pct">${p2}%</div></div>`;
   });
-  buildWeekInsights(document.getElementById('habit-wk-ins'), habitWkOff);
-}
-
-function renderMonthPanel(){
-  const all=allMonthDates(habitMoOff), t=dk(TODAY);
-  document.getElementById('habit-mo-title').textContent=new Date(all[0]).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-
-  const grid=document.getElementById('habit-mo-grid'); grid.innerHTML='';
-  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(n=>{const h2=document.createElement('div');h2.className='mgrid-hdr';h2.textContent=n;grid.appendChild(h2);});
-  const fd=new Date(all[0]); let dow=fd.getDay(); if(dow===0)dow=7;
-  for(let i=1;i<dow;i++){const e=document.createElement('div');e.className='mday empty';grid.appendChild(e);}
-  all.forEach(dk2=>{
-    const isFut=dk2>t, date=new Date(dk2), isToday=dk2===t;
-    const hd=hDay(dk2), hasSome=!isFut&&Object.values(hd).some(Boolean);
-    let cls='mday';
-    if(isFut)cls+=' mfut';
-    else if(!hasSome)cls+=' mno';
-    else{const p2=dayPct(dk2);cls+=p2===100?' m100':p2>=70?' mhi':p2>=40?' mmid':p2>0?' mlo':' m0';}
-    if(isToday)cls+=' mtoday';
-    const cell=document.createElement('div'); cell.className=cls;
-    cell.textContent=date.getDate();
-    if(!isFut)cell.title=`${dk2}: ${hasSome?dayPct(dk2)+'%':'no data'}`;
-    grid.appendChild(cell);
-  });
-
-  const barsEl=document.getElementById('habit-mo-bars');
-  barsEl.innerHTML='<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:10px">Per Habit This Month</div>';
-  const past=pastMonthDates(habitMoOff);
-  HABITS.forEach(habit=>{
-    const p2=hPct(habit.id,past), col=p2>=80?'var(--gn)':p2>=50?'var(--pk)':'#E8A060';
-    barsEl.innerHTML+=`<div class="hap-row"><div class="hap-lbl">${habit.icon} ${habit.label}</div><div class="hap-barwrap"><div class="hap-barfill" style="width:${p2}%;background:${col}"></div></div><div class="hap-pct">${p2}%</div></div>`;
-  });
-  buildMonthInsights(document.getElementById('habit-mo-ins'), habitMoOff);
 }
 
 function buildMonthInsights(el, off){
@@ -4086,14 +3877,25 @@ function toggleCeo4Done(cat) {
 }
 
 function getOverdueFour() {
-  const y = new Date(TODAY); y.setDate(y.getDate() - 1);
-  const yKey = 'ceo4_' + dk(y);
-  const yStored = JSON.parse(localStorage.getItem(yKey) || 'null');
-  if (!yStored) return [];
-  const yDone = getCeo4Done(y);
-  return ['client','content','team','prospect']
-    .filter(cat => yStored[cat] && !yDone[cat])
-    .map(cat => ({ cat, ...yStored[cat] }));
+  // Look back 48 hours (last 2 days) instead of just yesterday.
+  // Most recent day wins per category so we don't show duplicate overdue items.
+  const items = [];
+  const seenCats = new Set();
+  for (let back = 1; back <= 2; back++) {
+    const y = new Date(TODAY); y.setDate(y.getDate() - back);
+    const yDateStr = dk(y);
+    const yStored = JSON.parse(localStorage.getItem('ceo4_' + yDateStr) || 'null');
+    if (!yStored) continue;
+    const yDone = JSON.parse(localStorage.getItem('ceo4done_' + yDateStr) || '{}');
+    ['client','content','team','prospect'].forEach(cat => {
+      if (seenCats.has(cat)) return;
+      if (yStored[cat] && !yDone[cat]) {
+        items.push({ cat, date: yDateStr, ...yStored[cat] });
+        seenCats.add(cat);
+      }
+    });
+  }
+  return items;
 }
 
 // ── Render: Overdue (4-card system) ──────────────────────────
@@ -4117,11 +3919,10 @@ function renderOverdue() {
     const row = document.createElement('div'); row.className = 'ceo4-od-item';
     row.innerHTML = `<div class="ceo4-od-chk" title="Mark done">✓</div><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat" style="background:${col}22;color:${col}">${catNames[item.cat]||''}</span>`;
     row.querySelector('.ceo4-od-chk').addEventListener('click', () => {
-      // Mark done for yesterday so it disappears
-      const y = new Date(TODAY); y.setDate(y.getDate() - 1);
-      const d = getCeo4Done(y);
+      // Mark done for the day this item came from so it disappears
+      const d = JSON.parse(localStorage.getItem('ceo4done_' + item.date) || '{}');
       d[item.cat] = true;
-      localStorage.setItem('ceo4done_' + dk(y), JSON.stringify(d));
+      localStorage.setItem('ceo4done_' + item.date, JSON.stringify(d));
       renderOverdue();
     });
     list.appendChild(row);
@@ -4161,7 +3962,7 @@ function renderMonthStrip() {
     const isToday  = d === todayDom;
     let cls = 'month-dot ';
     if (isFuture) cls += 'md-future';
-    else if (count === 4) cls += 'md-all';
+    else if (count/4 >= 0.7) cls += 'md-all';
     else if (count > 0)  cls += 'md-some';
     else                 cls += 'md-none';
     if (isToday) cls += ' md-today';
@@ -4374,28 +4175,14 @@ function renderCEO() {
   const el_d = document.getElementById('cs-date');
   if(el_d) el_d.textContent = TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  // Slow Down — gentle self-care ticks + gratitude
-  const SLOWDOWN = [
-    {id:'candle',    icon:'🕯️', label:'Light a candle'},
-    {id:'podcast',   icon:'🎧', label:'Listen to a podcast'},
-    {id:'meditate',  icon:'🧘', label:'Meditate / breathe'},
-    {id:'offscreen', icon:'📵', label:'Screen-free 10 mins'},
-  ];
+  // Daily affirmation — pure date-based rotation, changes automatically each day
+  const dayIdx = Math.floor((TODAY - new Date(TODAY.getFullYear(),0,1)) / 86400000) % AFFIRMATIONS.length;
+  const aCat = AFF_CATS.find(c=>dayIdx>=c.start&&dayIdx<=c.end) || AFF_CATS[0];
+  const el_ac = document.getElementById('cs-aff-cat'); if(el_ac) el_ac.textContent = aCat.label;
+  const el_at = document.getElementById('cs-aff-text'); if(el_at) el_at.textContent = AFFIRMATIONS[dayIdx];
+
+  // Gratitude
   const slowKey = dk(TODAY);
-  if (!S.slowChecks) S.slowChecks = {};
-  if (!S.slowChecks[slowKey]) S.slowChecks[slowKey] = {};
-  const slowEl = document.getElementById('cs-slow-row');
-  if (slowEl) {
-    slowEl.innerHTML = '';
-    SLOWDOWN.forEach(sd => {
-      const done = !!S.slowChecks[slowKey][sd.id];
-      const btn = document.createElement('div');
-      btn.className = `cs-dm-btn${done?' done':''}`;
-      btn.innerHTML = `<div class="cs-dm-icon">${sd.icon}</div><div class="cs-dm-label">${sd.label}</div>`;
-      btn.onclick = () => { S.slowChecks[slowKey][sd.id]=!S.slowChecks[slowKey][sd.id]; save(); btn.classList.toggle('done',!!S.slowChecks[slowKey][sd.id]); };
-      slowEl.appendChild(btn);
-    });
-  }
   if (!S.gratitude) S.gratitude = {};
   if (!S.gratitude[slowKey]) S.gratitude[slowKey] = {};
   [1,2,3].forEach(n => {
@@ -4446,6 +4233,24 @@ function renderCEO() {
       btn.innerHTML = `<div class="cs-dm-icon">${dm.icon}</div><div class="cs-dm-label">${dm.label}</div>`;
       btn.onclick = () => { S.dmChecks[dmKey][dm.id]=!S.dmChecks[dmKey][dm.id]; save(); btn.classList.toggle('done',!!S.dmChecks[dmKey][dm.id]); };
       dmEl.appendChild(btn);
+    });
+  }
+
+  // Daily Habits (Movement / Wind-Down / Prospecting)
+  const habitKey = dk(TODAY);
+  if (!S.habits) S.habits = {};
+  if (!S.habits[habitKey]) S.habits[habitKey] = {};
+  const habitEl = document.getElementById('cs-habit-row');
+  if (habitEl) {
+    habitEl.innerHTML = '';
+    HABITS.forEach(h => {
+      const done = !!S.habits[habitKey][h.id];
+      const hs = hStreak(h.id);
+      const btn = document.createElement('div');
+      btn.className = `cs-dm-btn${done?' done':''}`;
+      btn.innerHTML = `<div class="cs-dm-icon">${h.icon}</div><div class="cs-dm-label">${h.label}</div>${hs>=2?`<div style="font-size:10px;font-weight:700;color:var(--pk-deep);margin-top:2px">${hs>=5?'🔥':'⭐'} ${hs}d</div>`:''}`;
+      btn.onclick = () => { toggleHabit(h.id); };
+      habitEl.appendChild(btn);
     });
   }
 
@@ -4871,6 +4676,21 @@ function renderMonthly() {
     habitAutoEl.textContent = pct + '%';
     habitAutoEl.style.color = pct >= 70 ? 'var(--gn-deep)' : pct >= 40 ? '#C9945B' : 'var(--pk-deep)';
   }
+  const habitStreakEl = document.getElementById('mo-habit-streak');
+  if (habitStreakEl) {
+    const streak = curStreak();
+    habitStreakEl.textContent = streak + (streak===1?' day':' days');
+    habitStreakEl.style.color = streak >= 3 ? '#C9945B' : 'var(--text)';
+  }
+  const habitBestEl = document.getElementById('mo-habit-best');
+  if (habitBestEl) {
+    const best = bestStreak();
+    habitBestEl.textContent = best + (best===1?' day':' days');
+  }
+  const habitBarsEl = document.getElementById('mo-habit-bars');
+  if (habitBarsEl) renderHabitBars(habitBarsEl, revMonthOff);
+  const habitInsEl = document.getElementById('mo-habit-ins');
+  if (habitInsEl) buildMonthInsights(habitInsEl, revMonthOff);
 
   // Section 2: Month-on-Month comparison (AUTO)
   const compareEl = document.getElementById('mr-compare-body');
