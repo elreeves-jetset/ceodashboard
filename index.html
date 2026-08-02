@@ -3253,152 +3253,95 @@ const WEEKLY_REVIEW = [
 // Referral-partner outreach, new-audience touchpoints and UAE-expansion groundwork
 // dominate; only a couple of lightweight CRM/pipeline checks remain, reframed
 // around new enquiries rather than "existing open quotes."
+// CEO_CLIENT — "Luxury Travel Focus" card.
+// Rewritten 2026-08-02 (v2) per her direct feedback: she didn't want abstract
+// "reach out to this type of business" tasks — she wanted concrete, numbered,
+// systematic tasks that mine networks she already has (LinkedIn, phone
+// contacts, Facebook, WhatsApp history, past collaborators/hotel/event
+// contacts), the same way the platform sweeps already work. Two new sweep
+// platforms (phone/fb) were added for this — see _buildSweepItem.
 const CEO_CLIENT = [
-  // ── Her original priority list ────────────────────────────────
-  { text:'Contact previous travel enquiries who never booked', time:'20 mins', crm:true,
-    why:'An old enquiry isn\'t a no — it\'s often just bad timing. A short personal check-in can turn a 6-month-old lead into this month\'s booking.' },
-  { text:'Reach out to a wedding planner about a referral partnership', time:'20 mins',
-    why:'One wedding planner relationship can hand you a steady stream of honeymoon and destination-wedding enquiries for years.' },
-  { text:'Contact a personal assistant or EA about booking travel for their principal', time:'20 mins',
-    why:'PAs and EAs book luxury travel constantly and want one trusted agent to hand it to — that could be you.' },
-  { text:'Build a relationship with a concierge company', time:'20 mins',
-    why:'Concierge companies are asked for travel recommendations daily. Becoming their go-to agent is a steady referral channel.' },
-  { text:'Message a luxury hotel about becoming a preferred agent partner', time:'20 mins',
-    why:'A direct relationship with a hotel\'s sales team can mean better rates, upgrades and first-look offers for your clients.' },
-  { text:'Reach out to equestrian or horse-riding clients about travel', time:'15 mins',
-    why:'Equestrian circles are close-knit and affluent — one relationship here often opens a whole community.' },
-  { text:'Network with an event organiser about travel tie-ins', time:'20 mins',
-    why:'Event organisers work with exactly the audience you want — a partnership puts you in front of them without cold outreach.' },
-  { text:'Contact a business about corporate or incentive travel', time:'25 mins',
-    why:'Corporate travel is higher-ticket and recurring — one company relationship can be worth dozens of individual bookings.' },
-  { text:'Build a relationship with a villa company', time:'20 mins',
-    why:'Villa companies are quoted constantly by families who\'d rather have one expert manage the whole trip — that\'s your opening.' },
-  { text:'Connect with a photographer or wedding supplier about referrals', time:'15 mins',
+  // ── Network sweeps — remember where you left off (see _buildSweepItem) ──
+  { _sweepPlatform:'phone', time:'20 mins',
+    why:'Your phone contacts are full of people you\'ve already met — some of them just need reminding that you sell travel.' },
+  { _sweepPlatform:'fb', time:'20 mins',
+    why:'Facebook friends skew older and more established than Instagram — often exactly the demographic who books luxury travel.' },
+
+  // ── Time capsule ─────────────────────────────────────────────────
+  { text:'Review old WhatsApp chats from {month} — reconnect with anyone worth messaging', time:'20 mins', _monthsAgo:12,
+    why:'A year is enough time for plans, budgets and life circumstances to change. Old conversations are often more ready to reopen than you\'d think.' },
+  { text:'Review old WhatsApp chats from {month} — reconnect with anyone worth messaging', time:'15 mins', _monthsAgo:6,
+    why:'Six months is long enough for someone to have gone quiet without meaning to. A friendly reopen costs nothing.' },
+
+  // ── LinkedIn connections — screen for opportunities ─────────────
+  { text:'Go through 20 LinkedIn connections and identify potential travel clients', time:'20 mins',
+    why:'Your existing network is full of people you haven\'t thought to pitch travel to yet — this makes sure none of them get missed.' },
+  { text:'Go through 20 LinkedIn connections and identify potential business partners', time:'20 mins',
+    why:'The right business partner — a planner, a concierge, a hotel contact — is often already in your network, just not yet asked.' },
+  { text:'Go through 20 LinkedIn connections and identify anyone based in the UAE', time:'20 mins',
+    why:'Your expansion needs local relationships. Some of them are already one message away in your existing connections.' },
+  { text:'Go through 20 LinkedIn connections and identify anyone in hospitality or events', time:'20 mins',
+    why:'Hospitality and events people are natural referral partners — you likely already know more of them than you realise.' },
+
+  // ── Targeted LinkedIn search & connect (10 at a time) ────────────
+  { text:'Search LinkedIn for 10 hotel sales, marketing or PR directors and send a connection request', time:'20 mins',
+    why:'These are the people who actually greenlight PR features and collaborations — a direct connection is worth far more than a general enquiry email.' },
+  { text:'Message 10 LinkedIn connections about PR or hotel collaboration opportunities', time:'25 mins',
+    why:'Most collaboration opportunities never happen simply because nobody asks. Ten messages is a real, doable start.' },
+  { text:'Search LinkedIn for 10 wedding planners and send a connection request', time:'20 mins',
+    why:'One wedding planner relationship can hand you a steady stream of honeymoon enquiries for years — start with ten new ones.' },
+  { text:'Search LinkedIn for 10 concierge or lifestyle-management contacts and connect', time:'20 mins',
+    why:'Concierge companies are asked for travel recommendations daily. Being one connection request away makes you easy to find.' },
+  { text:'Search LinkedIn for 10 villa or property management contacts and connect', time:'20 mins',
+    why:'Villa companies are quoted constantly by families who\'d rather have one expert manage the whole trip.' },
+  { text:'Search LinkedIn for 10 wedding photographers or suppliers and connect', time:'20 mins',
     why:'Wedding suppliers are trusted by engaged couples right when they\'re starting to think about the honeymoon.' },
-  { text:'Research this month\'s luxury travel trends', time:'20 mins', soft:true,
-    why:'Clients book with the agent who knows the most. Staying ahead of trends gives you fresh, credible content and conversation openers.' },
-  { text:'Create this week\'s travel offer', time:'25 mins', days:[1],
-    why:'A specific, time-bound offer gives people a reason to enquire today instead of "someday."' },
-  { text:'Reach out to an influencer about a travel collaboration', time:'20 mins',
-    why:'The right collaboration — even a small one — puts your name in front of an audience who already trusts the person recommending you.' },
-  { text:'Contact a previous hotel partner to reconnect', time:'15 mins',
-    why:'Dormant partnerships are the easiest to reactivate — you\'ve already done the relationship-building once.' },
-  { text:'Join and introduce yourself in a relevant Facebook group', time:'15 mins', soft:true,
-    why:'Travel-planning and luxury lifestyle groups are full of people actively looking for exactly what you offer.' },
-  { text:'Post this week\'s travel offer to your socials', time:'15 mins', days:[2],
-    why:'An offer only works if people see it. Posting it is what turns a good idea into actual enquiries.' },
-  { text:'Research a local networking event to attend', time:'15 mins', soft:true,
-    why:'In-person relationships convert faster than cold DMs. One good event can be worth a month of online outreach.' },
+  { text:'Search LinkedIn for 10 corporate travel or HR contacts and connect', time:'20 mins',
+    why:'Corporate and incentive travel is higher-ticket and recurring — one relationship can be worth dozens of individual bookings.' },
+  { text:'Search LinkedIn for 10 UAE-based contacts and send a connection request', time:'20 mins',
+    why:'Every UAE connection now is groundwork for your expansion — visibility in that market has to start somewhere concrete.' },
+  { text:'Search LinkedIn for 10 luxury brand or hospitality marketing contacts and connect', time:'20 mins',
+    why:'PR and collaboration opportunities come from marketing teams, not just hotels — spas, members\' clubs and luxury brands run partnerships too.' },
+  { text:'Search LinkedIn for 10 lifestyle or travel influencers and start engaging', time:'20 mins',
+    why:'Genuine engagement before you ever pitch a collaboration is what makes the eventual ask land as familiar, not cold.' },
+  { text:'Search LinkedIn for 10 event organisers and send a connection request', time:'20 mins',
+    why:'Event organisers work with exactly your target audience — a direct connection puts you in front of them without cold outreach.' },
+  { text:'Search Instagram for 10 equestrian or polo accounts and start engaging', time:'15 mins',
+    why:'Equestrian and polo circles are close-knit and affluent — one relationship here tends to open a whole community.' },
 
-  // ── Referral-partner outreach ──────────────────────────────────
-  { text:'Reach out to a bridal boutique about a honeymoon referral partnership', time:'20 mins',
-    why:'Every bride in a bridal boutique is about to plan a honeymoon — get there before she books it herself.' },
-  { text:'Contact a fine jewellery or engagement ring boutique about a referral partnership', time:'20 mins',
-    why:'Engagement season leads directly to honeymoon season. A jeweller relationship puts you at the very start of that journey.' },
-  { text:'Message a florist who works high-end weddings about referrals', time:'15 mins',
-    why:'Wedding florists talk to couples early and often — a warm introduction from them carries real trust.' },
-  { text:'Contact a wedding fair or bridal expo about exhibiting or partnering', time:'25 mins', soft:true,
-    why:'One expo can put you in front of hundreds of engaged couples who are actively planning and ready to spend.' },
-  { text:'Reach out to a bridal magazine or wedding blog about a feature', time:'20 mins',
-    why:'A feature builds credibility instantly and keeps working for you long after it\'s published.' },
-  { text:'Message a five-star restaurant manager about a referral partnership', time:'20 mins',
-    why:'Their guests are exactly your target client, and a simple mutual-referral arrangement costs nothing to set up.' },
-  { text:'Reach out to a luxury spa or wellness retreat about a referral exchange', time:'20 mins',
-    why:'Wellness clients travel for retreats and relaxation — a natural crossover into the trips you sell.' },
-  { text:'Contact a personal chef or private catering company with HNW clients', time:'20 mins',
-    why:'Anyone serving high-net-worth households regularly is a direct line to your ideal client.' },
-  { text:'Reach out to a luxury car dealership about their client base', time:'20 mins',
-    why:'People who buy luxury cars spend on luxury travel — shared clientele, easy conversation starter.' },
-  { text:'Contact a private jet or aviation company about a cross-referral', time:'25 mins',
-    why:'Private aviation clients are the highest-ticket travellers there are — one relationship here can change your business.' },
-  { text:'Build a relationship with a superyacht broker or charter company', time:'25 mins',
-    why:'Superyacht clients extend their trips with luxury land travel — a natural, high-value referral partnership.' },
-  { text:'Reach out to a luxury chauffeur or car service company for referrals', time:'15 mins',
-    why:'Chauffeur companies see affluent clients daily and are often happy to recommend a trusted travel partner in return.' },
-  { text:'Contact an interior designer with HNW clients about a referral relationship', time:'20 mins',
-    why:'Designers build long, trusted relationships with wealthy clients — exactly the kind of introduction that converts.' },
-  { text:'Message a night nanny or maternity nurse agency about family travel', time:'20 mins',
-    why:'Their clients are affluent young families who travel often and need someone who understands family logistics.' },
-  { text:'Reach out to a fertility or IVF clinic about babymoon travel', time:'20 mins',
-    why:'Babymoons are an emotional, high-intent booking — a sensitive, well-timed partnership here is genuinely valuable to their clients.' },
-  { text:'Contact a divorce or family lawyer about post-settlement travel', time:'20 mins',
-    why:'A first trip after a big life change is a meaningful, often high-budget booking — and an underused referral source.' },
-  { text:'Message a business or executive coach about a cross-referral', time:'20 mins',
-    why:'Their clients are ambitious and often affluent — a natural audience overlap with almost no competition.' },
-  { text:'Reach out to a boutique gym or Pilates studio with an affluent client base', time:'15 mins',
-    why:'Affluent, health-conscious clients are exactly who books luxury wellness and adventure travel.' },
-  { text:'Contact a champagne or luxury drinks brand about an event collaboration', time:'20 mins',
-    why:'A joint event or giveaway puts your name in front of an audience that already spends on luxury experiences.' },
-
-  // ── Corporate, community & networking ──────────────────────────
-  { text:'Contact a corporate HR department about incentive travel', time:'25 mins',
-    why:'Incentive and team-trip budgets are recurring and significant — one HR relationship can be worth many bookings.' },
-  { text:'Reach out to a local business chamber about networking opportunities', time:'15 mins', soft:true,
-    why:'Chambers put you directly in front of local business owners who both travel and refer other business owners.' },
-  { text:'Message an executive assistants\' networking group about a partnership', time:'20 mins',
-    why:'EA communities actively share trusted supplier recommendations with each other — one good impression spreads.' },
-  { text:'Reach out to a women\'s business networking group for a talk or collaboration', time:'20 mins',
-    why:'A talk or feature builds authority fast and puts you in front of a room of exactly the right audience at once.' },
-  { text:'Contact a private school parent association about a travel talk or partnership', time:'20 mins',
-    why:'School-gate networks are close, affluent, and travel constantly — one relationship can open the whole community.' },
-  { text:'Message a golf or country club about membership or partnership opportunities', time:'20 mins',
-    why:'Club members are relationship-driven and high-spending — exactly the kind of client who books through a trusted introduction.' },
-  { text:'Reach out to a padel or tennis club — an active, affluent membership base', time:'15 mins',
-    why:'These clubs skew affluent and social, which means referrals travel fast once you\'re known there.' },
-  { text:'Contact a local university alumni network about a talk or partnership', time:'20 mins',
-    why:'Alumni networks are built on trust and shared identity — a warm way into an established, affluent community.' },
-  { text:'Reach out to a sports agent about athlete or family travel', time:'20 mins',
-    why:'Athletes and their families travel often and value discretion and a single trusted point of contact.' },
-  { text:'Contact an art gallery or auction house about their clientele', time:'20 mins',
-    why:'Gallery and auction clients travel for collecting, events and openings — a natural, high-value audience.' },
-  { text:'Reach out to a polo club or equestrian event organiser about a partnership', time:'20 mins',
-    why:'Polo and equestrian circles are tight-knit and wealthy — one relationship here tends to open several more.' },
-
-  // ── UAE expansion ───────────────────────────────────────────────
-  { text:'Research UAE-based real estate or relocation agents for a partnership', time:'20 mins',
-    why:'Relocation agents meet affluent movers at the exact moment they need local recommendations — including travel.' },
-  { text:'Join a Dubai or Abu Dhabi expat Facebook or WhatsApp group', time:'15 mins', soft:true,
-    why:'Expat communities actively ask each other for trusted recommendations — visible, helpful presence there builds warm leads.' },
-  { text:'Reach out to a UAE-based wedding planner about your expansion', time:'20 mins',
-    why:'Local UAE partnerships now build the foundation your expansion will rely on later — start the relationships early.' },
-  { text:'Research UAE networking events or business groups relevant to your expansion', time:'20 mins', soft:true,
-    why:'Knowing where the right rooms are before you need to be in them means you\'re ready to move fast when the time comes.' },
-  { text:'Contact a UAE Chamber of Commerce or business council about membership', time:'20 mins',
-    why:'Formal business membership signals credibility and gives you a direct route into the local business community.' },
-  { text:'Message a Dubai school parent network or community group', time:'15 mins', soft:true,
-    why:'Affluent parent communities in the UAE are close and referral-driven, just like they are in the UK.' },
-  { text:'Reach out to a UAE tourism board or press contact', time:'20 mins',
-    why:'Tourism boards want agents actively selling their destination — a relationship here can mean FAM trips and co-marketing.' },
-
-  // ── Visibility, credibility & offers ────────────────────────────
-  { text:'Reach out to a tourism board about a press or partnership opportunity', time:'20 mins',
-    why:'Tourism boards actively support agents who sell their destination — press trips and co-marketing are there for the asking.' },
-  { text:'Contact a travel journalist or luxury lifestyle publication for a feature', time:'20 mins',
-    why:'Press coverage builds trust at scale in a way no amount of self-promotion can match.' },
-  { text:'Reach out to a luxury lifestyle influencer with an engaged following', time:'20 mins',
-    why:'A smaller, genuinely engaged audience often converts better than a huge disengaged one — look for real trust, not just reach.' },
-  { text:'Research an upcoming luxury travel trade show or expo to attend', time:'20 mins', soft:true,
-    why:'Trade shows compress months of relationship-building into a couple of days — plan ahead so you don\'t miss the good ones.' },
-  { text:'Audit your Instagram bio and highlights for a clear call to action', time:'15 mins', soft:true,
-    why:'Every new visitor decides whether to enquire within seconds. Your bio has to make the next step obvious.' },
-  { text:'Research and save 3 new luxury properties or destinations to recommend', time:'20 mins', soft:true,
-    why:'Fresh recommendations are what make you sound like an expert instead of a search engine — and become next week\'s content.' },
-  { text:'Reach out to a past hotel FAM trip contact to stay top of mind', time:'15 mins',
-    why:'Hotel relationships fade fast without contact. A quick check-in keeps you front of mind for the next invite and the next quote.' },
+  // ── Reconnecting with people you already know ────────────────────
+  { text:'Reconnect with previous collaborators — anyone worth a follow-up?', time:'20 mins',
+    why:'You\'ve already done the relationship-building once. Reopening it is far easier than starting from zero with someone new.' },
+  { text:'Reconnect with previous hotel sales, marketing or PR contacts you haven\'t spoken to in a while', time:'15 mins',
+    why:'Dormant hotel relationships fade fast. A quick check-in keeps you front of mind for the next PR feature or collaboration.' },
+  { text:'Review previous networking event contacts — follow up with 5 you haven\'t messaged since', time:'20 mins',
+    why:'People you\'ve already met convert faster than cold contacts. A follow-up keeps the connection from going cold.' },
   { text:'Message a previous FAM trip host to explore a joint offer or promotion', time:'20 mins',
     why:'You\'ve already built the relationship and the content — turning it into an offer is the easiest next step.' },
-  { text:'Research what your top 3 competitors are offering this month', time:'15 mins', soft:true,
-    why:'Knowing what else your future clients are seeing helps you position your offer as the obviously better choice.' },
-
-  // ── Reactivating & converting what's already warm ───────────────
-  { text:'Follow up personally with every new enquiry from the last 2 weeks', time:'25 mins', phase:'mid', crm:true,
-    why:'Warm enquiries go cold without follow-up. Mid-month is the moment to convert interest into commitment.' },
-  { text:'Reach out to a past enquiry who went quiet — timing may have just been wrong', time:'20 mins',
-    why:'Most "no"s are actually "not right now." A friendly, no-pressure check-in often reopens the door.' },
+  { text:'Contact previous travel enquiries who never booked', time:'20 mins', crm:true,
+    why:'An old enquiry isn\'t a no — it\'s often just bad timing. A short personal check-in can turn a 6-month-old lead into this month\'s booking.' },
   { text:'Message 5 previous clients — are you planning travel this year?', time:'20 mins',
     why:'Previous clients already trust you completely. A simple check-in often triggers an immediate new booking.' },
   { text:'Ask 3 happy clients for a referral or testimonial', time:'15 mins',
     why:'Your best clients know exactly who else should be booking through you. One ask opens two or three new conversations.' },
+
+  // ── Offer, visibility & pipeline hygiene ──────────────────────────
+  { text:'Create this week\'s travel offer', time:'25 mins', days:[1],
+    why:'A specific, time-bound offer gives people a reason to enquire today instead of "someday."' },
+  { text:'Post this week\'s travel offer to your socials', time:'15 mins', days:[2],
+    why:'An offer only works if people see it. Posting it is what turns a good idea into actual enquiries.' },
+  { text:'Join and introduce yourself in a relevant Facebook group', time:'15 mins', soft:true,
+    why:'Travel-planning and luxury lifestyle groups are full of people actively looking for exactly what you offer.' },
+  { text:'Research a local networking event to attend', time:'15 mins', soft:true,
+    why:'In-person relationships convert faster than cold DMs. One good event can be worth a month of online outreach.' },
+  { text:'Research UAE networking events or business groups relevant to your expansion', time:'20 mins', soft:true,
+    why:'Knowing where the right rooms are before you need to be in them means you\'re ready to move fast when the time comes.' },
+  { text:'Audit your Instagram bio and highlights for a clear call to action', time:'15 mins', soft:true,
+    why:'Every new visitor decides whether to enquire within seconds. Your bio has to make the next step obvious.' },
+  { text:'Research and save 3 new luxury properties or destinations to recommend', time:'20 mins', soft:true,
+    why:'Fresh recommendations are what make you sound like an expert instead of a search engine — and become next week\'s content.' },
+  { text:'Follow up personally with every new enquiry from the last 2 weeks', time:'25 mins', phase:'mid', crm:true,
+    why:'Warm enquiries go cold without follow-up. Mid-month is the moment to convert interest into commitment.' },
   { text:'10-minute review of new enquiries — has every single one had a reply?', time:'10 mins', days:[5], crm:true, soft:true,
     why:'A missed reply is a missed booking. A quick weekly check makes sure no new enquiry ever falls through the cracks.' },
 ];
@@ -4011,7 +3954,9 @@ function renderPriorities() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// PLATFORM SWEEP LETTER TRACKING (Instagram / LinkedIn)
+// PLATFORM SWEEP LETTER TRACKING (LinkedIn / Instagram / phone contacts / Facebook)
+// Used by both CEO_PROSPECT (new-conversation sweeps) and CEO_CLIENT
+// (mining her own existing network for travel clients & business partners).
 // TikTok has no alphabetical follower list, so it isn't swept this way —
 // see CEO_PROSPECT for its engagement-based replacement instead.
 // Progress is remembered per platform (localStorage 'sweep_<platform>') and
@@ -4030,12 +3975,21 @@ function _advanceSweep(platform) {
   const cur = parseInt(localStorage.getItem('sweep_'+platform)||'0');
   localStorage.setItem('sweep_'+platform, String((cur+_SWEEP_CHUNK)%26));
 }
+const _SWEEP_PLATFORM_NAMES = { li:'LinkedIn connections', ig:'Instagram followers', phone:'phone contacts', fb:'Facebook friends' };
 function _buildSweepItem(item) {
-  if (!item._sweepPlatform) return item;
-  const p = item._sweepPlatform;
-  const range = _sweepRange(p);
-  const platformName = p==='li'?'LinkedIn connections':'Instagram followers';
-  return { ...item, text: `Go through ${platformName} — names beginning with ${range}` };
+  if (item._sweepPlatform) {
+    const p = item._sweepPlatform;
+    const range = _sweepRange(p);
+    const platformName = _SWEEP_PLATFORM_NAMES[p] || p;
+    return { ...item, text: `Go through ${platformName} — names beginning with ${range} (continuing where you left off)` };
+  }
+  // "Time capsule" items — bakes in a real month/year, e.g. WhatsApp chats from this month last year
+  if (item._monthsAgo) {
+    const d = new Date(TODAY.getFullYear(), TODAY.getMonth() - item._monthsAgo, 1);
+    const monthLabel = d.toLocaleDateString('en-GB', { month:'long', year:'numeric' });
+    return { ...item, text: item.text.replace('{month}', monthLabel) };
+  }
+  return item;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -4046,13 +4000,14 @@ function getTodayFour() {
   const stored = JSON.parse(localStorage.getItem(key) || 'null');
   if (stored?.client && stored?.content && stored?.team && stored?.prospect) return stored;
 
-  const client   = _cs_pickItem(CEO_CLIENT,   'ceo_client',   []);
-  const content  = _cs_pickItem(CEO_CONTENT,  'ceo_content',  []);
-  const team     = _cs_pickItem(CEO_TEAM,     'ceo_team',     []);
-  const rawPros  = _cs_pickItem(CEO_PROSPECT, 'ceo_prospect', []);
-  const prospect = _buildSweepItem(rawPros); // bake letter into text at selection time
+  const rawClient = _cs_pickItem(CEO_CLIENT,   'ceo_client',   []);
+  const content   = _cs_pickItem(CEO_CONTENT,  'ceo_content',  []);
+  const team      = _cs_pickItem(CEO_TEAM,     'ceo_team',     []);
+  const rawPros   = _cs_pickItem(CEO_PROSPECT, 'ceo_prospect', []);
+  const client    = _buildSweepItem(rawClient); // bake letter-range / dynamic date into text at selection time
+  const prospect  = _buildSweepItem(rawPros);
 
-  _markRecentDone('ceo_client',   client._idx);
+  _markRecentDone('ceo_client',   rawClient._idx);
   _markRecentDone('ceo_content',  content._idx);
   _markRecentDone('ceo_team',     team._idx);
   _markRecentDone('ceo_prospect', rawPros._idx);
@@ -4070,7 +4025,7 @@ function swapFour(cat) {
   stored.swapped[cat].push(stored[cat]._idx);
   const pools = { client:CEO_CLIENT, content:CEO_CONTENT, team:CEO_TEAM, prospect:CEO_PROSPECT };
   const raw = _cs_pickItem(pools[cat], 'ceo_'+cat, stored.swapped[cat]);
-  const newItem = cat==='prospect' ? _buildSweepItem(raw) : raw;
+  const newItem = _buildSweepItem(raw); // no-op unless the item has _sweepPlatform/_monthsAgo
   _markRecentDone('ceo_'+cat, raw._idx);
   stored[cat] = newItem;
   localStorage.setItem(key, JSON.stringify(stored));
@@ -4085,10 +4040,10 @@ function toggleCeo4Done(cat) {
   const wasUndone = !d[cat];
   if (d[cat]) delete d[cat]; else d[cat] = true;
   localStorage.setItem('ceo4done_' + dk(TODAY), JSON.stringify(d));
-  // Advance letter when a platform sweep prospect task is ticked done
-  if (wasUndone && cat === 'prospect') {
+  // Advance the letter-range on whichever card was a platform sweep, regardless of category
+  if (wasUndone) {
     const four = getTodayFour();
-    if (four.prospect._sweepPlatform) _advanceSweep(four.prospect._sweepPlatform);
+    if (four[cat]?._sweepPlatform) _advanceSweep(four[cat]._sweepPlatform);
   }
   renderCEO();
   renderMonthStrip();
