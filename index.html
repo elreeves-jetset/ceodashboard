@@ -4210,7 +4210,7 @@ function personalIdeas() {
 function hashText(text){let h=2166136261;for(const c of text)h=Math.imul(h^c.charCodeAt(0),16777619);return (h>>>0).toString(36);}
 function renderPersonalIdeas() {
  const el=document.getElementById('cb-week-grid');el.innerHTML='';
- const ideas=(S.dump||[]).filter(t=>t.cat==='content'&&!t.archived);
+ const ideas=(S.dump||[]).filter(t=>t.cat==='content'&&!t.archived&&!t.done);
  if(!ideas.length)el.innerHTML='<p class="muted">Ideas categorised as Content in Brain Dump will appear here.</p>';
  ideas.forEach(t=>{const card=document.createElement('article');card.className='idea-card'+(t.done?' idea-complete':'');card.innerHTML=`<div class="eyebrow">Added by you</div><h2>${esc(t.text)}</h2><button class="action-btn" aria-pressed="${!!t.done}">${t.done?'✓ Created':'Mark created'}</button>`;card.querySelector('button').onclick=()=>{t.done=!t.done;save();renderPersonalIdeas();};el.appendChild(card);});
 }
@@ -4474,7 +4474,7 @@ function renderStudio(){
  const el=document.getElementById('cp-studio-selected');if(!el)return;
  if(!state.session){el.innerHTML='<p class="cp-muted">Sign in to Content Performance to see your selected ideas.</p>';return;}
  if(!state.data){el.innerHTML='<p class="cp-muted">Loading your selected ideas…</p>';return;}
- const tasks=state.data.tasks.filter(t=>!['removed','dismissed'].includes(t.payload.status));
+ const tasks=state.data.tasks.filter(t=>!['removed','dismissed','complete'].includes(t.payload.status));
  const ideas=selectedIdeas();
  el.innerHTML=tasks.map(t=>`<article class="cp-card"><h3>${escape(t.payload.title)}</h3><p>${escape(t.payload.creativeDirection||t.payload.hook||'')}</p><span class="cp-status">${t.payload.status==='complete'?'Created':'In your content planner'}</span>${button('View task','viewtask',`data-id="${t.task_id}"`)}</article>`).join('')+ideas.map(i=>`<article class="cp-card"><h3>${escape(i.title)}</h3><p>${escape(i.premise)}</p><span class="cp-status">Selected in Ideas Inbox</span>${button('Open Ideas Inbox','performance')}</article>`).join('');
  if(!tasks.length&&!ideas.length)el.innerHTML='<p class="cp-muted">No ideas selected yet. Open Content Performance & Ideas Inbox to choose what you want to create.</p>';
