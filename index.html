@@ -4361,18 +4361,31 @@ const dateLabel=value=>value?new Date(value+'T12:00:00').toLocaleDateString('en-
 const nice=k=>k.replace(/([a-z])([A-Z])/g,'$1 $2').replace(/^./,x=>x.toUpperCase());
 const configured=()=>/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(cfg.supabaseUrl||'')&&!!cfg.publishableKey;
 const apiURL=()=>cfg.supabaseUrl+'/functions/v1/content-performance';
-try{state.session=JSON.parse(sessionStorage.getItem('myceo_cp_session')||'null');}catch{}
-function setSession(s){if(!s||!state.session||s.user?.id!==state.session.user?.id)state.generation++;state.session=s;if(s)sessionStorage.setItem('myceo_cp_session',JSON.stringify(s));else sessionStorage.removeItem('myceo_cp_session');}
-async function auth(path,body){const r=await fetch(cfg.supabaseUrl+'/auth/v1/'+path,{method:'POST',headers:{apikey:cfg.publishableKey,'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(20000)});const d=await r.json();if(!r.ok)throw Error(d.msg||d.error_description||'Sign-in could not be completed. Please retry.');return d;}
+const SESSION_KEY='myceo_cp_session';
+const readSession=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null');}catch{return null;}};
+try{const old=sessionStorage.getItem(SESSION_KEY);if(!localStorage.getItem(SESSION_KEY)&&old)localStorage.setItem(SESSION_KEY,old);sessionStorage.removeItem(SESSION_KEY);}catch{}
+state.session=readSession();
+function setSession(s){if(!s||!state.session||s.user?.id!==state.session.user?.id)state.generation++;state.session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(SESSION_KEY);}
+async function auth(path,body,method='POST',jwt){
+ const r=await fetch(cfg.supabaseUrl+'/auth/v1/'+path,{method,headers:{apikey:cfg.publishableKey,'Content-Type':'application/json',...(jwt?{Authorization:'Bearer '+jwt}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(20000)});
+ const d=await r.json();if(!r.ok){const e=Error(r.status===429?'Email sign-in is temporarily limited. Use your app password, or wait before requesting another email.':d.msg||d.error_description||d.message||'Sign-in could not be completed. Please retry.');e.status=r.status;throw e;}return d;
+}
 let refreshing;
 async function token(){
  if(!state.session)throw Error('Please sign in.');
- if(state.session.expires_at*1000<Date.now()+60000){
-  if(!refreshing)refreshing=auth('token?grant_type=refresh_token',{refresh_token:state.session.refresh_token}).then(s=>setSession(s)).catch(e=>{setSession(null);state.data=null;throw e;}).finally(()=>refreshing=null);
+ if(!state.session.expires_at||state.session.expires_at*1000<Date.now()+60000){
+  if(!refreshing){const renew=async()=>{
+   const generation=state.generation,latest=readSession();
+   if(!latest)throw Error('Please sign in again.');
+   if(latest.expires_at*1000>Date.now()+60000){state.session=latest;return;}
+   try{const s=await auth('token?grant_type=refresh_token',{refresh_token:latest.refresh_token});if(generation===state.generation)setSession(s);}
+   catch(e){if(generation===state.generation&&[400,401,403].includes(e.status)){setSession(null);state.data=null;}throw e;}
+  };refreshing=(navigator.locks?navigator.locks.request('myceo-cp-refresh',renew):renew()).finally(()=>refreshing=null);}
   await refreshing;
  }
- return state.session.access_token;
+ if(!state.session)throw Error('Please sign in.');return state.session.access_token;
 }
+window.addEventListener('storage',e=>{if(e.key===SESSION_KEY){const old=state.session;state.session=readSession();if(old?.user?.id!==state.session?.user?.id){state.generation++;state.data=null;}if(!state.session){state.undo=[];renderGate();}else refresh(true);}});
 async function api(op,method='GET',body,query=''){
  const jwt=await token();let last;
  for(let attempt=0;attempt<(method==='GET'?3:1);attempt++){
@@ -4384,14 +4397,18 @@ async function api(op,method='GET',body,query=''){
  throw last;
 }
 function message(text,error=false){const el=document.getElementById('cp-message');if(el){el.className=error?'cp-error':'cp-toast';el.textContent=text;el.hidden=false;}else state.error=text;}
-function shell(){root.innerHTML=`<header class="cp-header"><div><div class="cp-kicker">Your creative intelligence</div><h1>Content Performance</h1><p class="cp-muted">The evidence. The opportunity. Your next move.</p></div><div class="cp-inline">${button('Content studio','studio')}${state.session?button('Sign out','logout'):''}</div></header><div id="cp-message" role="status" hidden></div><div id="cp-body"></div><div id="cp-selection" class="cp-sticky" hidden></div>`;}
+function shell(){root.innerHTML=`<header class="cp-header"><div><div class="cp-kicker">Your creative intelligence</div><h1>Content Performance</h1><p class="cp-muted">The evidence. The opportunity. Your next move.</p></div><div class="cp-inline">${button('Content studio','studio')}${state.session?button('Set app password','password')+button('Sign out','logout'):''}</div></header><div id="cp-message" role="status" hidden></div><div id="cp-body"></div><div id="cp-selection" class="cp-sticky" hidden></div>`;}
 function renderGate(){shell();const el=document.getElementById('cp-body');
  if(!configured()){el.innerHTML='<section class="cp-empty"><h2>Your private workspace is ready to connect</h2><p class="cp-muted">The secure storage connection needs to be finished before your reviews and ideas can sync here. Your existing dashboard is still available.</p></section>';renderPlanner();return;}
- el.innerHTML=`<section class="cp-card" style="max-width:480px"><h2>Sign in to your private reviews</h2><p class="cp-muted">Use your dashboard owner email. Your reviews, selections and content tasks stay in sync across devices.</p><form id="cp-login"><label>Email<input name="email" type="email" autocomplete="email" required></label><button class="cp-primary" type="submit">Email me a sign-in link</button></form><form id="cp-verify" hidden><label>Sign-in code<input name="code" inputmode="numeric" autocomplete="one-time-code" required></label><button class="cp-primary" type="submit">Sign in</button></form></section>`;
- const email=el.querySelector('[name=email]');
- el.querySelector('#cp-login').onsubmit=async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{await auth('otp?redirect_to='+encodeURIComponent('https://elreeves-jetset.github.io/ceodashboard/'),{email:email.value,create_user:false});message('Check your email and tap the sign-in link. It will bring you back to this dashboard.');}catch(e){message(e.message,true);}finally{b.disabled=false;}};
- el.querySelector('#cp-verify').onsubmit=async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{setSession(await auth('verify',{email:email.value,token:el.querySelector('[name=code]').value,type:'email'}));await refresh();}catch(e){message(e.message,true);}finally{b.disabled=false;}};renderPlanner();
+ el.innerHTML=`<section class="cp-card" style="max-width:480px"><h2>Sign in to your private reviews</h2><p class="cp-muted">Sign in once on this device. Your app will remember you.</p><form id="cp-login"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>App password<input name="password" type="password" autocomplete="current-password" required></label><button class="cp-primary" type="submit">Sign in</button></form><details><summary>First time here or forgotten your password?</summary><p>Already signed in in another browser? Open Content there and choose <strong>Set app password</strong>. Then use that password here.</p><p>Otherwise, request an email link below. Once it opens your review, choose <strong>Set app password</strong>, then return to your home-screen app to sign in.</p><form id="cp-email"><label>Email for sign-in link<input name="email" type="email" autocomplete="email" required></label><button type="submit">Email me a sign-in link</button></form><p class="cp-muted">Email links may open in Safari instead of your home-screen app.</p></details></section>`;
+ el.querySelector('#cp-login').onsubmit=async e=>{e.preventDefault();const form=e.target,b=e.submitter;b.disabled=true;try{setSession(await auth('token?grant_type=password',{email:form.elements.email.value.trim(),password:form.elements.password.value}));form.reset();await refresh();}catch(err){message(err.message,true);}finally{b.disabled=false;}};
+ el.querySelector('#cp-email').onsubmit=async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{await auth('otp?redirect_to='+encodeURIComponent('https://elreeves-jetset.github.io/ceodashboard/'),{email:e.target.elements.email.value.trim(),create_user:false});message('Check your newest email and tap the link. Then choose Set app password to connect your home-screen app.');}catch(err){message(err.message,true);}finally{setTimeout(()=>{b.disabled=false;},60000);}};renderPlanner();
 }
+function setAppPassword(){
+ const d=dialog('Set app password',`<p>Choose a password to sign in directly on your phone, without email links. Use at least 12 characters.</p><form><label>New app password<input name="password" type="password" autocomplete="new-password" minlength="12" required></label><label>Confirm app password<input name="confirm" type="password" autocomplete="new-password" minlength="12" required></label><button class="cp-primary" type="submit">Save app password</button><p role="status"></p></form>`);
+ d.querySelector('form').onsubmit=async e=>{e.preventDefault();const f=e.target,b=e.submitter,status=f.querySelector('[role=status]');if(f.elements.password.value!==f.elements.confirm.value){status.textContent='The passwords do not match.';return;}b.disabled=true;try{await auth('user',{password:f.elements.password.value},'PUT',await token());f.reset();d.close();message('App password saved. Open your home-screen app and sign in with your email and this password.');}catch(err){status.textContent=err.message;}finally{b.disabled=false;}};
+}
+
 async function refresh(quiet=false){
  if(!configured()||!state.session){renderGate();return;}if(state.loading)return;
  state.loading=true;const generation=state.generation;
@@ -4487,10 +4504,11 @@ function renderPlanner(){
 function openPlanner(taskId){const t=state.data?.tasks.find(t=>t.task_id===taskId);if(t){const anchor=weekStart(),target=_dateFromKey(t.payload.planWeek);revWeekOff=Math.round((target-anchor)/604800000);}else revWeekOff=0;switchView('weekly');renderPlanner();if(taskId)document.getElementById('content-task-'+taskId)?.scrollIntoView({block:'center',behavior:'smooth'});}
 async function handle(event){const b=event.target.closest('[data-cp]');if(!b)return;const a=b.dataset.cp;b.disabled=true;
  try{
+  if(a==='password')setAppPassword();
   if(a==='studio')switchView('cb');
   if(a==='performance')switchView('performance');
   if(a==='refresh')await refresh();
-  if(a==='logout'){const session=state.session;setSession(null);state.data=null;state.undo=[];renderGate();if(session)fetch(cfg.supabaseUrl+'/auth/v1/logout',{method:'POST',headers:{apikey:cfg.publishableKey,Authorization:'Bearer '+session.access_token}}).catch(()=>{});}
+  if(a==='logout'){const session=state.session;setSession(null);state.data=null;state.undo=[];renderGate();if(session)fetch(cfg.supabaseUrl+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:cfg.publishableKey,Authorization:'Bearer '+session.access_token}}).catch(()=>{});}
   if(a==='platform'){state.platform=b.dataset.value;render();}
   if(a==='pillar')document.getElementById('cp-pillar-detail').textContent=b.dataset.detail;
   if(a==='fullreview')dialog('Full weekly review',`<pre>${escape(state.data.review.fullReport||'The full report was not supplied.')}</pre>`);
