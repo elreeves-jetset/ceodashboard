@@ -908,7 +908,8 @@ nav, .ritual-btn, .dm-btn, .big3-card, .ceo-suggestion, .dump-task, .cb-card, .c
 .ceo4-od-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--rs);background:white;border:1px solid #F0C0A8;margin-bottom:6px}
 .ceo4-od-item:last-child{margin-bottom:0}
 .ceo4-od-chk{width:18px;height:18px;border-radius:50%;border:2px solid #E8A090;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;background:white;font-size:8px;font-weight:900;color:transparent}
-.ceo4-od-chk:hover{background:#F5D0C0;color:#C05030}
+.ceo4-od-chk:hover{border-color:#C05030}
+.ceo4-od-chk:focus-visible{outline:2px solid #94617c;outline-offset:3px}
 .ceo4-od-label{font-size:12px;flex:1;color:var(--text);line-height:1.4}
 .ceo4-od-cat{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
 
@@ -3530,7 +3531,7 @@ function renderOverdue() {
   list.innerHTML = '';
   items.forEach(item => {
     const row = document.createElement('div'); row.className = 'ceo4-od-item';
-    row.innerHTML = `<button type="button" class="ceo4-od-chk" aria-label="Mark ${esc(item.text)} done">✓</button><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat">${item.date}</span>`;
+    row.innerHTML = `<button type="button" class="ceo4-od-chk" aria-label="Mark ${esc(item.text)} done"></button><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat">${item.date}</span>`;
     row.style.cursor='pointer';
     row.addEventListener('click', () => {
       markTaskDonePeriod(item.date, item.id);
@@ -3542,7 +3543,7 @@ function renderOverdue() {
   });
   priOd.forEach(item => {
     const row = document.createElement('div'); row.className = 'ceo4-od-item';
-    row.innerHTML = `<button type="button" class="ceo4-od-chk" aria-label="Complete priority">✓</button><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat">Priority · ${item.date}</span>`;
+    row.innerHTML = `<button type="button" class="ceo4-od-chk" aria-label="Complete priority"></button><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat">Priority · ${item.date}</span>`;
     row.style.cursor='pointer';
     row.onclick=()=>{const date=_dateFromKey(item.date),done=getPriDone(date);done[item.id]=true;localStorage.setItem(_priDoneKey(date),JSON.stringify(done));renderOverdue();renderPriorities();};
     list.appendChild(row);
