@@ -996,7 +996,21 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 .weekly-add{display:flex;gap:10px;margin-top:18px}.weekly-todo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}.weekly-todo label{display:flex;align-items:center;gap:12px;min-height:44px;overflow-wrap:anywhere;min-width:0}.weekly-todo input{width:22px;height:22px;flex-shrink:0;accent-color:#94617c}.weekly-todo span{min-width:0}.planner-status{margin:0 0 20px}
 @media(max-width:900px){.project-grid{grid-template-columns:1fr}.monthly-numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.planner-grid{grid-template-columns:1fr}.planner-section{padding:20px}.planner-heading .action-btn{font-size:12px}.monthly-numbers .rev-label{font-size:11px}}
+.dm-daily-check{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;font-size:16px;font-weight:600}
+.dm-daily-check input{width:24px;height:24px;accent-color:#94617c;flex-shrink:0}
 </style>
+<!-- CP_STYLE_START -->
+<style>
+/* Scoped to the new workspace and its existing-weekly-planner integration. */
+.cp{--cp-ink:#302a31;--cp-soft:#756674;--cp-accent:#795269;--cp-line:#e5dce2;--cp-green:#356b58;color:var(--cp-ink)}
+.cp-header{position:static;height:auto;top:auto;z-index:auto;padding:0;background:transparent;border:0;display:flex;justify-content:space-between;gap:24px;align-items:start;margin:25px 0}.cp-header h1{font-size:clamp(30px,4vw,48px);font-weight:650;letter-spacing:-1.6px}.cp-kicker{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#785d6e;font-weight:750}.cp-muted{color:#756674;font-size:13px;line-height:1.6}.cp-toolbar,.cp-tabs,.cp-inline{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.cp-toolbar{padding:18px 0;border-bottom:1px solid #e5dce2;margin-bottom:24px}.cp label{font-size:12px;font-weight:650;display:grid;gap:7px}.cp input,.cp select,.cp textarea{font:inherit;color:inherit;background:#fff;border:1px solid #d5c6d0;border-radius:10px;padding:11px;max-width:100%;min-width:0}.cp input[type=checkbox]{width:20px;height:20px;accent-color:#795269}.cp textarea{width:100%;min-height:90px;resize:vertical}.cp button,.cp-btn{font:inherit;font-size:13px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid #d9cbd4;border-radius:12px;background:#fff;color:#604653;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}.cp button:hover,.cp-btn:hover{background:#f4eaf0;border-color:#9c7e90}.cp button:disabled{cursor:wait;opacity:.6}.cp button.cp-primary{background:#795269;color:white;border-color:#795269}.cp button:focus-visible,.cp input:focus-visible,.cp select:focus-visible,.cp textarea:focus-visible,.cp summary:focus-visible{outline:3px solid #6e87b0;outline-offset:3px}.cp-tabs{margin:20px 0}.cp-tabs button[aria-pressed=true]{background:#302a31;color:white;border-color:#302a31}.cp-status{display:inline-flex;align-items:center;padding:6px 10px;border-radius:20px;background:#edf4ef;color:#356b58;font-size:11px;font-weight:700}.cp-status.pending{background:#f4ede2;color:#7b5b2c}.cp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.cp-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-section{margin:32px 0}.cp-section h2{font-size:24px;font-weight:650;letter-spacing:-.5px;margin:0 0 16px}.cp-card{background:white;border:1px solid #e5dce2;border-radius:20px;padding:22px;min-width:0}.cp-card h3{font-size:18px;line-height:1.4;margin:12px 0}.cp-card p{font-size:14px;line-height:1.65;overflow-wrap:anywhere}.cp-judgement{background:#f1edf3;border:1px solid #ded3e2;border-radius:22px;padding:26px}.cp-judgement h2{font-size:26px;margin:8px 0 20px}.cp-judgement .cp-grid p{margin:8px 0 0;font-size:15px;line-height:1.6}.cp-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.cp-metric{padding:18px;background:#fff;border:1px solid #e5dce2;border-radius:16px}.cp-metric strong{display:block;font-size:29px;letter-spacing:-1px;margin:12px 0 8px}.cp-metric small{display:block;font-size:11px;color:#756674}.cp-trend{font-size:12px;display:block}.cp-trend.up{color:#356b58}.cp-trend.down{color:#9c4a3a}.cp-trend.flat{color:#756674}.cp-image{width:100%;height:210px;object-fit:cover;border-radius:12px;background:#eee8ec}.cp-placeholder{height:210px;display:grid;place-content:center;text-align:center;padding:20px;background:linear-gradient(135deg,#f0ecf1,#f5efea);border-radius:12px;color:#786a75;font-size:13px}.cp-post-metrics{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}.cp-post-metrics span{font-size:11px;background:#f4f1f4;padding:6px 9px;border-radius:8px}.cp details{border-top:1px solid #e5dce2;padding-top:12px;margin-top:14px}.cp summary{cursor:pointer;font-size:13px;font-weight:650;line-height:1.6;min-height:32px}.cp dl{font-size:14px}.cp dt{font-weight:700;margin:16px 0 5px}.cp dd{margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}.cp-bars{display:grid;gap:10px}.cp-bar{display:grid!important;grid-template-columns:140px 1fr 70px;gap:10px!important;width:100%;align-items:center;text-align:left;border:0!important;padding:9px 0!important}.cp-bar-track{height:12px;border-radius:20px;background:#eee9ed;overflow:hidden}.cp-bar-fill{height:100%;background:#947387;border-radius:20px}.cp-empty{padding:36px;border:1px dashed #d4c6d0;border-radius:20px;text-align:center;background:#fffcfe}.cp-error{padding:16px;border:1px solid #deb2a6;border-radius:14px;background:#fff4ef;color:#743f32;margin:14px 0;font-size:14px}.cp-filters{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:20px}.cp-idea.selected{border-color:#795269;box-shadow:0 0 0 2px #79526922}.cp-sticky{position:sticky;bottom:16px;z-index:15;background:#302a31;color:white;border-radius:18px;padding:16px 22px;display:flex;gap:14px;align-items:center;justify-content:space-between;box-shadow:0 10px 35px #302a3130}.cp-sticky[hidden]{display:none}.cp-sticky button{background:#fbf5f8}.cp-toast{background:#edf4ef;color:#285440;padding:15px;border-radius:14px;margin:16px 0}.cp-dialog{border:1px solid #d8cbd3;border-radius:22px;padding:25px;max-width:780px;width:calc(100% - 32px);max-height:88vh;color:#302a31}.cp-dialog::backdrop{background:#302a3170;backdrop-filter:blur(3px)}.cp-dialog .cp-close{float:right}.cp-dialog form{clear:both}.cp-dialog pre{white-space:pre-wrap;font:14px/1.7 system-ui;overflow-wrap:anywhere}.cp-dialog fieldset{border:1px solid #e5dce2;border-radius:16px;margin:20px 0;padding:18px}.cp-dialog legend{font-weight:700;padding:0 8px}.cp-form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.cp-form-grid .wide{grid-column:1/-1}.cp-task{padding:18px;border:1px solid #e5dce2;border-radius:16px;background:#fff;margin:12px 0}.cp-task-head{display:flex;gap:12px;align-items:center;justify-content:space-between}.cp-task-head label{display:flex;align-items:center;font-size:15px;gap:12px}.cp-task.complete .cp-task-title{text-decoration:line-through;color:#756674}.cp-skeleton{height:125px;background:linear-gradient(90deg,#eee8ed,#faf7fa,#eee8ed);background-size:200%;border-radius:16px;animation:cp-shimmer 1.5s infinite}.cp-form-help{font-size:12px;color:#756674}.cp-checklabel{display:flex!important;align-items:center;gap:10px!important}.cp-review-period{font-size:16px;font-weight:600}.cp-full-width{grid-column:1/-1}.cp-planner{margin:20px 0}.cp-intro-link{margin:0 0 20px}.cp-user{font-size:12px;max-width:260px;overflow-wrap:anywhere}.cp-compact-list{padding-left:19px;line-height:1.7;font-size:14px}.cp-card a{color:#795269;overflow-wrap:anywhere}.cp-media-caption{font-size:11px;color:#756674;margin-top:6px}
+@keyframes cp-shimmer{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.cp-skeleton{animation:none}.cp *{scroll-behavior:auto!important;transition:none!important}}
+@media(max-width:1000px){.cp-filters{grid-template-columns:repeat(3,minmax(0,1fr))}.cp-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.cp-header{display:block}.cp-grid,.cp-grid.two,.cp-form-grid{grid-template-columns:1fr}.cp-metrics,.cp-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-metric strong{font-size:25px}.cp-card,.cp-judgement{padding:18px}.cp-toolbar{gap:10px}.cp-bar{grid-template-columns:100px 1fr 55px;font-size:11px!important}.cp-sticky{bottom:8px;padding:14px;flex-wrap:wrap}.cp-task-head{align-items:flex-start}.cp-task-head .cp-inline{justify-content:flex-end}.cp-dialog{padding:18px}.cp-filters select{width:100%}}
+
+</style>
+<!-- CP_STYLE_END -->
 </head>
 <body>
 
@@ -1057,7 +1071,9 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 </div>
 
 <!-- ══════════════════════════════════════ CONTENT BANK ══════════════════════════════════════ -->
+<div class="view" id="view-performance"><div id="cp-root" class="cp"></div></div>
 <div class="view" id="view-cb">
+<div class="cp-intro-link"><button class="cp-btn" onclick="switchView('performance')">Content Performance &amp; Ideas Inbox ↗</button></div>
 <details class="context-panel" id="weekly-content-review"><summary>Optional content debrief · this week</summary>
     <p class="muted">What actually landed? Your answers shape the next ideas in Content Studio.</p>
     <label class="rev-label">Best post / moment</label><input id="wr-content-top" class="form-input" placeholder="The topic or opening line people responded to">
@@ -1127,9 +1143,13 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
     </div>
   </div>
 
-  <!-- Daily recurring tasks: at most three, with independent platform checks -->
+  <!-- Daily recurring tasks with independent platform checks -->
   <div class="cs-section-lbl" id="cs-task-heading" style="margin-top:0">Today's Focus · 3 tasks</div>
   <div class="ceo4-grid" id="cs-task-grid"></div>
+
+  <section class="card" style="margin-bottom:22px">
+    <label class="dm-daily-check"><input type="checkbox" id="daily-dm-check"><span>DMs checked &amp; replied to</span></label>
+  </section>
 
   <!-- MONTH STRIP — completion dots -->
   <div class="cs-section-lbl">This Month <span class="cs-month-reset" onclick="resetMonthStrip()">↺ Reset</span></div>
@@ -1199,7 +1219,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   <div class="planner-grid">
   <section class="rev-section planner-section"><h2>This week’s calls &amp; events</h2><label class="rev-label" for="wr-events-plan">Dates, times & details</label><textarea id="wr-events-plan" class="rev-input" rows="3" placeholder="e.g. Tuesday, 7pm — team call"></textarea></section>
   <section class="rev-section planner-section"><h2>To-do this week</h2><div id="wr-todos"></div><form class="weekly-add" onsubmit="event.preventDefault();addWeeklyTodo()"><input class="form-input" id="wr-new-todo" aria-label="New weekly to-do" placeholder="Add a one-off task…"><button class="action-btn" type="submit">Add</button></form></section>
-  <section class="rev-section planner-section planner-wide"><div class="planner-heading"><h2>Content this week</h2><button class="action-btn" onclick="switchView('cb')">Open Content ↗</button></div><label class="rev-label" for="wr-content-plan">Your weekly shortlist</label><textarea id="wr-content-plan" class="rev-input" rows="3" placeholder="Posts, ideas or launches to prioritise…"></textarea></section></div>
+  <section class="rev-section planner-section planner-wide"><div class="planner-heading"><h2>Content this week</h2><button class="action-btn" onclick="switchView('cb')">Open Content ↗</button></div><h3 style="margin:20px 0 8px">Content To Do This Week</h3><div id="cp-weekly-tasks"></div><label class="rev-label" for="wr-content-plan">Your weekly shortlist</label><textarea id="wr-content-plan" class="rev-input" rows="3" placeholder="Posts, ideas or launches to prioritise…"></textarea></section></div>
   <p class="muted planner-status" id="wr-plan-status" role="status">Optional · saved as you type</p>
   <details class="context-panel" id="wr-archive" hidden><summary>Previously saved review</summary><dl></dl></details>
 </div>
@@ -1841,6 +1861,7 @@ function switchView(v) {
   if(v==='settings') renderSettings();
   if(v==='weekly') renderWeekly();
   if(v==='monthly') renderMonthly();
+  if(v==='performance'){document.querySelector('.app-tab[data-view=cb]')?.classList.add('active');window.ContentPerformance?.show();}
 }
 document.querySelectorAll('nav button[data-view]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
 
@@ -3096,7 +3117,33 @@ function taskScheduleStart() {
   }
   return start;
 }
-function getTasksForDate(date) { return RECURRING_SCHEDULE[date.getDay()]; }
+const EXTRA_WEEKDAY_TASKS = {
+  1: {id:'client-outreach', text:'Client Outreach & Prospecting', parts:['LinkedIn','Instagram','WhatsApp']},
+  2: {id:'client-reengagement', text:'Client Re-Engagement', parts:['Past Clients','Previous Enquiries','Upcoming Travel Opportunities']},
+  3: {id:'follow-ups', text:'Follow Ups'},
+  4: {id:'expand-network', text:'Expanding Network', parts:['LinkedIn','Instagram']},
+  5: {id:'review-leads', text:'Review Leads'},
+};
+function fourTaskScheduleStart() {
+  let start=localStorage.getItem('ceotasks_four_start_v1');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(start || '')) {
+    start=dk(TODAY);localStorage.setItem('ceotasks_four_start_v1',start);
+  }
+  return start;
+}
+function sundayReviewStart() {
+  let start=localStorage.getItem('ceotasks_sunday_review_start_v1');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(start || '')) {
+    start=dk(TODAY);localStorage.setItem('ceotasks_sunday_review_start_v1',start);
+  }
+  return start;
+}
+function getTasksForDate(date) {
+  const reviewStart=sundayReviewStart();
+  const tasks=RECURRING_SCHEDULE[date.getDay()],extra=EXTRA_WEEKDAY_TASKS[date.getDay()];
+  if(date.getDay()===0 && dk(date)>=reviewStart) return [...tasks,{id:'weekly-review',text:'Weekly Review'}];
+  return dk(date)>=fourTaskScheduleStart() && extra ? [...tasks,extra] : tasks;
+}
 function getTaskDone(date = TODAY) {
   return JSON.parse(localStorage.getItem('ceotasks_done_v2_' + dk(date)) || '{}');
 }
@@ -3601,6 +3648,12 @@ function renderTaskGrid() {
       label.append(check, document.createTextNode(part));
       parts.appendChild(label);
     });
+    if(item.id==='weekly-review') {
+      const open=document.createElement('button');open.type='button';open.className='action-btn';
+      open.textContent='Open Weekly';
+      open.onclick=()=>{revWeekOff=0;switchView('weekly');};
+      card.querySelector('.ceo4-foot').before(open);
+    }
     const noteBox = card.querySelector('.task-note');
     noteBox.querySelector('button').onclick = () => { localStorage.setItem(noteKey, noteBox.querySelector('textarea').value); noteBox.open = false; };
     container.appendChild(card);
@@ -3743,6 +3796,14 @@ function swapCS(category) {
 }
 
 // ── RENDER ───────────────────────────────────────────────────
+function renderDmCheck() {
+  const input=document.getElementById('daily-dm-check'),date=dk(TODAY);
+  input.checked=!!S.habits?.[date]?.dmReplies;
+  input.onchange=()=>{
+    if(!S.habits)S.habits={};
+    S.habits[date]={...S.habits[date],dmReplies:input.checked};save();
+  };
+}
 function renderCEO() {
   const hr   = new Date().getHours();
   const name  = S.settings?.name ? `, ${S.settings.name}` : '';
@@ -3762,9 +3823,10 @@ function renderCEO() {
   // Overdue strip
   renderOverdue();
 
-  // Three-task daily grid
+  // Daily task grid
   renderTaskGrid();
   renderMonthStrip();
+  renderDmCheck();
 
   // Priorities (tickable)
   renderPriorities();
@@ -3939,6 +4001,7 @@ function renderWeekly() {
   document.getElementById('wr-new-todo').value='';
   document.getElementById('wr-plan-status').textContent='Optional · saved as you type';
   renderPlanArchive('wr',[{label:'Previous entries',data}]);
+  window.ContentPerformance?.renderPlanner();
 }
 function saveMonthResult(key,input) {
   if(!input.validity.valid)return;
@@ -4275,5 +4338,198 @@ if ('serviceWorker' in navigator) {
   }
 })();
 </script>
+<!-- CP_SCRIPT_START -->
+<script>
+// Public configuration only. Writer credentials remain server-side.
+window.CP_CONFIG=Object.freeze({supabaseUrl:'https://cfotxmjccfnefznrgoge.supabase.co',publishableKey:'sb_publishable_AeB8qW_a2y0Wk_kAqzBq0Q_EDkNQZlD'});
+
+/* Content Performance extends the existing views; server data is authoritative. */
+(()=>{
+'use strict';
+const cfg=window.CP_CONFIG||{},root=document.getElementById('cp-root'),planner=document.getElementById('cp-weekly-tasks');
+const state={session:null,data:null,platform:'instagram',week:null,compare:true,rank:'views',filters:{},pending:0,loading:false,undo:[],error:'',generation:0};
+const PILLARS=['Lifestyle','Client/Travel','Business/Prospecting','Educational','Inspiration'];
+const PLATFORM={instagram:'Instagram',tiktok:'TikTok'};
+const escape=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeURL=x=>{try{const u=new URL(x);return u.protocol==='https:'?u.href:'';}catch{return '';}};
+const button=(text,action,attrs='')=>`<button type="button" data-cp="${action}" ${attrs}>${escape(text)}</button>`;
+const key=(kind,week,id)=>`${kind}:${week}:${id}`;
+const labelPlatform=p=>PLATFORM[p]||p;
+const currentWeek=()=>dk(weekStart());
+const selectedWeek=()=>dk(weekStart(_revWkDate(revWeekOff)));
+const dateLabel=value=>value?new Date(value+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'Date unavailable';
+const nice=k=>k.replace(/([a-z])([A-Z])/g,'$1 $2').replace(/^./,x=>x.toUpperCase());
+const configured=()=>/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(cfg.supabaseUrl||'')&&!!cfg.publishableKey;
+const apiURL=()=>cfg.supabaseUrl+'/functions/v1/content-performance';
+try{state.session=JSON.parse(sessionStorage.getItem('myceo_cp_session')||'null');}catch{}
+function setSession(s){if(!s||!state.session||s.user?.id!==state.session.user?.id)state.generation++;state.session=s;if(s)sessionStorage.setItem('myceo_cp_session',JSON.stringify(s));else sessionStorage.removeItem('myceo_cp_session');}
+async function auth(path,body){const r=await fetch(cfg.supabaseUrl+'/auth/v1/'+path,{method:'POST',headers:{apikey:cfg.publishableKey,'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(20000)});const d=await r.json();if(!r.ok)throw Error(d.msg||d.error_description||'Sign-in could not be completed. Please retry.');return d;}
+let refreshing;
+async function token(){
+ if(!state.session)throw Error('Please sign in.');
+ if(state.session.expires_at*1000<Date.now()+60000){
+  if(!refreshing)refreshing=auth('token?grant_type=refresh_token',{refresh_token:state.session.refresh_token}).then(s=>setSession(s)).catch(e=>{setSession(null);state.data=null;throw e;}).finally(()=>refreshing=null);
+  await refreshing;
+ }
+ return state.session.access_token;
+}
+async function api(op,method='GET',body,query=''){
+ const jwt=await token();let last;
+ for(let attempt=0;attempt<(method==='GET'?3:1);attempt++){
+  try{
+   const r=await fetch(apiURL()+'?op='+op+query,{method,headers:{apikey:cfg.publishableKey,Authorization:'Bearer '+jwt,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(20000)});
+   const d=await r.json();if(!r.ok){const e=Error(d.error||'Could not sync. Please retry.');e.status=r.status;if(r.status===401){setSession(null);state.data=null;}throw e;}return d;
+  }catch(e){last=e;if(e.status&&e.status<500)break;if(attempt<2&&method==='GET')await new Promise(r=>setTimeout(r,500*(attempt+1)));}
+ }
+ throw last;
+}
+function message(text,error=false){const el=document.getElementById('cp-message');if(el){el.className=error?'cp-error':'cp-toast';el.textContent=text;el.hidden=false;}else state.error=text;}
+function shell(){root.innerHTML=`<header class="cp-header"><div><div class="cp-kicker">Your creative intelligence</div><h1>Content Performance</h1><p class="cp-muted">The evidence. The opportunity. Your next move.</p></div><div class="cp-inline">${button('Content studio','studio')}${state.session?button('Sign out','logout'):''}</div></header><div id="cp-message" role="status" hidden></div><div id="cp-body"></div><div id="cp-selection" class="cp-sticky" hidden></div>`;}
+function renderGate(){shell();const el=document.getElementById('cp-body');
+ if(!configured()){el.innerHTML='<section class="cp-empty"><h2>Your private workspace is ready to connect</h2><p class="cp-muted">The secure storage connection needs to be finished before your reviews and ideas can sync here. Your existing dashboard is still available.</p></section>';renderPlanner();return;}
+ el.innerHTML=`<section class="cp-card" style="max-width:480px"><h2>Sign in to your private reviews</h2><p class="cp-muted">Use your dashboard owner email. Your reviews, selections and content tasks stay in sync across devices.</p><form id="cp-login"><label>Email<input name="email" type="email" autocomplete="email" required></label><button class="cp-primary" type="submit">Email me a sign-in link</button></form><form id="cp-verify" hidden><label>Sign-in code<input name="code" inputmode="numeric" autocomplete="one-time-code" required></label><button class="cp-primary" type="submit">Sign in</button></form></section>`;
+ const email=el.querySelector('[name=email]');
+ el.querySelector('#cp-login').onsubmit=async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{await auth('otp',{email:email.value,create_user:false});message('Check your email and tap the sign-in link. It will bring you back to this dashboard.');}catch(e){message(e.message,true);}finally{b.disabled=false;}};
+ el.querySelector('#cp-verify').onsubmit=async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{setSession(await auth('verify',{email:email.value,token:el.querySelector('[name=code]').value,type:'email'}));await refresh();}catch(e){message(e.message,true);}finally{b.disabled=false;}};renderPlanner();
+}
+async function refresh(quiet=false){
+ if(!configured()||!state.session){renderGate();return;}if(state.loading)return;
+ state.loading=true;const generation=state.generation;
+ if(!quiet&&!state.data){shell();document.getElementById('cp-body').innerHTML='<div class="cp-grid" aria-label="Loading content performance" aria-busy="true">'+Array(6).fill('<div class="cp-skeleton"></div>').join('')+'</div>';}
+ try{const d=await api('snapshot','GET',null,state.week?'&week='+encodeURIComponent(state.week):'');if(generation!==state.generation)return;state.data=d;state.error='';render();renderPlanner();}
+ catch(e){state.error=e.message;if(!state.session)renderGate();else {render();renderPlanner();}message('Sync interrupted: '+e.message,true);}
+ finally{state.loading=false;}
+}
+function metricValue(m){if(!m||m.value===null||m.value===undefined)return null;return typeof m.value==='number'&&Number.isFinite(m.value)?m.value:null;}
+function metricText(m){const n=metricValue(m);return n===null?'Unavailable':new Intl.NumberFormat('en-GB',{maximumFractionDigits:1}).format(n)+(m.unit==='percent'?'%':m.unit==='seconds'?'s':'');}
+function metrics(){const p=state.platform,r=state.data.review,previous=state.data.previous;const keys=p==='instagram'?['views','reach','interactions','saves','shares','followerChange','profileActions']:['views','forYouTraffic','profileViews','saves','shares','comments','followerChange'];
+ return `<div class="cp-metrics">${keys.map(k=>{const m=r.accountResults[p]?.[k],n=metricValue(m),old=metricValue(previous?.accountResults[p]?.[k]);let trend='';
+ if(state.compare){if(n===null||old===null)trend='<span class="cp-trend flat">Comparison unavailable</span>';else {const diff=n-old,change=m?.unit==='percent'?`${diff>0?'+':''}${diff.toFixed(1)} pp`:old===0?`${diff>0?'+':''}${diff.toLocaleString('en-GB')} vs 0`:`${diff>0?'+':''}${(diff/Math.abs(old)*100).toFixed(1)}%`;trend=`<span class="cp-trend ${diff>0?'up':diff<0?'down':'flat'}">${diff>0?'↑':diff<0?'↓':'→'} ${change} vs previous week</span>`;}}
+ return `<article class="cp-metric"><span class="cp-muted">${escape(nice(k))}</span><strong tabindex="0" title="${escape(n===null?m?.reason||'This metric was not supplied by the data source.':m?.source||'Source not supplied')}">${metricText(m)}</strong>${trend}<small>${escape(m?.source||'Source unavailable')}</small></article>`;}).join('')}</div>`;
+}
+function media(post){const r=state.data.review,asset=r.media.find(m=>m.mediaId===post.mediaId),url=safeURL(state.data.media?.[post.mediaId]);return url?`<img class="cp-image" src="${escape(url)}" alt="${escape(asset?.alt||post.hook)}" loading="lazy" referrerpolicy="no-referrer"><p class="cp-media-caption">Verified review image</p>`:`<div class="cp-placeholder">Image unavailable<br><small>${escape(asset?.unavailableReason||'No verified thumbnail was supplied.')}</small></div>`;}
+function postMetrics(p){return Object.entries(p.metrics).slice(0,8).map(([k,m])=>`<span title="${escape(m.reason||m.source)}">${escape(nice(k))}: ${metricText(m)}</span>`).join('');}
+function score(p){const val=k=>metricValue(p.metrics[k]);if(state.rank==='views')return val('views')??val('reach');if(state.rank==='followerConversion')return val('followerConversion');if(state.rank==='savesShares'){const a=val('saves'),b=val('shares');return a===null||b===null?null:a+b;}return val(state.rank);}
+function postCard(p,low=false){return `<article class="cp-card">${media(p)}<p class="cp-muted">${dateLabel(p.date)} · ${escape(p.format)}</p><h3>${escape(p.hook)}</h3><div class="cp-post-metrics">${postMetrics(p)}</div>${low?`<span class="cp-status pending">${escape({'mature':'Mature result','too-young':'Too young to judge','delayed':'Delayed reporting','unknown':'Evidence incomplete'}[p.maturity])}</span><p>${escape(p.evidence)}</p><p><strong>Creative question</strong><br>${escape(p.issue)}</p><p><strong>Smallest useful test</strong><br>${escape(p.test)}</p>`:`<p><strong>Why it worked</strong><br>${escape(p.why)}</p><p><strong>What this means for future content</strong><br>${escape(p.implication)}</p>`}<details><summary>Complete analysis</summary><p>${escape(p.analysis||'No further analysis supplied.')}</p>${safeURL(p.url)?`<a href="${escape(safeURL(p.url))}" target="_blank" rel="noopener noreferrer">Open original post ↗</a>`:''}</details></article>`;}
+function sourceTask(kind,sourceId){return state.data.tasks.find(t=>t.source_key===key(kind,state.data.review.weekId,sourceId));}
+function sourceButtons(kind,sourceId){const t=sourceTask(kind,sourceId);return t&&!['removed','dismissed'].includes(t.payload.status)?`<span class="cp-status">${t.payload.status==='complete'?'Complete':'Added to planner'}</span>${button('View task','viewtask',`data-id="${t.task_id}"`)}`:t?.payload.status==='dismissed'?`<span class="cp-muted">Dismissed</span>${button('Restore','restore',`data-id="${t.task_id}"`)}`:`${button(t?.payload.status==='removed'?'Add again':'Add to this week','addsource',`data-kind="${kind}" data-id="${escape(sourceId)}"`)}${kind==='action'?button('Dismiss','dismisssource',`data-kind="${kind}" data-id="${escape(sourceId)}"`):''}`;}
+function render(){
+ if(!state.session||!configured()){renderGate();return;}shell();const body=document.getElementById('cp-body'),d=state.data;
+ if(!d){body.innerHTML=`<div class="cp-empty"><h2>Unable to load your reviews</h2>${button('Retry','refresh')}</div>`;return;}
+ if(!d.review){body.innerHTML=`<div class="cp-empty"><h2>Your first review will appear here</h2><p class="cp-muted">Waiting for a completed Content Review. Content Ideas sync separately after the review is saved.</p>${button('Check for updates','refresh')}</div>`;return;}
+ const r=d.review,p=state.platform,posts=r.topPosts.filter(x=>x.platform===p).sort((a,b)=>(score(b)??-Infinity)-(score(a)??-Infinity)).slice(0,3),low=r.lowPosts.filter(x=>x.platform===p);
+ body.innerHTML=`<div class="cp-toolbar"><label>Review week<select id="cp-week">${d.weeks.map(w=>`<option value="${w.week_id}" ${w.week_id===r.weekId?'selected':''}>${dateLabel(w.week_id)}</option>`).join('')}</select></label><label class="cp-checklabel"><input type="checkbox" id="cp-compare" ${state.compare?'checked':''}>Compare previous week</label>${button('Refresh','refresh')}${button('View full review','fullreview')}<span class="cp-status">Review synced</span><span class="cp-status ${d.ideas?'':'pending'}">${d.ideas?'Ideas synced':'Ideas pending'}</span></div>
+ <p class="cp-review-period">${dateLabel(r.periodStart)} — ${dateLabel(r.periodEnd)}</p><p class="cp-muted">Review updated ${escape(new Date(r.generatedAt).toLocaleString('en-GB'))}${d.ideas?' · Ideas updated '+escape(new Date(d.ideas.generatedAt).toLocaleString('en-GB')):''}</p>
+ <details><summary>Data sources & availability</summary>${r.sourceStatus.map(s=>`<p><strong>${labelPlatform(s.platform)} · ${escape(s.source)} · ${escape(s.status)}</strong><br>${escape(s.detail)}</p>`).join('')}<ul class="cp-compact-list">${r.unavailableMetrics.map(s=>`<li>${escape(s)}</li>`).join('')}</ul></details>
+ <section class="cp-section cp-judgement"><div class="cp-kicker">Executive judgement</div><h2>The week in perspective</h2><div class="cp-grid">${[['What happened',r.executiveJudgement.happened],['Biggest likely reason',r.executiveJudgement.reason],['Smallest useful correction',r.executiveJudgement.correction]].map(([h,t])=>`<div><strong>${h}</strong><p>${escape(t)}</p></div>`).join('')}</div></section>
+ <div class="cp-tabs" role="group" aria-label="Platform">${Object.entries(PLATFORM).map(([k,v])=>button(v,'platform',`data-value="${k}" aria-pressed="${p===k}"`)).join('')}</div>
+ <section class="cp-section"><h2>${labelPlatform(p)} · headline results</h2>${metrics()}</section>
+ <section class="cp-section"><div class="cp-inline" style="justify-content:space-between"><h2>Top three posts</h2><label>Rank by<select id="cp-rank">${[['views','Views / reach'],['followerConversion','Follower conversion'],['savesShares','Saves + shares'],['meaningfulComments','Meaningful comments / community'],['profileActions','Profile actions']].map(([k,v])=>`<option value="${k}" ${state.rank===k?'selected':''}>${v}</option>`).join('')}</select></label></div><p class="cp-muted">Ranked among posts supplied in this review. Missing ranking metrics remain unavailable.</p><div class="cp-grid">${posts.length?posts.map(x=>postCard(x)).join(''):'<p class="cp-muted">No verified post results were supplied.</p>'}</div></section>
+ <section class="cp-section"><h2>Creative opportunities</h2><p class="cp-muted">Useful low-performing examples, with reporting context.</p><div class="cp-grid">${low.length?low.map(x=>postCard(x,true)).join(''):'<p class="cp-muted">No low-performing examples supplied for this platform.</p>'}</div></section>
+ <section class="cp-section"><h2>Growth priorities</h2><div class="cp-grid two">${Object.keys(PLATFORM).map(k=>`<article class="cp-card"><div class="cp-kicker">${labelPlatform(k)}</div><h3>${k==='instagram'?'Turn discovery into followers':'Reach more relevant people on the For You page'}</h3>${r.growthPriorities[k].map(x=>`<p><strong>${escape(x.category)}</strong><br>${escape(x.recommendation)}</p>`).join('')||'<p class="cp-muted">Waiting for evidence-led recommendations.</p>'}</article>`).join('')}</div></section>
+ <section class="cp-section cp-card"><h2>${labelPlatform(p)} · content-pillar mix</h2><div class="cp-bars">${pillarChart(r.pillarMix[p])}</div><p id="cp-pillar-detail" class="cp-muted" role="status">Tap a pillar for its count and share.</p><p>${escape(r.pillarMix[p].interpretation)}</p></section>
+ <section class="cp-section"><h2>Diagnosis</h2>${[['proven','Proven by the data'],['suggested','Strongly suggested by the pattern'],['unknown','Unknown because evidence is missing']].map(([k,t])=>`<details class="cp-card"><summary>${t} · ${r.diagnosis[k].length}</summary>${r.diagnosis[k].map(x=>`<p>${escape(x.point)}</p><p><strong>What this means for future content</strong><br>${escape(x.implication)}</p>`).join('')||'<p>No findings supplied.</p>'}</details>`).join('')}</section>
+ <section class="cp-section cp-judgement"><h2>Do this next week</h2><div class="cp-grid">${r.nextWeekActions.map(a=>`<article class="cp-card"><div class="cp-kicker">${labelPlatform(a.platform)}</div><h3>${escape(a.title)}</h3><p>${escape(a.details)}</p><details><summary>Supporting evidence</summary><p>${escape(a.evidence)}</p></details><div class="cp-inline">${sourceButtons('action',a.actionId)}</div></article>`).join('')||'<p>No actions supplied for this review.</p>'}</div></section>
+ <section class="cp-section"><h2>Repeat, refine, test & retire</h2><div class="cp-grid two">${Object.entries(r.repeatRefineTestRetire).map(([k,items])=>`<article class="cp-card"><div class="cp-kicker">${k}</div>${items.filter(x=>x.platform===p).map(x=>`<details><summary>${escape(x.title)}</summary><dl>${[['Original post',x.originalPostId||'Not supplied'],['Supporting metric',x.evidence],['Retain',x.retain],['Change',x.change],['Primary success metric',x.successMetric]].map(([a,b])=>`<dt>${a}</dt><dd>${escape(b)}</dd>`).join('')}</dl>${sourceButtons('recommendation',x.recommendationId)}</details>`).join('')||'<p class="cp-muted">No recommendations supplied.</p>'}</article>`).join('')}</div></section>
+ <section class="cp-section"><div class="cp-kicker">A separate creative workflow</div><h2>Content Ideas Inbox</h2><p class="cp-muted">Ideas from Content Ideas, informed by this review. Select the ones you want to make.</p><div id="cp-idea-filters"></div><div id="cp-ideas" class="cp-grid"></div></section>`;
+ root.querySelector('#cp-week').onchange=e=>{state.week=e.target.value;refresh();};root.querySelector('#cp-compare').onchange=e=>{state.compare=e.target.checked;render();};root.querySelector('#cp-rank').onchange=e=>{state.rank=e.target.value;render();};
+ renderIdeas();if(state.error)message(state.error,true);bindImages();
+}
+function pillarChart(mix){const known=Object.values(mix.counts).every(n=>n!==null),total=known?Object.values(mix.counts).reduce((a,b)=>a+b,0):null;return PILLARS.map(p=>{const n=mix.counts[p],pct=total>0&&n!==null?Math.round(n/total*100):total===0?0:null,detail=`${p}: ${n===null?'count unavailable':n+' posts'} · ${pct===null?'share unavailable':pct+'%'}`;return `<button type="button" class="cp-bar" data-cp="pillar" data-detail="${escape(detail)}" title="${escape(detail)}"><span>${escape(p)}</span><span class="cp-bar-track"><span class="cp-bar-fill" style="display:block;width:${pct??0}%"></span></span><span>${pct===null?'—':pct+'%'}</span></button>`;}).join('');}
+function bindImages(){root.querySelectorAll('.cp-image').forEach(img=>img.onerror=()=>{const p=document.createElement('div');p.className='cp-placeholder';p.textContent='Image unavailable — refresh to retry.';img.replaceWith(p);});}
+function selectedIdeas(){return (state.data?.ideas?.ideas||[]).filter(i=>state.data.selections.some(s=>s.idea_key===key('idea',i.weekId,i.ideaId)&&s.selected)&&!state.data.tasks.some(t=>t.source_key===key('idea',i.weekId,i.ideaId)&&!['removed','dismissed'].includes(t.payload.status)));}
+function renderIdeas(){
+ const all=state.data.ideas?.ideas||[],filters=document.getElementById('cp-idea-filters');if(!filters)return;
+ const options={platform:Object.keys(PLATFORM),pillar:PILLARS,format:[...new Set(all.map(x=>x.format))],goal:[...new Set(all.map(x=>x.goal))],effort:['low','medium','high'],selection:['selected','unselected','added']};
+ filters.innerHTML='<div class="cp-filters">'+Object.entries(options).map(([k,values])=>`<label>${nice(k)}<select data-filter="${k}"><option value="">All</option>${values.map(v=>`<option value="${escape(v)}" ${state.filters[k]===v?'selected':''}>${escape(PLATFORM[v]||nice(v))}</option>`).join('')}</select></label>`).join('')+'</div>';
+ filters.querySelectorAll('select').forEach(el=>el.onchange=()=>{state.filters[el.dataset.filter]=el.value;renderIdeas();});
+ const selected=new Set(selectedIdeas().map(i=>i.ideaId));
+ const ideas=all.filter(i=>Object.entries(state.filters).every(([k,v])=>!v||(k==='selection'?v==='selected'?selected.has(i.ideaId):v==='unselected'?!selected.has(i.ideaId)&&!isAdded(i):isAdded(i):i[k]===v)));
+ document.getElementById('cp-ideas').innerHTML=ideas.map(i=>{
+ const added=isAdded(i);return `<article class="cp-card cp-idea ${selected.has(i.ideaId)?'selected':''}"><div class="cp-inline" style="justify-content:space-between"><div class="cp-kicker">${labelPlatform(i.platform)} · ${escape(i.format)}</div>${added?'<span class="cp-status">Added</span>':`<label class="cp-checklabel"><input type="checkbox" data-idea="${escape(i.ideaId)}" ${selected.has(i.ideaId)?'checked':''}>Select</label>`}</div><h3>${escape(i.title)}</h3><p class="cp-muted">${escape(i.pillar)} · ${escape(i.goal)} · ${escape(i.effort)} effort</p><p><strong>${escape(i.hook)}</strong></p><p>${escape(i.premise)}</p><details><summary>Creative direction & evidence</summary><dl>${[['Why this idea',i.rationale],['Supporting review insight / post',i.supportingEvidence],['Primary success metric',i.successMetric],['Full details',i.details]].map(([k,v])=>`<dt>${k}</dt><dd>${escape(v)}</dd>`).join('')}</dl></details>${added?sourceButtons('idea',i.ideaId):''}</article>`;}).join('')||`<div class="cp-empty cp-full-width">${all.length?'No ideas match these filters.':state.data.ideas?'No ideas supplied for this week.':'Waiting for the separate Content Ideas workflow.'}</div>`;
+ document.querySelectorAll('[data-idea]').forEach(el=>el.onchange=async()=>{const i=all.find(i=>i.ideaId===el.dataset.idea),selected=el.checked;el.disabled=true;state.pending++;try{await api('selection','POST',{weekId:i.weekId,ideaId:i.ideaId,selected});const k=key('idea',i.weekId,i.ideaId),s=state.data.selections.find(s=>s.idea_key===k);if(s)s.selected=selected;else state.data.selections.push({idea_key:k,selected});renderIdeas();}catch(e){el.checked=!selected;message(e.message,true);el.disabled=false;}finally{state.pending--;}});
+ const bar=document.getElementById('cp-selection'),n=selectedIdeas().length;bar.hidden=!n;bar.innerHTML=`<strong>${n} idea${n===1?'':'s'} selected</strong>${button('Add to Content To Do This Week','addideas')}`;
+}
+function isAdded(i){return state.data.tasks.some(t=>t.source_key===key('idea',i.weekId,i.ideaId)&&!['removed','dismissed'].includes(t.payload.status));}
+function dialog(title,html){const old=document.getElementById('cp-dialog');if(old)old.remove();const d=document.createElement('dialog');d.id='cp-dialog';d.className='cp cp-dialog';d.setAttribute('aria-label',title);d.innerHTML=`<button type="button" class="cp-close" aria-label="Close">×</button><h2>${escape(title)}</h2>${html}`;document.body.appendChild(d);d.querySelector('.cp-close').onclick=()=>d.close();d.addEventListener('close',()=>d.remove());d.showModal();return d;}
+function taskFields(p,index=0){return `<div class="cp-form-grid"><label>Platform<select name="platform-${index}">${Object.entries(PLATFORM).map(([k,v])=>`<option value="${k}" ${p.platform===k?'selected':''}>${v}</option>`).join('')}</select></label><label>Due date<input name="due-${index}" type="date" value="${escape(p.dueDate||'')}"></label><label>Priority<select name="priority-${index}">${['low','medium','high'].map(v=>`<option ${v===(p.priority||'medium')?'selected':''}>${v}</option>`).join('')}</select></label><label class="wide">Notes<textarea name="notes-${index}">${escape(p.notes||'')}</textarea></label></div>`;}
+function readFields(form,index=0){return {platform:form.elements['platform-'+index].value,dueDate:form.elements['due-'+index].value||null,priority:form.elements['priority-'+index].value,notes:form.elements['notes-'+index].value};}
+function lookupSource(kind,sourceId){const r=state.data.review;return kind==='idea'?state.data.ideas.ideas.find(i=>i.ideaId===sourceId):kind==='action'?r.nextWeekActions.find(i=>i.actionId===sourceId):Object.values(r.repeatRefineTestRetire).flat().find(i=>i.recommendationId===sourceId);}
+function confirmSources(items){
+ const d=dialog('Add to Content To Do This Week',`<p class="cp-muted">Choose the details for each item. The complete creative brief stays attached.</p><form id="cp-confirm">${items.map((item,i)=>`<fieldset><legend>${escape(item.source.title)}</legend>${taskFields(item.source,i)}</fieldset>`).join('')}<button type="submit" class="cp-primary">Confirm selection</button><p class="cp-form-help" role="status"></p></form>`);
+ d.querySelector('form').onsubmit=async e=>{e.preventDefault();const form=e.target,b=e.submitter;b.disabled=true;state.pending++;const changed=[];
+ try{
+  const fresh=[],restores=[];
+  items.forEach((item,i)=>{const opts={...readFields(form,i),planWeek:currentWeek()},sourceId=item.source.ideaId||item.source.actionId||item.source.recommendationId;const existing=state.data.tasks.find(t=>t.source_key===key(item.kind,state.data.review.weekId,sourceId));
+   if(existing&&['removed','dismissed'].includes(existing.payload.status))restores.push({task:existing,opts});else if(!existing)fresh.push({kind:item.kind,weekId:state.data.review.weekId,sourceId,...opts});
+  });
+  if(fresh.length){const result=await api('tasks','POST',{items:fresh});changed.push(...result.created.map(t=>({task:t,previous:'removed'})));}
+  for(const {task,opts}of restores){const r=await api('task','PATCH',{taskId:task.task_id,revision:task.revision,patch:{...opts,status:'todo'}});changed.push({task:r.task,previous:task.payload.status});}
+  for(const item of items.filter(i=>i.kind==='idea'))await api('selection','POST',{weekId:item.source.weekId,ideaId:item.source.ideaId,selected:false});
+  state.undo=changed;d.close();await refresh();showSuccess(`${changed.length} task${changed.length===1?'':'s'} added to this week.`,true);
+ }catch(e){form.querySelector('[role=status]').textContent=e.message+' Saved items are safe to retry; duplicates will not be created.';state.undo=changed;await refresh(true);}finally{state.pending--;b.disabled=false;}
+ };
+}
+function showSuccess(text,undo=false){message(text);const el=document.getElementById('cp-message');if(undo&&state.undo.length){const b=document.createElement('button');b.textContent='Undo';b.dataset.cp='undo';el.append(' ',b);}const link=document.createElement('button');link.textContent='View Content To Do This Week';link.dataset.cp='planner';el.append(' ',link);}
+async function patchTask(task,patch){const r=await api('task','PATCH',{taskId:task.task_id,revision:task.revision,patch});state.data.tasks=state.data.tasks.map(t=>t.task_id===task.task_id?r.task:t);return r.task;}
+function editTask(task){const p=task.payload,d=dialog('Edit content task',`<form><label>Task title<input name="title" required value="${escape(p.title)}"></label>${taskFields(p)}<label>Planner week<input name="planWeek" type="date" required value="${p.planWeek}"></label><label>Status<select name="status">${['todo','in-progress','complete','dismissed','removed'].map(s=>`<option value="${s}" ${s===p.status?'selected':''}>${nice(s)}</option>`).join('')}</select></label><button type="submit" class="cp-primary">Save changes</button><p role="status"></p></form>`);
+ d.querySelector('form').onsubmit=async e=>{e.preventDefault();e.submitter.disabled=true;try{const form=e.target,week=dk(weekStart(_dateFromKey(form.elements.planWeek.value)));await patchTask(task,{...readFields(form),title:form.elements.title.value,planWeek:week,status:form.elements.status.value});d.close();render();renderPlanner();}catch(error){e.target.querySelector('[role=status]').textContent=error.message;}finally{e.submitter.disabled=false;}};
+}
+function renderPlanner(){
+ if(!planner)return;planner.className='cp cp-planner';
+ if(!configured()||!state.session){planner.innerHTML=`<p class="cp-muted">${configured()?'Sign in to see your synced content tasks.':'Your synced content tasks will appear here once private storage is connected.'}</p>${button('Open Content Performance','performance')}`;return;}
+ if(!state.data){planner.innerHTML=button('Load synced content tasks','performance');return;}
+ const week=selectedWeek(),tasks=state.data.tasks.filter(t=>t.payload.planWeek===week),active=tasks.filter(t=>!['removed','dismissed'].includes(t.payload.status)),removed=tasks.filter(t=>['removed','dismissed'].includes(t.payload.status));
+ const cards=items=>items.map(t=>{const p=t.payload;return `<article class="cp-task ${p.status==='complete'?'complete':''}" id="content-task-${t.task_id}"><div class="cp-task-head"><label><input type="checkbox" data-task-check="${t.task_id}" ${p.status==='complete'?'checked':''}><span class="cp-task-title">${escape(p.title)}</span></label>${button('Edit','edittask',`data-id="${t.task_id}"`)}</div><p class="cp-muted">${labelPlatform(p.platform)} · ${escape(p.priority)} priority · ${p.dueDate?dateLabel(p.dueDate):'No due date'} · ${escape(p.status)}</p><div class="cp-inline">${['removed','dismissed'].includes(p.status)?button('Restore','restore',`data-id="${t.task_id}"`):button('Carry to next week','carry',`data-id="${t.task_id}"`)+button('Remove','remove',`data-id="${t.task_id}"`)}</div><details><summary>Full brief & source review</summary><dl>${[['Source review week',dateLabel(p.weekId)],['Content pillar',p.contentPillar],['Hook',p.hook],['Creative direction',p.creativeDirection],['Success metric',p.successMetric],['Notes',p.notes],...Object.entries(p.original).filter(([k])=>!['hook','premise','successMetric','title'].includes(k)).map(([k,v])=>[nice(k),v])].filter(([,v])=>v).map(([k,v])=>`<dt>${escape(k)}</dt><dd>${escape(v)}</dd>`).join('')}</dl></details></article>`;}).join('');
+ planner.innerHTML=`${state.error?'<p class="cp-error">Sync interrupted. Showing the last loaded tasks.</p>':''}${cards(active)||'<p class="cp-muted">No selected content tasks for this week yet.</p>'}${removed.length?`<details><summary>Removed & dismissed · ${removed.length}</summary>${cards(removed)}</details>`:''}<div class="cp-inline">${button('Choose content ideas','performance')}${button('Refresh tasks','refresh')}</div><p id="cp-planner-message" role="status"></p>`;
+ planner.querySelectorAll('[data-task-check]').forEach(el=>el.onchange=async()=>{el.disabled=true;const task=state.data.tasks.find(t=>t.task_id===el.dataset.taskCheck);try{await patchTask(task,{status:el.checked?'complete':'todo'});renderPlanner();render();}catch(e){el.checked=!el.checked;el.disabled=false;planner.querySelector('[role=status]').textContent=e.message;}});
+}
+function openPlanner(taskId){const t=state.data?.tasks.find(t=>t.task_id===taskId);if(t){const anchor=weekStart(),target=_dateFromKey(t.payload.planWeek);revWeekOff=Math.round((target-anchor)/604800000);}else revWeekOff=0;switchView('weekly');renderPlanner();if(taskId)document.getElementById('content-task-'+taskId)?.scrollIntoView({block:'center',behavior:'smooth'});}
+async function handle(event){const b=event.target.closest('[data-cp]');if(!b)return;const a=b.dataset.cp;b.disabled=true;
+ try{
+  if(a==='studio')switchView('cb');
+  if(a==='performance')switchView('performance');
+  if(a==='refresh')await refresh();
+  if(a==='logout'){const session=state.session;setSession(null);state.data=null;state.undo=[];renderGate();if(session)fetch(cfg.supabaseUrl+'/auth/v1/logout',{method:'POST',headers:{apikey:cfg.publishableKey,Authorization:'Bearer '+session.access_token}}).catch(()=>{});}
+  if(a==='platform'){state.platform=b.dataset.value;render();}
+  if(a==='pillar')document.getElementById('cp-pillar-detail').textContent=b.dataset.detail;
+  if(a==='fullreview')dialog('Full weekly review',`<pre>${escape(state.data.review.fullReport||'The full report was not supplied.')}</pre>`);
+  if(a==='addideas')confirmSources(selectedIdeas().map(source=>({kind:'idea',source})));
+  if(a==='addsource')confirmSources([{kind:b.dataset.kind,source:lookupSource(b.dataset.kind,b.dataset.id)}]);
+  if(a==='planner')openPlanner();
+  if(a==='viewtask')openPlanner(b.dataset.id);
+  if(a==='undo'){const pending=[...state.undo];for(const {task,previous}of pending){const current=state.data.tasks.find(t=>t.task_id===task.task_id);if(!current||current.revision!==task.revision)throw Error('A task changed since it was added. Edit it in the planner to undo safely.');await patchTask(current,{status:previous});state.undo=state.undo.filter(x=>x.task.task_id!==task.task_id);}render();renderPlanner();message('Selection undone. Your ideas remain in the inbox.');}
+  if(['edittask','carry','remove','restore'].includes(a)){const t=state.data.tasks.find(t=>t.task_id===b.dataset.id);if(a==='edittask')editTask(t);else {const patch=a==='carry'?{planWeek:dk(addDays(_dateFromKey(t.payload.planWeek),7)),status:'todo'}:{status:a==='remove'?'removed':'todo'};await patchTask(t,patch);render();renderPlanner();}}
+  if(a==='dismisssource'){
+   const source=lookupSource(b.dataset.kind,b.dataset.id),r=await api('tasks','POST',{items:[{kind:b.dataset.kind,weekId:state.data.review.weekId,sourceId:b.dataset.id,platform:source.platform,dueDate:null,priority:'medium',notes:'',planWeek:currentWeek()}]});
+   await refresh();const task=state.data.tasks.find(t=>t.source_key===key(b.dataset.kind,state.data.review.weekId,b.dataset.id));if(task)await patchTask(task,{status:'dismissed'});render();renderPlanner();
+  }
+ }catch(e){message(e.message,true);const p=document.getElementById('cp-planner-message');if(p)p.textContent=e.message;}finally{b.disabled=false;}
+}
+root.addEventListener('click',handle);planner.addEventListener('click',handle);
+window.ContentPerformance={show:()=>{if(state.data)render();refresh();},renderPlanner};
+// Poll only when the app is visible; writer updates do not depend on this browser.
+setInterval(()=>{if(state.session&&!document.hidden&&!state.pending&&!document.querySelector('#cp-dialog')&&!root.contains(document.activeElement)&&!planner.contains(document.activeElement))refresh(true);},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&state.session&&!state.pending&&!document.querySelector('#cp-dialog'))refresh(true);});
+window.addEventListener('online',()=>{if(state.session)refresh(true);});
+renderPlanner();
+(async()=>{
+ const hash=new URLSearchParams(location.hash.slice(1));
+ if(hash.has('access_token')){
+  const access=hash.get('access_token'),refreshToken=hash.get('refresh_token');
+  history.replaceState(null,'',location.pathname+location.search);
+  try{
+   const r=await fetch(cfg.supabaseUrl+'/auth/v1/user',{headers:{apikey:cfg.publishableKey,Authorization:'Bearer '+access}});
+   if(!r.ok)throw Error('This sign-in link has expired. Request another link.');
+   setSession({access_token:access,refresh_token:refreshToken,expires_at:Math.floor(Date.now()/1000)+Number(hash.get('expires_in')||3600),user:await r.json()});
+   switchView('performance');
+  }catch(e){state.error=e.message;switchView('performance');message(e.message,true);}
+ }else if(hash.has('error_description')){history.replaceState(null,'',location.pathname+location.search);switchView('performance');message(hash.get('error_description'),true);}
+ else if(state.session)refresh(true);
+})();
+})();
+
+</script>
+<!-- CP_SCRIPT_END -->
 </body>
 </html>
