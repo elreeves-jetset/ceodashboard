@@ -3531,7 +3531,8 @@ function renderOverdue() {
   items.forEach(item => {
     const row = document.createElement('div'); row.className = 'ceo4-od-item';
     row.innerHTML = `<button type="button" class="ceo4-od-chk" aria-label="Mark ${esc(item.text)} done">✓</button><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat">${item.date}</span>`;
-    row.querySelector('button').addEventListener('click', () => {
+    row.style.cursor='pointer';
+    row.addEventListener('click', () => {
       markTaskDonePeriod(item.date, item.id);
       row.remove();
       renderOverdue();
@@ -3542,7 +3543,8 @@ function renderOverdue() {
   priOd.forEach(item => {
     const row = document.createElement('div'); row.className = 'ceo4-od-item';
     row.innerHTML = `<button type="button" class="ceo4-od-chk" aria-label="Complete priority">✓</button><span class="ceo4-od-label">${esc(item.text)}</span><span class="ceo4-od-cat">Priority · ${item.date}</span>`;
-    row.querySelector('button').onclick=()=>{const date=_dateFromKey(item.date),done=getPriDone(date);done[item.id]=true;localStorage.setItem(_priDoneKey(date),JSON.stringify(done));renderOverdue();renderPriorities();};
+    row.style.cursor='pointer';
+    row.onclick=()=>{const date=_dateFromKey(item.date),done=getPriDone(date);done[item.id]=true;localStorage.setItem(_priDoneKey(date),JSON.stringify(done));renderOverdue();renderPriorities();};
     list.appendChild(row);
   });
 }
