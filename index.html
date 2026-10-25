@@ -1090,27 +1090,11 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   </details>
 
 
-  <div class="cb-brief">
-    <div class="cb-brief-inner" id="cb-brief-text">Loading your content strategy…</div>
-    <div class="cb-meta-pills">
-      <span class="cb-pill cb-pill--month" id="cb-month-pill">—</span>
-      <span class="cb-pill cb-pill--trend" id="cb-trend-pill">—</span>
-      <span class="cb-pill cb-pill--sat" id="cb-sat-pill" style="display:none">📅 Saturday Content Morning</span>
-    </div>
-  </div>
-
-  <div id="cb-sat-note" style="display:none" class="cb-sat-note"></div>
-
-  <div class="cb-section-title">Ideas for your week</div>
-  <div class="cb-week-grid" id="cb-week-grid"></div>
-
-  <div class="cb-section-title" style="margin-top:4px">Explore fresh angles</div>
-  <div class="cb-bank-controls">
-    <div class="cb-filter-row" id="cb-format-chips"></div>
-    <div class="cb-filter-row" id="cb-priority-chips"></div>
-    <div class="cb-filter-row" id="cb-pillar-chips"></div>
-  </div>
-  <div class="cb-bank-grid" id="cb-bank-grid"></div>
+  <div class="cb-section-title">Your content ideas</div>
+  <form onsubmit="event.preventDefault();addOwnContentIdea(this)"><label for="own-content-idea">Add your own idea</label><div class="idea-actions"><input id="own-content-idea" name="idea" required placeholder="What would you like to create?" style="flex:1;min-width:180px"><button class="action-btn" type="submit">Add idea</button></div></form>
+  <div class="cb-week-grid" id="cb-week-grid" style="margin-top:18px"></div>
+  <div class="cb-section-title">Selected from your reviews & ideas</div>
+  <div id="cp-studio-selected" class="cp"></div>
 
 </div>
 
@@ -2601,13 +2585,8 @@ function generateContentBrief() {
 function renderContentBank() {
   loadContentReview();
   renderTrips();
-  const context=contentContext();
-  document.getElementById('cb-brief-text').textContent=context.evidence || 'Start with a small experiment. Add a weekly content review to make the next ideas more personal.';
-  document.getElementById('cb-month-pill').textContent=context.place || 'Your everyday life';
-  document.getElementById('cb-trend-pill').textContent=context.evidence?'Informed by your saved review':'Ideas to test';
-  document.getElementById('cb-sat-pill').style.display='none';
-  document.getElementById('cb-sat-note').style.display='none';
-  renderPersonalIdeas(); renderCBFilters(); renderCBBankGrid();
+  renderPersonalIdeas();
+  window.ContentPerformance?.renderStudio();
 }
 
 function renderCBWeekGrid() {
@@ -4232,21 +4211,19 @@ function personalIdeas() {
 function hashText(text){let h=2166136261;for(const c of text)h=Math.imul(h^c.charCodeAt(0),16777619);return (h>>>0).toString(36);}
 function renderPersonalIdeas() {
  const el=document.getElementById('cb-week-grid');el.innerHTML='';
- const done=studioRead('idea_done',{}),context=contentContext();
- personalIdeas().forEach(idea=>{
-  const card=document.createElement('article');card.className='idea-card'+(done[idea.id]?' idea-complete':'');
-  card.innerHTML=`<div class="eyebrow">${esc(idea.source)} · ${esc(CB_FORMATS[idea.format].label)}</div><h2>${esc(idea.hook)}</h2><p>${esc(idea.concept)}</p><details><summary>Why this idea?</summary><p>${esc(idea.why)}</p>${context.stop?`<p>Keep in mind: ${esc(context.stop)}</p>`:''}</details><p class="idea-cta">${esc(idea.cta)}</p><div class="idea-actions"><button class="action-btn plan-idea">Add to task space</button><button class="action-btn film-idea" aria-pressed="${!!done[idea.id]}">${done[idea.id]?'✓ Created':'Mark created'}</button></div>`;
-  card.querySelector('.plan-idea').onclick=e=>{const text='Create: '+idea.hook;addTaskFromIdea(text);e.target.textContent='✓ In task space';};
-  card.querySelector('.film-idea').onclick=()=>{done[idea.id]=!done[idea.id];studioWrite('idea_done',done);renderPersonalIdeas();};el.appendChild(card);
- });
+ const ideas=(S.dump||[]).filter(t=>t.cat==='content'&&!t.archived);
+ if(!ideas.length)el.innerHTML='<p class="muted">Your own ideas will appear here when you add them. Choose review suggestions in Content Performance & Ideas Inbox.</p>';
+ ideas.forEach(t=>{const card=document.createElement('article');card.className='idea-card'+(t.done?' idea-complete':'');card.innerHTML=`<div class="eyebrow">Added by you</div><h2>${esc(t.text)}</h2><button class="action-btn" aria-pressed="${!!t.done}">${t.done?'✓ Created':'Mark created'}</button>`;card.querySelector('button').onclick=()=>{t.done=!t.done;save();renderPersonalIdeas();};el.appendChild(card);});
 }
+function addOwnContentIdea(form){const text=form.elements.idea.value.trim();if(!text)return;addTaskFromIdea(text);form.reset();renderPersonalIdeas();}
+
 function addTaskFromIdea(text) {if(!S.dump.some(t=>!t.archived&&t.text===text)) {S.dump.unshift({id:uid(),text,cat:'content',pri:'medium',done:false,archived:false,created:new Date().toISOString()});save();}}
 function addTrip() {
  const place=document.getElementById('trip-place').value.trim(),start=document.getElementById('trip-start').value,end=document.getElementById('trip-end').value;
  const message=document.getElementById('trip-message');
  if(!place||!start||!end||end<start){message.textContent='Add a place and an end date on or after the start date.';return;}
  const trips=studioRead('trips',[]);trips.push({id:uid(),place,start,end,source:'Entered by you'});studioWrite('trips',trips);
- message.textContent='Saved. Your content ideas now use this trip when it is current or within the next two weeks.';renderContentBank();
+ message.textContent='Trip saved.';renderContentBank();
 }
 function renderTrips() {
  const el=document.getElementById('trip-list');el.innerHTML='';
@@ -4457,6 +4434,7 @@ function pillarChart(mix){const known=Object.values(mix.counts).every(n=>n!==nul
 function bindImages(){root.querySelectorAll('.cp-image').forEach(img=>img.onerror=()=>{const p=document.createElement('div');p.className='cp-placeholder';p.textContent='Image unavailable — refresh to retry.';img.replaceWith(p);});}
 function selectedIdeas(){return (state.data?.ideas?.ideas||[]).filter(i=>state.data.selections.some(s=>s.idea_key===key('idea',i.weekId,i.ideaId)&&s.selected)&&!state.data.tasks.some(t=>t.source_key===key('idea',i.weekId,i.ideaId)&&!['removed','dismissed'].includes(t.payload.status)));}
 function renderIdeas(){
+ renderStudio();
  const all=state.data.ideas?.ideas||[],filters=document.getElementById('cp-idea-filters');if(!filters)return;
  const options={platform:Object.keys(PLATFORM),pillar:PILLARS,format:[...new Set(all.map(x=>x.format))],goal:[...new Set(all.map(x=>x.goal))],effort:['low','medium','high'],selection:['selected','unselected','added']};
  filters.innerHTML='<div class="cp-filters">'+Object.entries(options).map(([k,values])=>`<label>${nice(k)}<select data-filter="${k}"><option value="">All</option>${values.map(v=>`<option value="${escape(v)}" ${state.filters[k]===v?'selected':''}>${escape(PLATFORM[v]||nice(v))}</option>`).join('')}</select></label>`).join('')+'</div>';
@@ -4493,7 +4471,18 @@ async function patchTask(task,patch){const r=await api('task','PATCH',{taskId:ta
 function editTask(task){const p=task.payload,d=dialog('Edit content task',`<form><label>Task title<input name="title" required value="${escape(p.title)}"></label>${taskFields(p)}<label>Planner week<input name="planWeek" type="date" required value="${p.planWeek}"></label><label>Status<select name="status">${['todo','in-progress','complete','dismissed','removed'].map(s=>`<option value="${s}" ${s===p.status?'selected':''}>${nice(s)}</option>`).join('')}</select></label><button type="submit" class="cp-primary">Save changes</button><p role="status"></p></form>`);
  d.querySelector('form').onsubmit=async e=>{e.preventDefault();e.submitter.disabled=true;try{const form=e.target,week=dk(weekStart(_dateFromKey(form.elements.planWeek.value)));await patchTask(task,{...readFields(form),title:form.elements.title.value,planWeek:week,status:form.elements.status.value});d.close();render();renderPlanner();}catch(error){e.target.querySelector('[role=status]').textContent=error.message;}finally{e.submitter.disabled=false;}};
 }
+function renderStudio(){
+ const el=document.getElementById('cp-studio-selected');if(!el)return;
+ if(!state.session){el.innerHTML='<p class="cp-muted">Sign in to Content Performance to see your selected ideas.</p>';return;}
+ if(!state.data){el.innerHTML='<p class="cp-muted">Loading your selected ideas…</p>';return;}
+ const tasks=state.data.tasks.filter(t=>!['removed','dismissed'].includes(t.payload.status));
+ const ideas=selectedIdeas();
+ el.innerHTML=tasks.map(t=>`<article class="cp-card"><h3>${escape(t.payload.title)}</h3><p>${escape(t.payload.creativeDirection||t.payload.hook||'')}</p><span class="cp-status">${t.payload.status==='complete'?'Created':'In your content planner'}</span>${button('View task','viewtask',`data-id="${t.task_id}"`)}</article>`).join('')+ideas.map(i=>`<article class="cp-card"><h3>${escape(i.title)}</h3><p>${escape(i.premise)}</p><span class="cp-status">Selected in Ideas Inbox</span>${button('Open Ideas Inbox','performance')}</article>`).join('');
+ if(!tasks.length&&!ideas.length)el.innerHTML='<p class="cp-muted">No ideas selected yet. Open Content Performance & Ideas Inbox to choose what you want to create.</p>';
+ el.onclick=handle;
+}
 function renderPlanner(){
+ renderStudio();
  if(!planner)return;planner.className='cp cp-planner';
  if(!configured()||!state.session){planner.innerHTML=`<p class="cp-muted">${configured()?'Sign in to see your synced content tasks.':'Your synced content tasks will appear here once private storage is connected.'}</p>${button('Open Content Performance','performance')}`;return;}
  if(!state.data){planner.innerHTML=button('Load synced content tasks','performance');return;}
@@ -4526,7 +4515,7 @@ async function handle(event){const b=event.target.closest('[data-cp]');if(!b)ret
  }catch(e){message(e.message,true);const p=document.getElementById('cp-planner-message');if(p)p.textContent=e.message;}finally{b.disabled=false;}
 }
 root.addEventListener('click',handle);planner.addEventListener('click',handle);
-window.ContentPerformance={show:()=>{if(state.data)render();refresh();},renderPlanner};
+window.ContentPerformance={show:()=>{if(state.data)render();refresh();},renderPlanner,renderStudio};
 // Poll only when the app is visible; writer updates do not depend on this browser.
 setInterval(()=>{if(state.session&&!document.hidden&&!state.pending&&!document.querySelector('#cp-dialog')&&!root.contains(document.activeElement)&&!planner.contains(document.activeElement))refresh(true);},60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&state.session&&!state.pending&&!document.querySelector('#cp-dialog'))refresh(true);});
