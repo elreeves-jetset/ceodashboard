@@ -996,8 +996,6 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 .weekly-add{display:flex;gap:10px;margin-top:18px}.weekly-todo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}.weekly-todo label{display:flex;align-items:center;gap:12px;min-height:44px;overflow-wrap:anywhere;min-width:0}.weekly-todo input{width:22px;height:22px;flex-shrink:0;accent-color:#94617c}.weekly-todo span{min-width:0}.planner-status{margin:0 0 20px}
 @media(max-width:900px){.project-grid{grid-template-columns:1fr}.monthly-numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.planner-grid{grid-template-columns:1fr}.planner-section{padding:20px}.planner-heading .action-btn{font-size:12px}.monthly-numbers .rev-label{font-size:11px}}
-.dm-daily-check{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;font-size:16px;font-weight:600}
-.dm-daily-check input{width:24px;height:24px;accent-color:#94617c;flex-shrink:0}
 </style>
 <!-- CP_STYLE_START -->
 <style>
@@ -1130,9 +1128,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   <div class="cs-section-lbl" id="cs-task-heading" style="margin-top:0">Today's Focus · 3 tasks</div>
   <div class="ceo4-grid" id="cs-task-grid"></div>
 
-  <section class="card" style="margin-bottom:22px">
-    <label class="dm-daily-check"><input type="checkbox" id="daily-dm-check"><span>DMs checked &amp; replied to</span></label>
-  </section>
+
 
   <!-- MONTH STRIP — completion dots -->
   <div class="cs-section-lbl">This Month <span class="cs-month-reset" onclick="resetMonthStrip()">↺ Reset</span></div>
@@ -3775,14 +3771,6 @@ function swapCS(category) {
 }
 
 // ── RENDER ───────────────────────────────────────────────────
-function renderDmCheck() {
-  const input=document.getElementById('daily-dm-check'),date=dk(TODAY);
-  input.checked=!!S.habits?.[date]?.dmReplies;
-  input.onchange=()=>{
-    if(!S.habits)S.habits={};
-    S.habits[date]={...S.habits[date],dmReplies:input.checked};save();
-  };
-}
 function renderCEO() {
   const hr   = new Date().getHours();
   const name  = S.settings?.name ? `, ${S.settings.name}` : '';
@@ -3805,7 +3793,6 @@ function renderCEO() {
   // Daily task grid
   renderTaskGrid();
   renderMonthStrip();
-  renderDmCheck();
 
   // Priorities (tickable)
   renderPriorities();
