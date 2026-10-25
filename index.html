@@ -1090,8 +1090,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   </details>
 
 
-  <div class="cb-section-title">Your content ideas</div>
-  <form onsubmit="event.preventDefault();addOwnContentIdea(this)"><label for="own-content-idea">Add your own idea</label><div class="idea-actions"><input id="own-content-idea" name="idea" required placeholder="What would you like to create?" style="flex:1;min-width:180px"><button class="action-btn" type="submit">Add idea</button></div></form>
+  <div class="cb-section-title">Ideas for your week</div>
   <div class="cb-week-grid" id="cb-week-grid" style="margin-top:18px"></div>
   <div class="cb-section-title">Selected from your reviews & ideas</div>
   <div id="cp-studio-selected" class="cp"></div>
@@ -4212,7 +4211,7 @@ function hashText(text){let h=2166136261;for(const c of text)h=Math.imul(h^c.cha
 function renderPersonalIdeas() {
  const el=document.getElementById('cb-week-grid');el.innerHTML='';
  const ideas=(S.dump||[]).filter(t=>t.cat==='content'&&!t.archived);
- if(!ideas.length)el.innerHTML='<p class="muted">Your own ideas will appear here when you add them. Choose review suggestions in Content Performance & Ideas Inbox.</p>';
+ if(!ideas.length)el.innerHTML='<p class="muted">Ideas categorised as Content in Brain Dump will appear here.</p>';
  ideas.forEach(t=>{const card=document.createElement('article');card.className='idea-card'+(t.done?' idea-complete':'');card.innerHTML=`<div class="eyebrow">Added by you</div><h2>${esc(t.text)}</h2><button class="action-btn" aria-pressed="${!!t.done}">${t.done?'✓ Created':'Mark created'}</button>`;card.querySelector('button').onclick=()=>{t.done=!t.done;save();renderPersonalIdeas();};el.appendChild(card);});
 }
 function addOwnContentIdea(form){const text=form.elements.idea.value.trim();if(!text)return;addTaskFromIdea(text);form.reset();renderPersonalIdeas();}
