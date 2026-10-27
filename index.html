@@ -4596,7 +4596,8 @@ renderPlanner();
 (function(root){
 'use strict';
 const allowed=k=>/^(myceodash_v[123]|myceo_recentDone|cbWeekPlan|cbBankDone)$/.test(k)||/^(pool_|cb_|wkrev_|morev_|ceo4|ceotasks_|ceotask_note_|fa_|sweep_|studio_|pri_done_|itemDone_|wr_done_)/.test(k);
-const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const stable=x=>Array.isArray(x)?x.map(stable):x&&typeof x==='object'?Object.fromEntries(Object.keys(x).sort().map(k=>[k,stable(x[k])])):x;
+const equal=(a,b)=>JSON.stringify(stable(a))===JSON.stringify(stable(b));
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 const safe=k=>!['__proto__','prototype','constructor'].includes(k);
 function merge(base,local,remote,initial=false,path=[],conflicts=[]){
