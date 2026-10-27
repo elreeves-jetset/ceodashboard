@@ -1033,6 +1033,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
     <button class="btn-icon" onclick="switchView('settings')" title="Settings">⚙</button>
   </div>
 </header>
+<button type="button" data-dashboard-sync-status onclick="openSyncModal()" style="display:block;margin:8px auto;border:0;background:transparent;color:var(--text2);font:inherit;font-size:11px;cursor:pointer;padding:5px 12px">Checking sync…</button>
 
 <!-- App tab bar — sticky below header, works on all screen sizes -->
 <nav class="app-tab-bar" id="app-tab-bar">
@@ -1227,7 +1228,14 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 <div class="overlay" id="sync-modal">
   <div class="modal" style="max-width:480px;width:100%">
     <h3>⇄ Sync Between Devices</h3>
-    <p style="font-size:13px;color:var(--text2);margin:-6px 0 16px;line-height:1.5">Transfer all your data — habits, tasks, brain dump, priorities — between your iPhone and Mac.</p>
+    <p data-dashboard-sync-status role="status">Checking sync…</p>
+    <p class="muted">Sign in with the same account on your phone and computer. Changes sync automatically while the dashboard is open and online.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"><button class="action-btn" onclick="document.getElementById('sync-modal').classList.remove('open');switchView('performance')">Account / sign in</button><button class="action-btn" onclick="DashboardSync.sync()">Sync now</button></div>
+    <details id="dashboard-sync-recovery" hidden><summary>Saved differences — both versions kept</summary><p class="muted">These fields differed between devices. Both versions are preserved below so you can copy any wording you want to keep.</p><div id="dashboard-sync-conflicts"></div></details>
+    <details><summary>Backups &amp; manual transfer</summary>
+    <p class="muted">The original saved data from each device is backed up before its first merge. Recent synced versions are also retained.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="action-btn" onclick="DashboardSync.original()">Download this device’s original</button><button class="action-btn" onclick="DashboardSync.backups()">Download cloud backups</button></div>
+    <p style="font-size:13px;color:var(--text2);margin:-6px 0 16px;line-height:1.5">Optional manual backup and transfer. Automatic sync does not need these steps.</p>
 
     <div class="tab-sub-row" style="margin-bottom:16px">
       <button class="tab-sub active" id="sync-tab-export" onclick="setSyncTab('export')">📤 Export from this device</button>
@@ -1259,6 +1267,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
       <button class="btn-save" onclick="doImport()" style="width:100%">📥 Import &amp; apply data</button>
     </div>
 
+    </details>
     <div class="modal-actions" style="margin-top:16px">
       <button class="btn-cancel" onclick="document.getElementById('sync-modal').classList.remove('open')">Close</button>
     </div>
@@ -1832,6 +1841,7 @@ function ensureDailyTasks() {
 function getPhase() { return null; }
 
 // ─────────────────────────────────────────────────────────────
+const DASHBOARD_DEFAULT_STATE=JSON.stringify(S);
 // VIEWS
 // ─────────────────────────────────────────────────────────────
 let activeCat='coaching', revCat='prospecting', activeEmailTab='client', weekOffset=0, modalMonth=mk(TODAY);
@@ -4014,10 +4024,10 @@ function saveContentReview() {
 
 // Keys we care about — main state + all pool/tracking data
 function _getSyncKeys() {
-  const keys = ['myceodash_v3', 'myceo_recentDone', 'cbWeekPlan'];
+  const keys = ['myceodash_v3', 'myceodash_v2', 'myceodash_v1', 'myceo_recentDone', 'cbWeekPlan', 'cbBankDone'];
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i);
-    if (k && (k.startsWith('pool_') || k.startsWith('cb_') || k.startsWith('hint_') || k.startsWith('wkrev_') || k.startsWith('morev_') || k.startsWith('ceo4') || k.startsWith('ceotasks_') || k.startsWith('ceotask_note_') || k.startsWith('fa_') || k.startsWith('sweep_') || k.startsWith('studio_') || k.startsWith('pri_done_'))) {
+    if (k && (k.startsWith('pool_') || k.startsWith('cb_') || k.startsWith('hint_') || k.startsWith('wkrev_') || k.startsWith('morev_') || k.startsWith('ceo4') || k.startsWith('ceotasks_') || k.startsWith('ceotask_note_') || k.startsWith('fa_') || k.startsWith('sweep_') || k.startsWith('studio_') || k.startsWith('pri_done_') || k.startsWith('itemDone_') || k.startsWith('wr_done_'))) {
       if (!keys.includes(k)) keys.push(k);
     }
   }
@@ -4047,6 +4057,7 @@ function importDashboardData(str) {
 }
 
 function openSyncModal() {
+  window.DashboardSync?.showRecovery();
   // Generate fresh export data each time the modal opens
   const raw = exportDashboardData();
   const el = document.getElementById('sync-export-text');
@@ -4326,7 +4337,7 @@ const SESSION_KEY='myceo_cp_session';
 const readSession=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null');}catch{return null;}};
 try{const old=sessionStorage.getItem(SESSION_KEY);if(!localStorage.getItem(SESSION_KEY)&&old)localStorage.setItem(SESSION_KEY,old);sessionStorage.removeItem(SESSION_KEY);}catch{}
 state.session=readSession();
-function setSession(s){if(!s||!state.session||s.user?.id!==state.session.user?.id)state.generation++;state.session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(SESSION_KEY);}
+function setSession(s){if(!s||!state.session||s.user?.id!==state.session.user?.id)state.generation++;state.session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(SESSION_KEY);window.dispatchEvent(new Event('dashboard-auth'));}
 async function auth(path,body,method='POST',jwt){
  const r=await fetch(cfg.supabaseUrl+'/auth/v1/'+path,{method,headers:{apikey:cfg.publishableKey,'Content-Type':'application/json',...(jwt?{Authorization:'Bearer '+jwt}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(20000)});
  const d=await r.json();if(!r.ok){const e=Error(r.status===429?'Email sign-in is temporarily limited. Use your app password, or wait before requesting another email.':d.msg||d.error_description||d.message||'Sign-in could not be completed. Please retry.');e.status=r.status;throw e;}return d;
@@ -4361,7 +4372,7 @@ function message(text,error=false){const el=document.getElementById('cp-message'
 function shell(){root.innerHTML=`<header class="cp-header"><div><div class="cp-kicker">Your creative intelligence</div><h1>Content Performance</h1><p class="cp-muted">The evidence. The opportunity. Your next move.</p></div><div class="cp-inline">${button('Content studio','studio')}${state.session?`<details class="cp-account"><summary>Account</summary><div>${button('Set app password','password')}${button('Sign out','logout')}</div></details>`:''}</div></header><div id="cp-message" role="status" hidden></div><div id="cp-body"></div><div id="cp-selection" class="cp-sticky" hidden></div>`;}
 function renderGate(){shell();const el=document.getElementById('cp-body');
  if(!configured()){el.innerHTML='<section class="cp-empty"><h2>Your private workspace is ready to connect</h2><p class="cp-muted">The secure storage connection needs to be finished before your reviews and ideas can sync here. Your existing dashboard is still available.</p></section>';renderPlanner();return;}
- el.innerHTML=`<section class="cp-card" style="max-width:480px"><h2>Sign in to your private reviews</h2><p class="cp-muted">Sign in once on this device. Your app will remember you.</p><form id="cp-login"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>App password<input name="password" type="password" autocomplete="current-password" required></label><button class="cp-primary" type="submit">Sign in</button></form><details><summary>First time here or forgotten your password?</summary><p>Already signed in in another browser? Open Content there and choose <strong>Set app password</strong>. Then use that password here.</p><p>Otherwise, request an email link below. Once it opens your review, choose <strong>Set app password</strong>, then return to your home-screen app to sign in.</p><form id="cp-email"><label>Email for sign-in link<input name="email" type="email" autocomplete="email" required></label><button type="submit">Email me a sign-in link</button></form><p class="cp-muted">Email links may open in Safari instead of your home-screen app.</p></details></section>`;
+ el.innerHTML=`<section class="cp-card" style="max-width:480px"><h2>Sign in to your dashboard</h2><p class="cp-muted">Sign in once on each device. Your tasks, plans, notes and content will stay in sync.</p><form id="cp-login"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>App password<input name="password" type="password" autocomplete="current-password" required></label><button class="cp-primary" type="submit">Sign in</button></form><details><summary>First time here or forgotten your password?</summary><p>Already signed in in another browser? Open Content there and choose <strong>Set app password</strong>. Then use that password here.</p><p>Otherwise, request an email link below. Once it opens your review, choose <strong>Set app password</strong>, then return to your home-screen app to sign in.</p><form id="cp-email"><label>Email for sign-in link<input name="email" type="email" autocomplete="email" required></label><button type="submit">Email me a sign-in link</button></form><p class="cp-muted">Email links may open in Safari instead of your home-screen app.</p></details></section>`;
  el.querySelector('#cp-login').onsubmit=async e=>{e.preventDefault();const form=e.target,b=e.submitter;b.disabled=true;try{setSession(await auth('token?grant_type=password',{email:form.elements.email.value.trim(),password:form.elements.password.value}));form.reset();await refresh();}catch(err){message(err.message,true);}finally{b.disabled=false;}};
  el.querySelector('#cp-email').onsubmit=async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{await auth('otp?redirect_to='+encodeURIComponent('https://elreeves-jetset.github.io/ceodashboard/'),{email:e.target.elements.email.value.trim(),create_user:false});message('Check your newest email and tap the link. Then choose Set app password to connect your home-screen app.');}catch(err){message(err.message,true);}finally{setTimeout(()=>{b.disabled=false;},60000);}};renderPlanner();
 }
@@ -4554,6 +4565,7 @@ async function handle(event){const b=event.target.closest('[data-cp]');if(!b)ret
  }catch(e){message(e.message,true);const p=document.getElementById('cp-planner-message');if(p)p.textContent=e.message;}finally{b.disabled=false;}
 }
 root.addEventListener('click',handle);planner.addEventListener('click',handle);
+window.DashboardAuth={token,session:()=>state.session};
 window.ContentPerformance={show:()=>{if(state.data)render();refresh();},renderPlanner,renderStudio};
 // Poll only when the app is visible; writer updates do not depend on this browser.
 setInterval(()=>{if(state.session&&!document.hidden&&!state.pending&&!document.querySelector('#cp-dialog')&&!root.contains(document.activeElement)&&!planner.contains(document.activeElement))refresh(true);},60000);
@@ -4578,5 +4590,168 @@ renderPlanner();
 
 </script>
 <!-- CP_SCRIPT_END -->
+<!-- DASHBOARD_SYNC_START -->
+<script>
+/* Shared merge rules: never merge credentials or browser-only preferences. */
+(function(root){
+'use strict';
+const allowed=k=>/^(myceodash_v[123]|myceo_recentDone|cbWeekPlan|cbBankDone)$/.test(k)||/^(pool_|cb_|wkrev_|morev_|ceo4|ceotasks_|ceotask_note_|fa_|sweep_|studio_|pri_done_|itemDone_|wr_done_)/.test(k);
+const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+const safe=k=>!['__proto__','prototype','constructor'].includes(k);
+function merge(base,local,remote,initial=false,path=[],conflicts=[]){
+ if(equal(local,remote))return local;
+ if(!initial&&equal(local,base))return remote;
+ if(!initial&&equal(remote,base))return local;
+ if(initial&&local===undefined)return remote;
+ if(initial&&remote===undefined)return local;
+ if(object(local)&&object(remote)&&(base===undefined||object(base))){
+  const out={};for(const k of new Set([...Object.keys(base||{}),...Object.keys(local),...Object.keys(remote)])){
+   if(!safe(k))continue;const v=merge(base?.[k],local[k],remote[k],initial,[...path,k],conflicts);if(v!==undefined)out[k]=v;
+  }return out;
+ }
+ if(Array.isArray(local)&&Array.isArray(remote)&&(base===undefined||Array.isArray(base))){
+  const all=[...(base||[]),...local,...remote];
+  if(all.length&&all.every(v=>object(v)&&typeof v.id==='string')){
+   // Old automatically generated daily tasks used random IDs on each device.
+   const canonical=v=>{const match=v.auto&&remote.find(x=>x.auto&&x.text===v.text&&x.cat===v.cat);return match?{...v,id:match.id}:v;};
+   local=local.map(canonical);base=base?.map(canonical);
+   const out=[];for(const id of new Set([...remote,...local,...(base||[])].map(v=>v.id))){
+    const v=merge(base?.find(v=>v.id===id),local.find(v=>v.id===id),remote.find(v=>v.id===id),initial,[...path,'id:'+id],conflicts);if(v!==undefined)out.push(v);
+   }return out;
+  }
+  if(['wins','actions','projects'].includes(path.at(-1))||path.includes('actions')){
+   return Array.from({length:Math.max(local.length,remote.length,base?.length||0)},(_,i)=>merge(base?.[i],local[i],remote[i],initial,[...path,String(i)],conflicts)??'');
+  }
+  // Lists of primitive values (completed IDs, selected days) merge as sets.
+  if(all.every(v=>v===null||typeof v!=='object')){
+   const out=[];for(const v of [...remote,...local])if(!out.some(x=>equal(x,v))&&(initial||!(base||[]).some(x=>equal(x,v))||local.some(x=>equal(x,v))&&remote.some(x=>equal(x,v))))out.push(v);return out;
+  }
+ }
+ if(initial){
+  if(local===''||local===null)return remote;
+  if(remote===''||remote===null)return local;
+  if(typeof local==='boolean'&&typeof remote==='boolean')return local||remote;
+  // Retain the earliest task schedule start so overdue history is not shortened.
+  if(path.length===1&&/start/.test(path[0])&&/^\d{4}-\d\d-\d\d$/.test(local)&&/^\d{4}-\d\d-\d\d$/.test(remote))return local<remote?local:remote;
+ }
+ // Both devices edited the same field. Keep the incoming edit; retain both
+ // versions in a visible recovery list and immutable server revision history.
+ if(!/^(savedAt|updatedAt|affIdx)$/.test(path.at(-1)||''))conflicts.push({path,local:local===undefined?null:local,remote:remote===undefined?null:remote});
+ return initial?remote:local;
+}
+function decode(raw){try{return {value:JSON.parse(raw),json:true};}catch{return {value:raw,json:false};}}
+function mergeValues(base,local,remote,initial=false){
+ const values={},conflicts=[];
+ for(const k of new Set([...Object.keys(base||{}),...Object.keys(local),...Object.keys(remote)])){
+  if(!allowed(k))continue;
+  const b=base?.[k]===undefined?undefined:decode(base[k]).value,l=local[k]===undefined?undefined:decode(local[k]).value,r=remote[k]===undefined?undefined:decode(remote[k]).value;
+  const v=merge(b,l,r,initial,[k],conflicts);
+  if(v!==undefined)values[k]=(local[k]!==undefined?decode(local[k]).json:decode(remote[k]).json)?JSON.stringify(v):String(v);
+ }return {values,conflicts};
+}
+root.DashboardSyncCore={allowed,equal,mergeValues};
+})(globalThis);
+
+(()=>{
+'use strict';
+const {allowed,equal,mergeValues}=DashboardSyncCore;
+const META='jetset_sync_v1',ORIGINAL='jetset_sync_original_v1';
+let busy=false,timer,needsRender=false,lastChecked=0,lastSeen='',error='';
+const readJSON=(k,fallback)=>{try{return JSON.parse(localStorage.getItem(k))||fallback;}catch{return fallback;}};
+const capture=()=>{const out={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(allowed(k))out[k]=localStorage.getItem(k);}return out;};
+const metadata=()=>readJSON(META,null);
+const typing=()=>document.activeElement?.matches('input,textarea,[contenteditable=true]')||!!document.querySelector('.overlay.open:not(#sync-modal),#cp-dialog');
+function status(text){for(const el of document.querySelectorAll('[data-dashboard-sync-status]'))el.textContent=text;}
+function download(value,name){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function showRecovery(){
+ const list=document.getElementById('dashboard-sync-conflicts');if(!list)return;list.replaceChildren();
+ const conflicts=metadata()?.conflicts||[];document.getElementById('dashboard-sync-recovery').hidden=!conflicts.length;
+ for(const c of conflicts){const item=document.createElement('details'),title=document.createElement('summary'),copy=document.createElement('pre');title.textContent=c.path.join(' › ');copy.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px';copy.textContent='Version from this device:\n'+JSON.stringify(c.local,null,2)+'\n\nOther saved version:\n'+JSON.stringify(c.remote,null,2);item.append(title,copy);list.append(item);}
+}
+async function request(op,method='GET',body){
+ const jwt=await window.DashboardAuth.token();
+ const r=await fetch(window.CP_CONFIG.supabaseUrl+'/functions/v1/dashboard-sync?op='+op,{method,headers:{apikey:window.CP_CONFIG.publishableKey,Authorization:'Bearer '+jwt,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(20000)});
+ const data=await r.json();if(!r.ok&&r.status!==409){const e=Error(data.error||'Sync unavailable');e.status=r.status;throw e;}return {...data,collision:r.status===409};
+}
+function render(){
+ if(!needsRender||typing())return;
+ needsRender=false;
+ // Reset before loading so remote removals are not resurrected by Object.assign.
+ for(const k of Object.keys(S))delete S[k];Object.assign(S,JSON.parse(DASHBOARD_DEFAULT_STATE));load();
+ const view=document.querySelector('.view.active')?.id.replace('view-','')||'ceo';
+ if(view!=='performance')switchView(view);
+}
+function apply(values,meta){
+ const before=capture();
+ try{
+  for(const k of Object.keys(before))if(!(k in values))localStorage.removeItem(k);
+  for(const [k,v] of Object.entries(values))if(allowed(k)&&localStorage.getItem(k)!==v)localStorage.setItem(k,v);
+  localStorage.setItem(META,JSON.stringify(meta));
+ }catch(e){
+  for(const k of Object.keys(capture()))if(!(k in before))localStorage.removeItem(k);
+  for(const [k,v] of Object.entries(before))localStorage.setItem(k,v);
+  throw Error('Storage is full. Sync paused; your device backup is preserved.');
+ }
+ if(!equal(before,values)){needsRender=true;render();}
+}
+async function run(){
+ if(busy||typing())return;
+ if(!window.DashboardAuth?.session()){status('Sign in to sync all devices');return;}
+ if(!navigator.onLine){status('Offline · changes saved on this device');return;}
+ busy=true;
+ const account=window.DashboardAuth.session()?.user?.id;
+ try{
+  let meta=metadata();
+  if(!meta){meta={device:crypto.randomUUID(),baseline:null,conflicts:[]};localStorage.setItem(ORIGINAL,JSON.stringify(capture()));localStorage.setItem(META,JSON.stringify(meta));}
+  if(meta.account&&meta.account!==account)throw Error('Use the original dashboard account to sync this device.');
+  status('Syncing…');
+  if(!meta.backedUp){await request('backup','POST',{device:meta.device,values:readJSON(ORIGINAL,capture())});meta.backedUp=true;meta.account=account;localStorage.setItem(META,JSON.stringify(meta));}
+  let cloud=await request('state');
+  for(let attempt=0;attempt<4;attempt++){
+   if(typing()||account!==window.DashboardAuth.session()?.user?.id)return;
+   const local=capture(),merged=mergeValues(meta.baseline,local,cloud.payload.values,meta.baseline===null);
+   for(const [key,raw] of Object.entries(merged.values)){
+    if(!/^ceotasks_done_v2_\d{4}-\d\d-\d\d$/.test(key))continue;
+    const done=JSON.parse(raw),date=new Date(key.slice(-10)+'T12:00:00');
+    for(const task of getTasksForDate(date))if(task.parts?.some(p=>taskPartKey(task.id,p) in done))done[task.id]=task.parts.every(p=>!!done[taskPartKey(task.id,p)]);
+    merged.values[key]=JSON.stringify(done);
+   }
+   const conflicts=[...(cloud.payload.conflicts||[])];for(const c of merged.conflicts)if(!conflicts.some(x=>equal(x,c)))conflicts.push(c);
+   const payload={values:merged.values,conflicts};
+   let result=cloud;
+   if(!equal(payload,cloud.payload)){
+    result=await request('state','POST',{device:meta.device,revision:cloud.revision,payload});
+    if(result.collision){cloud=result;continue;}
+   }
+   if(account!==window.DashboardAuth.session()?.user?.id)return;
+   // A click or edit may happen while a request is in flight. Never replace it.
+   if(typing()||!equal(capture(),local)){status('Saved on this device · finishing sync…');schedule();return;}
+   meta={...meta,account,baseline:result.payload.values,revision:result.revision,conflicts:result.payload.conflicts,lastSync:new Date().toISOString()};
+   apply(result.payload.values,meta);lastSeen=JSON.stringify(capture());lastChecked=Date.now();error='';
+   status(conflicts.length?'Synced · saved differences available':'Synced across devices');showRecovery();return;
+  }
+  status('Changes saved · another device is syncing');schedule();
+ }catch(e){error=e.message;status(e.status===401?'Sign in again · changes saved here':error);}
+ finally{busy=false;}
+}
+async function sync(){
+ if(navigator.locks)await navigator.locks.request('jetset-dashboard-sync',{ifAvailable:true},lock=>lock?run():undefined);else await run();
+}
+function schedule(){clearTimeout(timer);timer=setTimeout(sync,350);}
+window.DashboardSync={sync,showRecovery,async backups(){try{status('Preparing backups…');download(await request('backups'),'Jet-Set-Lifestyle-backups.json');status('Backups downloaded');}catch(e){status(e.message);}},original(){download(readJSON(ORIGINAL,capture()),'Jet-Set-Lifestyle-original-device-backup.json');}};
+window.addEventListener('online',schedule);
+window.addEventListener('focus',schedule);
+window.addEventListener('pageshow',schedule);
+window.addEventListener('dashboard-auth',schedule);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule();});
+document.addEventListener('focusout',()=>{setTimeout(()=>{render();schedule();},0);});
+window.addEventListener('storage',e=>{if(allowed(e.key||'')){needsRender=true;render();schedule();}else if(e.key===META)showRecovery();});
+setInterval(()=>{if(document.hidden)return;render();const now=JSON.stringify(capture());if(now!==lastSeen||Date.now()-lastChecked>5000)sync();},1000);
+schedule();
+})();
+
+</script>
+<!-- DASHBOARD_SYNC_END -->
 </body>
 </html>
