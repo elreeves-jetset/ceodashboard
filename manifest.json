@@ -1,7 +1,7 @@
 {
-  "name": "myCEO Dashboard",
-  "short_name": "myCEO",
-  "description": "The Jet Set CEO — Command Centre",
+  "name": "Jetset Lifestyle",
+  "short_name": "Jetset Lifestyle",
+  "description": "The Jet Set CEO \u2014 Command Centre",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

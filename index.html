@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>myCEO · Ela Reeves</title>
+<title>Jetset Lifestyle · Ela Reeves</title>
 
 <!-- PWA / Add to Home Screen -->
 <link rel="manifest" href="manifest.json">
@@ -12,12 +12,12 @@
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="myCEO">
+<meta name="apple-mobile-web-app-title" content="Jetset Lifestyle">
 <link rel="apple-touch-icon" href="icon-180.png">
 
 <!-- Android Chrome -->
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="myCEO">
+<meta name="application-name" content="Jetset Lifestyle">
 <style>
 :root {
   --bg: #FDF7FA; --white: #FFFFFF; --border: #EDE0E8; --bl: #F6EEF3;
@@ -1009,6 +1009,12 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 @media(max-width:700px){.cp-header{display:block}.cp-grid,.cp-grid.two,.cp-form-grid{grid-template-columns:1fr}.cp-metrics,.cp-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-metric strong{font-size:25px}.cp-card,.cp-judgement{padding:18px}.cp-toolbar{gap:10px}.cp-bar{grid-template-columns:100px 1fr 55px;font-size:11px!important}.cp-sticky{bottom:8px;padding:14px;flex-wrap:wrap}.cp-task-head{align-items:flex-start}.cp-task-head .cp-inline{justify-content:flex-end}.cp-dialog{padding:18px}.cp-filters select{width:100%}}
 
 .cp-ready-copy p{white-space:pre-wrap;margin-top:6px;line-height:1.6}.cp-ready-copy{margin:16px 0}.cp #cp-ideas-section{scroll-margin-top:125px}.cp #cp-idea-filters{display:flex;gap:14px;flex-wrap:wrap;align-items:start}.cp #cp-idea-filters .cp-filters{display:block;margin:0 0 18px}.cp-dialog textarea{width:100%;box-sizing:border-box;font:14px/1.6 inherit}
+/* Creation workspace: format remains readable without relying on colour. */
+.jetset-brand{display:flex;align-items:center;gap:10px}.jetset-brand img{width:46px;height:46px;border-radius:50%;object-fit:contain}.jetset-brand span{color:var(--tx,#29242a);font-size:15px}
+.cp-account{position:relative;font-size:13px}.cp-account summary{cursor:pointer;padding:12px}.cp-account>div{position:absolute;right:0;z-index:20;min-width:180px;background:white;padding:12px;border:1px solid #ded5dc;border-radius:14px;box-shadow:0 8px 24px #30253520;display:grid;gap:8px}
+.cp-create-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}.cp-create-card{border-top:5px solid var(--format-colour,#ba929e);margin:0!important;min-width:0}.cp-create-card h3{white-space:pre-line;line-height:1.5;font-size:19px;overflow-wrap:anywhere}.cp-create-head{justify-content:space-between;align-items:center;gap:12px}.cp-format-label{font-weight:800;font-size:12px;letter-spacing:.04em;color:var(--format-colour,#684e60)}.cp-format-trials{--format-colour:#643c61;background:#f4eaf3!important}.cp-format-reels{--format-colour:#ab416e}.cp-format-carousel{--format-colour:#8b5e24;background:#fff9ef!important}.cp-format-tiktok{--format-colour:#226c70;background:#eff9f8!important}.cp-format-stories{--format-colour:#5e679a;background:#f2f4fc!important}.cp-created{margin-top:22px}.cp-created>summary{cursor:pointer;font-weight:700;padding:12px 0}.cp-studio-filters{flex-wrap:wrap}.cp-studio-filters button{min-height:44px}.cp-create-card details{margin:16px 0}.cp-create-card summary{cursor:pointer;font-weight:600}.cp-create-card .cp-checklabel{min-height:44px;cursor:pointer}.cp-create-card input[type=checkbox]{width:22px;height:22px;accent-color:var(--format-colour,#643c61)}
+#wr-hot-bookings,#wr-hot-prospects{display:block;margin-top:10px;width:100%;box-sizing:border-box}
+@media(max-width:500px){.jetset-brand{gap:7px}.jetset-brand img{width:36px;height:36px}.jetset-brand span{font-size:13px}.cp-create-card h3{font-size:18px}}
 
 </style>
 <!-- CP_STYLE_END -->
@@ -1020,7 +1026,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   <button class="ios-hint-x" onclick="document.getElementById('ios-hint').classList.remove('show');localStorage.setItem('hint_dismissed','1')">✕</button>
 </div>
 <header>
-  <div class="logo">my<span>CEO</span></div>
+  <div class="logo jetset-brand"><img src="icon-180.png" alt="The Jet Set Lifestyle logo"><span>Jetset Lifestyle</span></div>
   <div class="hdr-right">
     <span class="save-tag" id="save-tag">✓ Saved</span>
     <button class="btn-icon" onclick="openSyncModal()" title="Sync between devices" style="font-size:16px">⇄</button>
@@ -1093,8 +1099,8 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 
   <div class="cb-section-title">Ideas for your week</div>
   <div class="cb-week-grid" id="cb-week-grid" style="margin-top:18px"></div>
-  <div class="cb-section-title">Selected from your reviews & ideas</div>
-  <div id="cp-studio-selected" class="cp"></div>
+  <div class="cb-section-title">Your selected content · ready to create</div>
+  <div id="cp-studio-selected" class="cp"></div><div id="cp-weekly-tasks" hidden></div>
 
 </div>
 
@@ -1198,10 +1204,11 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   <section class="rev-section planner-section"><div class="planner-heading"><div><div class="eyebrow">Your monthly projects, in motion</div><h2>This week’s actions</h2></div><button class="action-btn" onclick="openProjectMonth()">Edit monthly projects ↗</button></div>
   <label class="rev-label" for="wr-project-month">Projects from</label><input class="form-input project-month" id="wr-project-month" type="month" onchange="selectProjectMonth(this.value)">
   <div id="wr-projects" class="project-grid"></div></section>
+  <section class="rev-section planner-section"><div class="eyebrow">The conversations to focus on</div><h2>Hot this week</h2><div class="planner-grid"><label class="rev-label" for="wr-hot-bookings">Bookings<textarea id="wr-hot-bookings" class="rev-input" rows="5" placeholder="Client, trip details and the next step…" oninput="updateWeeklyPlan({hotBookings:this.value})"></textarea></label><label class="rev-label" for="wr-hot-prospects">Prospects<textarea id="wr-hot-prospects" class="rev-input" rows="5" placeholder="Name, what you’re discussing and the next step…" oninput="updateWeeklyPlan({hotProspects:this.value})"></textarea></label></div><p class="muted">Saved for this week as you type.</p></section>
   <div class="planner-grid">
   <section class="rev-section planner-section"><h2>This week’s calls &amp; events</h2><label class="rev-label" for="wr-events-plan">Dates, times & details</label><textarea id="wr-events-plan" class="rev-input" rows="3" placeholder="e.g. Tuesday, 7pm — team call"></textarea></section>
   <section class="rev-section planner-section"><h2>To-do this week</h2><div id="wr-todos"></div><form class="weekly-add" onsubmit="event.preventDefault();addWeeklyTodo()"><input class="form-input" id="wr-new-todo" aria-label="New weekly to-do" placeholder="Add a one-off task…"><button class="action-btn" type="submit">Add</button></form></section>
-  <section class="rev-section planner-section planner-wide"><div class="planner-heading"><h2>Content this week</h2><button class="action-btn" onclick="switchView('cb')">Open Content ↗</button></div><h3 style="margin:20px 0 8px">Content To Do This Week</h3><div id="cp-weekly-tasks"></div><label class="rev-label" for="wr-content-plan">Your weekly shortlist</label><textarea id="wr-content-plan" class="rev-input" rows="3" placeholder="Posts, ideas or launches to prioritise…"></textarea></section></div>
+  <section class="rev-section planner-section planner-wide"><div class="planner-heading"><h2>Content this week</h2><button class="action-btn" onclick="switchView('cb')">Open Content ↗</button></div><p class="muted">Create and tick off your selected ideas in Content Studio.</p><label class="rev-label" for="wr-content-plan">Your weekly shortlist</label><textarea id="wr-content-plan" class="rev-input" rows="3" placeholder="Posts, ideas or launches to prioritise…"></textarea></section></div>
   <p class="muted planner-status" id="wr-plan-status" role="status">Optional · saved as you type</p>
   <details class="context-panel" id="wr-archive" hidden><summary>Previously saved review</summary><dl></dl></details>
 </div>
@@ -3967,6 +3974,8 @@ function renderWeekly() {
   document.getElementById('wr-week-title').textContent=_wkLabel(revWeekOff);
   const data=getWkRev(_revWkDate(revWeekOff)),plan=data.plan || {};
   renderWeeklyProjects();renderWeeklyTodos();
+  document.getElementById('wr-hot-bookings').value=plan.hotBookings || '';
+  document.getElementById('wr-hot-prospects').value=plan.hotProspects || '';
   document.getElementById('wr-events-plan').value=plan.events || '';
   document.getElementById('wr-content-plan').value=plan.content || '';
   document.getElementById('wr-new-todo').value='';
@@ -4316,7 +4325,7 @@ window.CP_CONFIG=Object.freeze({supabaseUrl:'https://cfotxmjccfnefznrgoge.supaba
 (()=>{
 'use strict';
 const cfg=window.CP_CONFIG||{},root=document.getElementById('cp-root'),planner=document.getElementById('cp-weekly-tasks');
-const state={session:null,data:null,platform:'instagram',week:null,compare:true,rank:'views',filters:{},pending:0,loading:false,undo:[],error:'',generation:0};
+const state={session:null,data:null,platform:'instagram',week:null,compare:true,rank:'views',filters:{},studioFilter:'all',pending:0,loading:false,undo:[],error:'',generation:0};
 const PILLARS=['Lifestyle','Client/Travel','Business/Prospecting','Educational','Inspiration'];
 const PLATFORM={instagram:'Instagram',tiktok:'TikTok'};
 const VIEWS={...PLATFORM,stories:'Stories',trials:'Trials'};
@@ -4370,7 +4379,7 @@ async function api(op,method='GET',body,query=''){
  throw last;
 }
 function message(text,error=false){const el=document.getElementById('cp-message');if(el){el.className=error?'cp-error':'cp-toast';el.textContent=text;el.hidden=false;}else state.error=text;}
-function shell(){root.innerHTML=`<header class="cp-header"><div><div class="cp-kicker">Your creative intelligence</div><h1>Content Performance</h1><p class="cp-muted">The evidence. The opportunity. Your next move.</p></div><div class="cp-inline">${button('Content studio','studio')}${state.session?button('Set app password','password')+button('Sign out','logout'):''}</div></header><div id="cp-message" role="status" hidden></div><div id="cp-body"></div><div id="cp-selection" class="cp-sticky" hidden></div>`;}
+function shell(){root.innerHTML=`<header class="cp-header"><div><div class="cp-kicker">Your creative intelligence</div><h1>Content Performance</h1><p class="cp-muted">The evidence. The opportunity. Your next move.</p></div><div class="cp-inline">${button('Content studio','studio')}${state.session?`<details class="cp-account"><summary>Account</summary><div>${button('Set app password','password')}${button('Sign out','logout')}</div></details>`:''}</div></header><div id="cp-message" role="status" hidden></div><div id="cp-body"></div><div id="cp-selection" class="cp-sticky" hidden></div>`;}
 function renderGate(){shell();const el=document.getElementById('cp-body');
  if(!configured()){el.innerHTML='<section class="cp-empty"><h2>Your private workspace is ready to connect</h2><p class="cp-muted">The secure storage connection needs to be finished before your reviews and ideas can sync here. Your existing dashboard is still available.</p></section>';renderPlanner();return;}
  el.innerHTML=`<section class="cp-card" style="max-width:480px"><h2>Sign in to your private reviews</h2><p class="cp-muted">Sign in once on this device. Your app will remember you.</p><form id="cp-login"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>App password<input name="password" type="password" autocomplete="current-password" required></label><button class="cp-primary" type="submit">Sign in</button></form><details><summary>First time here or forgotten your password?</summary><p>Already signed in in another browser? Open Content there and choose <strong>Set app password</strong>. Then use that password here.</p><p>Otherwise, request an email link below. Once it opens your review, choose <strong>Set app password</strong>, then return to your home-screen app to sign in.</p><form id="cp-email"><label>Email for sign-in link<input name="email" type="email" autocomplete="email" required></label><button type="submit">Email me a sign-in link</button></form><p class="cp-muted">Email links may open in Safari instead of your home-screen app.</p></details></section>`;
@@ -4487,20 +4496,46 @@ function confirmSources(items){
  }catch(e){form.querySelector('[role=status]').textContent=e.message+' Saved items are safe to retry; duplicates will not be created.';state.undo=changed;await refresh(true);}finally{state.pending--;b.disabled=false;}
  };
 }
-function showSuccess(text,undo=false){message(text);const el=document.getElementById('cp-message');if(undo&&state.undo.length){const b=document.createElement('button');b.textContent='Undo';b.dataset.cp='undo';el.append(' ',b);}const link=document.createElement('button');link.textContent='View Content To Do This Week';link.dataset.cp='planner';el.append(' ',link);}
+function showSuccess(text,undo=false){message(text);const el=document.getElementById('cp-message');if(undo&&state.undo.length){const b=document.createElement('button');b.textContent='Undo';b.dataset.cp='undo';el.append(' ',b);}const link=document.createElement('button');link.textContent='Open Content Studio';link.dataset.cp='planner';el.append(' ',link);}
 async function patchTask(task,patch){const r=await api('task','PATCH',{taskId:task.task_id,revision:task.revision,patch});state.data.tasks=state.data.tasks.map(t=>t.task_id===task.task_id?r.task:t);return r.task;}
 function editTask(task){const p=task.payload,d=dialog('Edit content task',`<form><label>Task title<input name="title" required value="${escape(p.title)}"></label>${taskFields(p)}<label>Planner week<input name="planWeek" type="date" required value="${p.planWeek}"></label><label>Status<select name="status">${['todo','in-progress','complete','dismissed','removed'].map(s=>`<option value="${s}" ${s===p.status?'selected':''}>${nice(s)}</option>`).join('')}</select></label><button type="submit" class="cp-primary">Save changes</button><p role="status"></p></form>`);
  d.querySelector('form').onsubmit=async e=>{e.preventDefault();e.submitter.disabled=true;try{const form=e.target,week=dk(weekStart(_dateFromKey(form.elements.planWeek.value)));await patchTask(task,{...readFields(form),title:form.elements.title.value,planWeek:week,status:form.elements.status.value});d.close();render();renderPlanner();}catch(error){e.target.querySelector('[role=status]').textContent=error.message;}finally{e.submitter.disabled=false;}};
+}
+function studioFormat(i){
+ if(isTrial(i))return ['trials','Trial Reel'];
+ if(isStory(i))return ['stories','Instagram Stories'];
+ if(i.platform==='tiktok')return ['tiktok','TikTok'];
+ if(/carousel/i.test(i.format||''))return ['carousel','Instagram Carousel'];
+ if(/reel/i.test(i.format||''))return ['reels','Instagram Reel'];
+ return ['instagram','Instagram Post'];
 }
 function renderStudio(){
  const el=document.getElementById('cp-studio-selected');if(!el)return;
  if(!state.session){el.innerHTML='<p class="cp-muted">Sign in to Content Performance to see your selected ideas.</p>';return;}
  if(!state.data){el.innerHTML='<p class="cp-muted">Loading your selected ideas…</p>';return;}
- const tasks=state.data.tasks.filter(t=>!['removed','dismissed','complete'].includes(t.payload.status));
- const ideas=selectedIdeas();
- el.innerHTML=tasks.map(t=>`<article class="cp-card"><h3>${escape(t.payload.title)}</h3><p>${escape(t.payload.creativeDirection||t.payload.hook||'')}</p><span class="cp-status">${t.payload.status==='complete'?'Created':'In your content planner'}</span>${button('View task','viewtask',`data-id="${t.task_id}"`)}</article>`).join('')+ideas.map(i=>`<article class="cp-card"><h3>${escape(i.title)}</h3><p>${escape(i.premise)}</p><span class="cp-status">Selected in Ideas Inbox</span>${button('Open Ideas Inbox','performance')}</article>`).join('');
- if(!tasks.length&&!ideas.length)el.innerHTML='<p class="cp-muted">No ideas selected yet. Open Content Performance & Ideas Inbox to choose what you want to create.</p>';
+ const tasks=state.data.tasks.filter(t=>!['removed','dismissed'].includes(t.payload.status));
+ const entries=tasks.map(t=>({task:t,idea:{...t.payload.original,platform:t.payload.platform,hook:t.payload.hook||t.payload.original.hook}})).concat(selectedIdeas().map(idea=>({idea})));
+ const filter=state.studioFilter,visible=entries.filter(e=>filter==='all'||studioFormat(e.idea)[0]===filter);
+ const card=({task,idea})=>{const [type,label]=studioFormat(idea),done=task?.payload.status==='complete';return `<article class="cp-card cp-create-card cp-format-${type}"><div class="cp-inline cp-create-head"><span class="cp-format-label">${label}</span><label class="cp-checklabel"><input type="checkbox" data-studio-done="${escape(task?.task_id||'')}" data-studio-idea="${escape(idea.ideaId||'')}" ${done?'checked':''}>Created</label></div><h3>${escape(idea.hook||idea.title||task?.payload.title)}</h3><details><summary>View full brief</summary>${ideaBrief(idea)}</details>${task?button('Edit details','edittask',`data-id="${task.task_id}"`):''}</article>`;};
+ const active=visible.filter(e=>e.task?.payload.status!=='complete'),done=visible.filter(e=>e.task?.payload.status==='complete');
+ el.innerHTML=`<div class="cp-tabs cp-studio-filters" role="group" aria-label="Filter content to create">${Object.entries({all:'All',trials:'Trial Reels',reels:'Instagram Reels',carousel:'Carousels',tiktok:'TikTok',stories:'Stories',instagram:'Other posts'}).map(([value,label])=>button(label,'studiofilter',`data-value="${value}" aria-pressed="${filter===value}"`)).join('')}</div><p class="cp-muted">Choose a format for today. Tick Created when it’s finished.</p><p id="cp-studio-message" role="status"></p><div class="cp-create-grid">${active.map(card).join('')||'<p class="cp-muted">No content waiting in this format.</p>'}</div>${done.length?`<details class="cp-created"><summary>Created · ${done.length}</summary><p class="cp-muted">Untick to bring an idea back.</p><div class="cp-create-grid">${done.map(card).join('')}</div></details>`:''}`;
  el.onclick=handle;
+ el.querySelectorAll('[data-studio-done]').forEach(check=>check.onchange=async()=>{
+  check.disabled=true;state.pending++;
+  try{
+   let task=tasks.find(t=>t.task_id===check.dataset.studioDone);
+   if(!task){const idea=entries.find(e=>e.idea.ideaId===check.dataset.studioIdea)?.idea;
+    if(!idea)throw Error('Refresh to load this idea.');
+    await api('tasks','POST',{items:[{kind:'idea',weekId:idea.weekId,sourceId:idea.ideaId,platform:idea.platform,dueDate:null,priority:'medium',notes:'',planWeek:currentWeek()}]});
+    const snapshot=await api('snapshot','GET',null,'&week='+encodeURIComponent(idea.weekId));
+    task=snapshot.tasks.find(t=>t.source_key===key('idea',idea.weekId,idea.ideaId));
+    if(!task)throw Error('Could not load the saved task. Please retry.');
+    state.data.tasks=snapshot.tasks;
+   }
+   await patchTask(task,{status:check.checked?'complete':'todo'});renderStudio();renderPlanner();
+  }catch(e){check.checked=!check.checked;check.disabled=false;document.getElementById('cp-studio-message').textContent='Could not save: '+e.message;}
+  finally{state.pending--;}
+ });
 }
 function renderPlanner(){
  renderStudio();
@@ -4512,11 +4547,12 @@ function renderPlanner(){
  planner.innerHTML=`${state.error?'<p class="cp-error">Sync interrupted. Showing the last loaded tasks.</p>':''}${cards(active)||'<p class="cp-muted">No selected content tasks for this week yet.</p>'}${removed.length?`<details><summary>Removed & dismissed · ${removed.length}</summary>${cards(removed)}</details>`:''}<div class="cp-inline">${button('Choose content ideas','performance')}${button('Refresh tasks','refresh')}</div><p id="cp-planner-message" role="status"></p>`;
  planner.querySelectorAll('[data-task-check]').forEach(el=>el.onchange=async()=>{el.disabled=true;const task=state.data.tasks.find(t=>t.task_id===el.dataset.taskCheck);try{await patchTask(task,{status:el.checked?'complete':'todo'});renderPlanner();render();}catch(e){el.checked=!el.checked;el.disabled=false;planner.querySelector('[role=status]').textContent=e.message;}});
 }
-function openPlanner(taskId){const t=state.data?.tasks.find(t=>t.task_id===taskId);if(t){const anchor=weekStart(),target=_dateFromKey(t.payload.planWeek);revWeekOff=Math.round((target-anchor)/604800000);}else revWeekOff=0;switchView('weekly');renderPlanner();if(taskId)document.getElementById('content-task-'+taskId)?.scrollIntoView({block:'center',behavior:'smooth'});}
+function openPlanner(){switchView('cb');renderStudio();document.getElementById('cp-studio-selected')?.scrollIntoView({block:'start',behavior:'smooth'});}
 async function handle(event){const b=event.target.closest('[data-cp]');if(!b)return;const a=b.dataset.cp;b.disabled=true;
  try{
   if(a==='password')setAppPassword();
   if(a==='studio')switchView('cb');
+  if(a==='studiofilter'){state.studioFilter=b.dataset.value;renderStudio();}
   if(a==='performance')switchView('performance');
   if(a==='refresh')await refresh();
   if(a==='logout'){const session=state.session;setSession(null);state.data=null;state.undo=[];renderGate();if(session)fetch(cfg.supabaseUrl+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:cfg.publishableKey,Authorization:'Bearer '+session.access_token}}).catch(()=>{});}
