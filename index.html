@@ -997,6 +997,17 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 .weekly-add{display:flex;gap:10px;margin-top:18px}.weekly-todo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}.weekly-todo label{display:flex;align-items:center;gap:12px;min-height:44px;overflow-wrap:anywhere;min-width:0}.weekly-todo input{width:22px;height:22px;flex-shrink:0;accent-color:#94617c}.weekly-todo span{min-width:0}.planner-status{margin:0 0 20px}
 @media(max-width:900px){.project-grid{grid-template-columns:1fr}.monthly-numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.planner-grid{grid-template-columns:1fr}.planner-section{padding:20px}.planner-heading .action-btn{font-size:12px}.monthly-numbers .rev-label{font-size:11px}}
+/* Monthly focus stays visible above the daily priorities. */
+.ceo-project-focus{margin-bottom:20px;padding:18px 22px}
+.ceo-project-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ceo-project-heading h2{font-size:18px;margin:3px 0 0}
+.ceo-project-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ceo-project-item{background:#fcf4f7;border-radius:12px;padding:12px 14px;min-width:0}
+.ceo-project-item:nth-child(2){background:#f3f6fc}.ceo-project-item:nth-child(3){background:#f3f8f2}
+.ceo-project-item h3{font-size:15px;line-height:1.4;margin:0;overflow-wrap:anywhere}
+.ceo-project-item p{font-size:12px;line-height:1.5;color:var(--text2);margin:5px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.ceo-project-empty{font-size:13px;color:var(--text2);margin:0}
+@media(max-width:600px){.ceo-project-list{grid-template-columns:1fr}.ceo-project-focus{padding:16px}.ceo-project-heading .action-btn{font-size:12px}}
 </style>
 <!-- CP_STYLE_START -->
 <style>
@@ -1123,6 +1134,11 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
       <div class="aff-text" id="cs-aff-text">—</div>
     </div>
   </div>
+
+  <section class="card ceo-project-focus" aria-labelledby="cs-project-title">
+    <div class="ceo-project-heading"><div><div class="eyebrow" id="cs-project-month"></div><h2 id="cs-project-title">Monthly projects</h2></div><button class="action-btn" onclick="openCurrentMonthProjects()">Edit projects ↗</button></div>
+    <div id="cs-project-list" class="ceo-project-list"></div>
+  </section>
 
   <section class="card priority-hero"><div class="eyebrow">Make room for what matters</div><h2>Your priorities</h2><p class="muted">Saved as you type. Unfinished priorities move to overdue the next day and stay until completed.</p><div id="cs-priority-list"></div></section>
 
@@ -3790,7 +3806,29 @@ function swapCS(category) {
 }
 
 // ── RENDER ───────────────────────────────────────────────────
+function openCurrentMonthProjects() {
+  revMonthOff=0;
+  switchView('monthly');
+  document.getElementById('mr-direction-month').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderCEOMonthlyProjects() {
+  document.getElementById('cs-project-month').textContent=monthName(TODAY);
+  const list=document.getElementById('cs-project-list');list.replaceChildren();
+  const projects=(getMoRev(TODAY).direction?.projects || []).filter(p=>p && (p.name?.trim() || p.goal?.trim()));
+  if(!projects.length){
+    const empty=document.createElement('p');empty.className='ceo-project-empty';
+    empty.textContent='Choose your projects in Monthly to keep them in view here.';
+    list.appendChild(empty);return;
+  }
+  projects.forEach(project=>{
+    const card=document.createElement('article');card.className='ceo-project-item';
+    const title=document.createElement('h3');title.textContent=project.name || 'Monthly project';card.appendChild(title);
+    if(project.goal){const goal=document.createElement('p');goal.textContent=project.goal;card.appendChild(goal);}
+    list.appendChild(card);
+  });
+}
 function renderCEO() {
+  renderCEOMonthlyProjects();
   const hr   = new Date().getHours();
   const name  = S.settings?.name ? `, ${S.settings.name}` : '';
 
