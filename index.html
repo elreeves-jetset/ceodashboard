@@ -3610,14 +3610,15 @@ function renderMonthStrip() {
     const isToday  = d === todayDom;
     let cls = 'month-dot ';
     if (isFuture) cls += 'md-future';
-    else if (count === progress.total) cls += 'md-all';
+    else if (progress.total > 0 && count / progress.total > 0.5) cls += 'md-all';
     else if (count > 0)  cls += 'md-some';
     else                 cls += 'md-none';
     if (isToday) cls += ' md-today';
     const dot = document.createElement('div');
     dot.className = cls;
     dot.textContent = d;
-    dot.title = isFuture ? '' : `${dateStr}: ${count}/${progress.total} done`;
+    dot.title = isFuture ? `${dateStr}: upcoming` : `${dateStr}: ${count}/${progress.total} done · green when more than half are complete`;
+    dot.setAttribute('aria-label', dot.title);
     el.appendChild(dot);
   }
 }
