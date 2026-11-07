@@ -3156,7 +3156,30 @@ function getTaskDone(date = TODAY) {
   return JSON.parse(localStorage.getItem('ceotasks_done_v2_' + dk(date)) || '{}');
 }
 function taskPartKey(id, part) { return id + ':' + part; }
+// Calendar results record only work completed on its scheduled day.
+const CALENDAR_DEADLINE_START='2026-11-07';
+const CALENDAR_RED_CORRECTIONS=new Set(['2026-11-04','2026-11-05','2026-11-06']);
+function onTimeKey(date){return 'ceotasks_ontime_v1_'+dk(date);}
+function initialiseTodayResult(date){
+  if(dk(date)!==dk(new Date())||dk(date)<CALENDAR_DEADLINE_START)return;
+  if(localStorage.getItem(onTimeKey(date))===null)localStorage.setItem(onTimeKey(date),JSON.stringify(getTaskDone(date)));
+}
+function getCalendarProgress(date){
+  const day=dk(date);
+  if(CALENDAR_RED_CORRECTIONS.has(day))return {done:0,total:getTasksForDate(date).length,corrected:true};
+  if(day<CALENDAR_DEADLINE_START)return getTaskProgress(date);
+  initialiseTodayResult(date);
+  const done=JSON.parse(localStorage.getItem(onTimeKey(date))||'{}'),tasks=getTasksForDate(date);
+  return {done:tasks.filter(t=>t.parts?.length?t.parts.every(p=>done[taskPartKey(t.id,p)]):done[t.id]).length,total:tasks.length};
+}
 function writeTaskDone(date, done) {
+  const previous=getTaskDone(date);
+  initialiseTodayResult(date);
+  if(dk(date)===dk(new Date())&&dk(date)>=CALENDAR_DEADLINE_START){
+    const onTime=JSON.parse(localStorage.getItem(onTimeKey(date))||'{}');
+    for(const key of new Set([...Object.keys(previous),...Object.keys(done)]))if(previous[key]!==done[key])onTime[key]=!!done[key];
+    localStorage.setItem(onTimeKey(date),JSON.stringify(onTime));
+  }
   localStorage.setItem('ceotasks_done_v2_' + dk(date), JSON.stringify(done));
 }
 function setTaskDone(date, id, complete) {
@@ -3604,20 +3627,20 @@ function renderMonthStrip() {
   el.innerHTML = '';
   for (let d=1; d<=days; d++) {
     const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const progress = getTaskProgress(_dateFromKey(dateStr));
+    const progress = getCalendarProgress(_dateFromKey(dateStr));
     const count = progress.done;
     const isFuture = d > todayDom;
     const isToday  = d === todayDom;
     let cls = 'month-dot ';
     if (isFuture) cls += 'md-future';
-    else if (progress.total > 0 && count / progress.total > 0.5) cls += 'md-all';
-    else if (count > 0)  cls += 'md-some';
-    else                 cls += 'md-none';
+    else if (progress.total > 0 && count / progress.total >= 0.5) cls += 'md-all';
+    else if (!isToday || count > 0) cls += 'md-some';
+    else cls += 'md-none';
     if (isToday) cls += ' md-today';
     const dot = document.createElement('div');
     dot.className = cls;
     dot.textContent = d;
-    dot.title = isFuture ? `${dateStr}: upcoming` : `${dateStr}: ${count}/${progress.total} done · green when more than half are complete`;
+    dot.title = isFuture ? `${dateStr}: upcoming` : progress.corrected ? `${dateStr}: missed day · marked red as requested` : `${dateStr}: ${count}/${progress.total} completed on the day · green at 50% or more; overdue work does not change past days`;
     dot.setAttribute('aria-label', dot.title);
     el.appendChild(dot);
   }
