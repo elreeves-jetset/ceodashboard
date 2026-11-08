@@ -3156,7 +3156,7 @@ function getTaskDone(date = TODAY) {
   return JSON.parse(localStorage.getItem('ceotasks_done_v2_' + dk(date)) || '{}');
 }
 function taskPartKey(id, part) { return id + ':' + part; }
-// Calendar results record only work completed on its scheduled day.
+// Credit overdue work to the day it is completed, never its original missed day.
 const CALENDAR_DEADLINE_START='2026-11-07';
 const CALENDAR_RED_CORRECTIONS=new Set(['2026-11-04','2026-11-05','2026-11-06']);
 function onTimeKey(date){return 'ceotasks_ontime_v1_'+dk(date);}
@@ -3167,14 +3167,25 @@ function initialiseTodayResult(date){
 function getCalendarProgress(date){
   const day=dk(date);
   if(CALENDAR_RED_CORRECTIONS.has(day))return {done:0,total:getTasksForDate(date).length,corrected:true};
+  if(day==='2026-11-07')return {done:getTasksForDate(date).length,total:getTasksForDate(date).length,greenCorrection:true};
   if(day<CALENDAR_DEADLINE_START)return getTaskProgress(date);
   initialiseTodayResult(date);
   const done=JSON.parse(localStorage.getItem(onTimeKey(date))||'{}'),tasks=getTasksForDate(date);
-  return {done:tasks.filter(t=>t.parts?.length?t.parts.every(p=>done[taskPartKey(t.id,p)]):done[t.id]).length,total:tasks.length};
+  const late=JSON.parse(localStorage.getItem('ceotasks_activity_v1_'+day)||'{}');
+  return {done:tasks.filter(t=>t.parts?.length?t.parts.every(p=>done[taskPartKey(t.id,p)]):done[t.id]).length+Object.values(late).filter(Boolean).length,total:tasks.length};
 }
 function writeTaskDone(date, done) {
   const previous=getTaskDone(date);
   initialiseTodayResult(date);
+  const actualDay=dk(new Date());
+  if(dk(date)<actualDay){
+    const key='ceotasks_activity_v1_'+actualDay,activity=JSON.parse(localStorage.getItem(key)||'{}');
+    for(const task of getTasksForDate(date)){
+      const complete=flags=>task.parts?.length?task.parts.every(p=>flags[taskPartKey(task.id,p)]):!!flags[task.id];
+      if(complete(previous)!==complete(done))activity[dk(date)+':'+task.id]=complete(done);
+    }
+    localStorage.setItem(key,JSON.stringify(activity));
+  }
   if(dk(date)===dk(new Date())&&dk(date)>=CALENDAR_DEADLINE_START){
     const onTime=JSON.parse(localStorage.getItem(onTimeKey(date))||'{}');
     for(const key of new Set([...Object.keys(previous),...Object.keys(done)]))if(previous[key]!==done[key])onTime[key]=!!done[key];
@@ -3640,7 +3651,7 @@ function renderMonthStrip() {
     const dot = document.createElement('div');
     dot.className = cls;
     dot.textContent = d;
-    dot.title = isFuture ? `${dateStr}: upcoming` : progress.corrected ? `${dateStr}: missed day · marked red as requested` : `${dateStr}: ${count}/${progress.total} completed on the day · green at 50% or more; overdue work does not change past days`;
+    dot.title = isFuture ? `${dateStr}: upcoming` : progress.corrected ? `${dateStr}: missed day · marked red as requested` : progress.greenCorrection ? `${dateStr}: productive day · marked green as requested` : `${dateStr}: ${count} tasks completed today, including overdue · target ${Math.ceil(progress.total/2)}; missed days stay unchanged`;
     dot.setAttribute('aria-label', dot.title);
     el.appendChild(dot);
   }
