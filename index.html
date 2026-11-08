@@ -1219,10 +1219,12 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
     <button class="rev-week-nav-btn" style="width:auto;padding:0 12px" onclick="changeRevWeek(0)">This week</button>
     <button class="rev-week-nav-btn" aria-label="Next week" onclick="changeRevWeek(1)">›</button>
   </div></div>
+  <p class="muted" id="wr-week-context"></p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px"><button class="action-btn" onclick="revWeekOff=0;renderWeekly()">Review this week</button><button class="action-btn" onclick="revWeekOff=1;renderWeekly()">Plan next week</button></div>
   <section class="rev-section planner-section"><div class="planner-heading"><div><div class="eyebrow">Your monthly projects, in motion</div><h2>This week’s actions</h2></div><button class="action-btn" onclick="openProjectMonth()">Edit monthly projects ↗</button></div>
   <label class="rev-label" for="wr-project-month">Projects from</label><input class="form-input project-month" id="wr-project-month" type="month" onchange="selectProjectMonth(this.value)">
   <div id="wr-projects" class="project-grid"></div></section>
-  <section class="rev-section planner-section"><div class="eyebrow">The conversations to focus on</div><h2>Hot this week</h2><div class="planner-grid"><label class="rev-label" for="wr-hot-bookings">Bookings<textarea id="wr-hot-bookings" class="rev-input" rows="5" placeholder="Client, trip details and the next step…" oninput="updateWeeklyPlan({hotBookings:this.value})"></textarea></label><label class="rev-label" for="wr-hot-prospects">Prospects<textarea id="wr-hot-prospects" class="rev-input" rows="5" placeholder="Name, what you’re discussing and the next step…" oninput="updateWeeklyPlan({hotProspects:this.value})"></textarea></label></div><p class="muted">Saved for this week as you type.</p></section>
+  <section class="rev-section planner-section"><div class="eyebrow">The conversations to focus on</div><h2>Hot this week</h2><div class="planner-grid"><div><h3>Bookings</h3><div id="wr-bookings-list"></div><button class="action-btn" onclick="addHotEntry('bookings')">+ Add booking</button></div><div><h3>Prospects</h3><div id="wr-prospects-list"></div><button class="action-btn" onclick="addHotEntry('prospects')">+ Add prospect</button></div></div><p class="muted">Tick confirmed bookings or signed-up prospects. Add unfinished ones to next week without losing this week’s record.</p></section>
   <section class="rev-section planner-section"><h2>Wins of this week</h2><div class="project-grid"><div><label class="rev-label" for="wr-win-0">Win 1</label><textarea id="wr-win-0" class="rev-input" rows="3" placeholder="A win worth remembering…" oninput="saveWeeklyWin(0,this.value)"></textarea></div><div><label class="rev-label" for="wr-win-1">Win 2</label><textarea id="wr-win-1" class="rev-input" rows="3" placeholder="A win worth remembering…" oninput="saveWeeklyWin(1,this.value)"></textarea></div><div><label class="rev-label" for="wr-win-2">Win 3</label><textarea id="wr-win-2" class="rev-input" rows="3" placeholder="A win worth remembering…" oninput="saveWeeklyWin(2,this.value)"></textarea></div></div></section>
   <p class="muted planner-status" id="wr-plan-status" role="status">Optional · saved as you type</p>
   <details class="context-panel" id="wr-archive" hidden><summary>Previously saved review</summary><dl></dl></details>
@@ -3697,7 +3699,7 @@ function renderTaskGrid() {
     if(item.id==='weekly-review') {
       const open=document.createElement('button');open.type='button';open.className='action-btn';
       open.textContent='Open Weekly';
-      open.onclick=()=>{revWeekOff=0;switchView('weekly');};
+      open.onclick=()=>{revWeekOff=TODAY.getDay()===0?1:0;switchView('weekly');};
       card.querySelector('.ceo4-foot').before(open);
     }
     const noteBox = card.querySelector('.task-note');
@@ -3896,7 +3898,7 @@ function renderCEO() {
 // WEEKLY & MONTHLY REVIEW — Storage helpers
 // ─────────────────────────────────────────────────────────────
 
-let revWeekOff = 0, revMonthOff = 0;
+let revWeekOff = TODAY.getDay()===0 ? 1 : 0, revMonthOff = 0;
 
 function _legacyWkKey(d) {
   const x = d || TODAY;
@@ -4019,8 +4021,43 @@ function renderWeeklyProjects() {
     const project=projects[i] || {}, card=document.createElement('article');card.className='project-panel';
     card.innerHTML=`<div class="eyebrow">Monthly project ${i+1}</div><h3>${esc(project.name || 'Name this project in Monthly')}</h3><p class="project-goal">${esc(project.goal || 'Add a monthly goal when you’re ready.')}</p><label class="rev-label" for="wr-action-${i}">This week’s action</label><input class="form-input" id="wr-action-${i}" placeholder="One action to move it forward…">`;
     const input=card.querySelector('input');input.value=actions[i] || '';
-    input.addEventListener('input',()=>saveWeeklyAction(i,input.value));grid.appendChild(card);
+    input.addEventListener('input',()=>saveWeeklyAction(i,input.value));
+    const label=document.createElement('label');label.style.cssText='display:flex;gap:8px;align-items:center;margin-top:12px';
+    const check=document.createElement('input');check.type='checkbox';check.checked=!!weeklyPlan().actionDone?.[month]?.[i];
+    check.addEventListener('change',()=>{const all={...weeklyPlan().actionDone},entries={...all[month]};entries[i]=check.checked;all[month]=entries;updateWeeklyPlan({actionDone:all});});
+    label.append(check,document.createTextNode('Action complete'));card.append(label);grid.appendChild(card);
   }
+}
+function hotEntries(kind,plan=weeklyPlan()) {
+  if(Array.isArray(plan.hotItems?.[kind]))return plan.hotItems[kind];
+  const text=plan[kind==='bookings'?'hotBookings':'hotProspects'] || '';
+  // Preserve the original free-form note as one editable entry; never guess where names end.
+  return text.trim()?[{id:'legacy-'+kind,text,done:false}]:[];
+}
+function saveHotEntries(kind,entries){updateWeeklyPlan({hotItems:{...weeklyPlan().hotItems,[kind]:entries}});}
+function addHotEntry(kind){saveHotEntries(kind,[...hotEntries(kind),{id:crypto.randomUUID(),text:'',done:false}]);renderHotEntries(kind);}
+function carryHotEntry(kind,id){
+  const entries=hotEntries(kind),entry=entries.find(e=>e.id===id);if(!entry?.text.trim())return;
+  const next=_revWkDate(revWeekOff+1),data=getWkRev(next),plan=data.plan || {};
+  const origin=_wkKey(_revWkDate(revWeekOff))+':'+kind+':'+id,items=hotEntries(kind,plan);
+  if(!items.some(e=>e.origin===origin))items.push({id:crypto.randomUUID(),origin,text:entry.text,done:false});
+  _saveWkRev({...data,plan:{...plan,hotItems:{...plan.hotItems,[kind]:items}},savedAt:new Date().toISOString()},next);
+  saveHotEntries(kind,entries.map(e=>e.id===id?{...e,carried:true}:e));renderHotEntries(kind);
+}
+function renderHotEntries(kind){
+  const root=document.getElementById('wr-'+kind+'-list');root.replaceChildren();
+  const entries=hotEntries(kind);
+  if(!entries.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Nothing added for this week yet.';root.append(empty);}
+  entries.forEach(entry=>{
+    const row=document.createElement('div');row.className='project-panel';row.style.marginBottom='12px';
+    const input=document.createElement('textarea');input.className='rev-input';input.rows=3;input.value=entry.text;input.placeholder=kind==='bookings'?'Client, trip and next step…':'Name, conversation and next step…';input.setAttribute('aria-label',kind==='bookings'?'Booking details':'Prospect details');
+    input.oninput=()=>saveHotEntries(kind,hotEntries(kind).map(e=>e.id===entry.id?{...e,text:input.value}:e));
+    const label=document.createElement('label');label.style.cssText='display:flex;align-items:center;gap:8px;margin:10px 0';
+    const check=document.createElement('input');check.type='checkbox';check.checked=!!entry.done;check.onchange=()=>{saveHotEntries(kind,hotEntries(kind).map(e=>e.id===entry.id?{...e,done:check.checked}:e));renderHotEntries(kind);};
+    label.append(check,document.createTextNode(kind==='bookings'?'Booking confirmed':'Signed up'));
+    const carry=document.createElement('button');carry.className='action-btn';carry.textContent=entry.carried?'Added to next week ✓':'Add to next week';carry.disabled=!!entry.carried||!!entry.done;carry.onclick=()=>carryHotEntry(kind,entry.id);
+    row.append(input,label,carry);root.append(row);
+  });
 }
 function saveWeeklyWin(index,value) {
   const wins=[...(weeklyPlan().wins || ['','',''])];wins[index]=value;
@@ -4041,8 +4078,8 @@ function renderWeekly() {
   document.getElementById('wr-week-title').textContent=_wkLabel(revWeekOff);
   const data=getWkRev(_revWkDate(revWeekOff)),plan=data.plan || {};
   renderWeeklyProjects();
-  document.getElementById('wr-hot-bookings').value=plan.hotBookings || '';
-  document.getElementById('wr-hot-prospects').value=plan.hotProspects || '';
+  document.getElementById('wr-week-context').textContent=revWeekOff===1?'Planning next week · review this week whenever you’re ready.':revWeekOff===0?'This week’s review · tick what’s complete, carry forward what still needs attention, and record your wins.':'Your saved weekly plan and review.';
+  renderHotEntries('bookings');renderHotEntries('prospects');
   for(let i=0;i<3;i++)document.getElementById('wr-win-'+i).value=plan.wins?.[i] || '';
   document.getElementById('wr-plan-status').textContent='Optional · saved as you type';
   renderPlanArchive('wr',[{label:'Previous entries',data}]);
