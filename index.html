@@ -3149,14 +3149,64 @@ function sundayReviewStart() {
   }
   return start;
 }
+// New schedule applies from 13 November; historical task lists stay unchanged.
+const FOCUSED_SCHEDULE_START='2026-11-13';
+const FOCUSED_SCHEDULE={
+  1:[
+    {id:'new-conversations',text:'New Conversations with Connections',parts:['LinkedIn','Instagram','TikTok']},
+    {id:'amy-trial-reels',text:'Amy Reels & Trial Reels'},
+    {id:'team-checkins-focused',text:'Team Check-Ins',parts:['New Starters','Active Builders']},
+    {id:'client-outreach-focused',text:'Client Outreach',parts:['Email 20 LinkedIn Connections','DM 5 Instagram Followers']}
+  ],
+  2:[
+    {id:'flagged-messages',text:'Reply to Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email']},
+    {id:'current-network',text:'Prospecting Current Network',parts:['LinkedIn','Instagram']},
+    {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 5 Contacts']},
+    {id:'booking-practice',text:'Booking-System Practice · 45 Minutes'}
+  ],
+  3:[
+    {id:'marketing-emails',text:'Marketing Emails',parts:['Client','Prospect','Team']},
+    {id:'expand-network',text:'Expanding Network',parts:['LinkedIn','Instagram']},
+    {id:'travel-followups',text:'Follow Up Travel Enquiries & Quotes',parts:['Outstanding Enquiries','Quotes Sent','Agree Next Steps']},
+    {id:'follow-ups',text:'Old Follow Ups',parts:['LinkedIn','Instagram','WhatsApp']}
+  ],
+  4:[
+    {id:'talking-videos',text:'Talking Videos'},
+    {id:'team-support-focused',text:'Team Support & Training',parts:['Planned Training','New Starters & Active Builders']},
+    {id:'flagged-messages',text:'Reply to Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email']},
+    {id:'booking-practice',text:'Booking-System Practice · 45 Minutes'}
+  ],
+  5:[
+    {id:'follow-ups',text:'Old Follow Ups',parts:['LinkedIn','Instagram','WhatsApp']},
+    {id:'current-network',text:'Prospecting Current Network',parts:['LinkedIn','Instagram']},
+    {id:'past-client-outreach',text:'Contact Past Travel Clients',parts:['Message 5 Past Clients or Previous Enquirers']},
+    {id:'travel-followups',text:'Follow Up Travel Enquiries & Quotes',parts:['Outstanding Answers','Quotes Sent','Confirm Next Steps']}
+  ],
+  6:[
+    {id:'jetset-content',text:'Create Jet Set Content',parts:['Create Content','Weekly Travel Promotion']},
+    {id:'ela-content',text:'Review & Create Ela Content',parts:['LinkedIn','Instagram','TikTok','Stories']}
+  ],
+  0:[
+    {id:'crm-update',text:'CRM Update'},
+    {id:'saved-messages',text:'Review Saved & Flagged Conversations',parts:['WhatsApp','Instagram','TikTok','Email']},
+    {id:'weekly-review',text:'Weekly Review & Plan Next Week'}
+  ]
+};
 function getTasksForDate(date) {
+  if(dk(date)>=FOCUSED_SCHEDULE_START)return FOCUSED_SCHEDULE[date.getDay()];
   const reviewStart=sundayReviewStart();
   const tasks=RECURRING_SCHEDULE[date.getDay()],extra=EXTRA_WEEKDAY_TASKS[date.getDay()];
   if(date.getDay()===0 && dk(date)>=reviewStart) return [...tasks,{id:'weekly-review',text:'Weekly Review'}];
   return dk(date)>=fourTaskScheduleStart() && extra ? [...tasks,extra] : tasks;
 }
 function getTaskDone(date = TODAY) {
-  return JSON.parse(localStorage.getItem('ceotasks_done_v2_' + dk(date)) || '{}');
+  const done=JSON.parse(localStorage.getItem('ceotasks_done_v2_' + dk(date)) || '{}');
+  // Preserve an existing completed parent when sub-checkboxes are first introduced.
+  if(dk(date)>=FOCUSED_SCHEDULE_START)for(const task of FOCUSED_SCHEDULE[date.getDay()]){
+    if(done[task.id] && task.parts?.length && !task.parts.some(part=>Object.prototype.hasOwnProperty.call(done,taskPartKey(task.id,part))))
+      task.parts.forEach(part=>done[taskPartKey(task.id,part)]=true);
+  }
+  return done;
 }
 function taskPartKey(id, part) { return id + ':' + part; }
 // Credit overdue work to the day it is completed, never its original missed day.
