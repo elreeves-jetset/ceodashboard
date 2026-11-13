@@ -3192,8 +3192,20 @@ const FOCUSED_SCHEDULE={
     {id:'weekly-review',text:'Weekly Review & Plan Next Week'}
   ]
 };
+const CLIENT_TOUCHPOINTS=[
+  'Message 5 Past Clients or Previous Enquirers',
+  'Email 5 Previous Travel Enquirers',
+  'WhatsApp 5 Past Clients a Travel Check-In',
+  'Ask 3 Happy Clients for a Referral',
+  'Follow Up 5 Previous Quotes by Email',
+  'Send 3 Relevant Trip Ideas to Past Clients on WhatsApp'
+];
+function focusedTasksForDate(date){
+  const week=Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,10,13))/604800000);
+  return FOCUSED_SCHEDULE[date.getDay()].map(task=>task.id==='past-client-outreach'?{...task,parts:[CLIENT_TOUCHPOINTS[((week%CLIENT_TOUCHPOINTS.length)+CLIENT_TOUCHPOINTS.length)%CLIENT_TOUCHPOINTS.length]]}:task);
+}
 function getTasksForDate(date) {
-  if(dk(date)>=FOCUSED_SCHEDULE_START)return FOCUSED_SCHEDULE[date.getDay()];
+  if(dk(date)>=FOCUSED_SCHEDULE_START)return focusedTasksForDate(date);
   const reviewStart=sundayReviewStart();
   const tasks=RECURRING_SCHEDULE[date.getDay()],extra=EXTRA_WEEKDAY_TASKS[date.getDay()];
   if(date.getDay()===0 && dk(date)>=reviewStart) return [...tasks,{id:'weekly-review',text:'Weekly Review'}];
@@ -3202,7 +3214,7 @@ function getTasksForDate(date) {
 function getTaskDone(date = TODAY) {
   const done=JSON.parse(localStorage.getItem('ceotasks_done_v2_' + dk(date)) || '{}');
   // Preserve an existing completed parent when sub-checkboxes are first introduced.
-  if(dk(date)>=FOCUSED_SCHEDULE_START)for(const task of FOCUSED_SCHEDULE[date.getDay()]){
+  if(dk(date)>=FOCUSED_SCHEDULE_START)for(const task of focusedTasksForDate(date)){
     if(done[task.id] && task.parts?.length && !task.parts.some(part=>Object.prototype.hasOwnProperty.call(done,taskPartKey(task.id,part))))
       task.parts.forEach(part=>done[taskPartKey(task.id,part)]=true);
   }
