@@ -3203,7 +3203,11 @@ const CLIENT_TOUCHPOINTS=[
 ];
 function focusedTasksForDate(date){
   const week=Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,10,13))/604800000);
-  return FOCUSED_SCHEDULE[date.getDay()].map(task=>task.id==='past-client-outreach'?{...task,parts:[CLIENT_TOUCHPOINTS[((week%CLIENT_TOUCHPOINTS.length)+CLIENT_TOUCHPOINTS.length)%CLIENT_TOUCHPOINTS.length]]}:task);
+  return FOCUSED_SCHEDULE[date.getDay()].map(task=>{
+    // Keep historical flagged-message checklists unchanged when adding a platform.
+    if(dk(date)<'2026-11-22' && ['flagged-messages','saved-messages'].includes(task.id))return {...task,parts:task.parts.filter(part=>part!=='LinkedIn')};
+    return task.id==='past-client-outreach'?{...task,parts:[CLIENT_TOUCHPOINTS[((week%CLIENT_TOUCHPOINTS.length)+CLIENT_TOUCHPOINTS.length)%CLIENT_TOUCHPOINTS.length]]}:task;
+  });
 }
 function getTasksForDate(date) {
   if(dk(date)>=FOCUSED_SCHEDULE_START)return focusedTasksForDate(date);
