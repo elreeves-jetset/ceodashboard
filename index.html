@@ -1030,17 +1030,6 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
 
 </style>
 <!-- CP_STYLE_END -->
-<style>
-.meetings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0 20px}
-.meeting-card{border:1px solid #e8dce5;background:#fffafd;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
-.meeting-card h3{font-size:16px;margin:0;overflow-wrap:anywhere}
-.meeting-time,.meeting-updated{font-size:12px;color:#796d77;margin:0}
-.meeting-card a{color:#80536c;font-weight:700}
-.meeting-card button{border:1px solid #d9c5d3;background:white;border-radius:12px;padding:9px 14px;cursor:pointer;color:#634958;font:inherit}
-.meeting-card button:focus-visible,.meeting-card a:focus-visible{outline:2px solid #80536c;outline-offset:3px}
-@media(max-width:480px){.meetings-grid{grid-template-columns:1fr}}
-
-</style>
 </head>
 <body>
 
@@ -1162,7 +1151,6 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
     </div>
   </div>
 
-  <section id="cs-meetings" class="card" aria-label="Today’s calls and events"></section>
 
   <!-- Daily recurring tasks with independent platform checks -->
   <div class="cs-section-lbl" id="cs-task-heading" style="margin-top:0">Today's Focus · 3 tasks</div>
@@ -3172,7 +3160,7 @@ const FOCUSED_SCHEDULE={
     {id:'client-outreach-focused',text:'Client Outreach',parts:['Email 20 LinkedIn Connections','DM 5 Instagram Followers']}
   ],
   2:[
-    {id:'flagged-messages',text:'Reply to Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email']},
+    {id:'flagged-messages',text:'Reply to Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email','LinkedIn']},
     {id:'current-network',text:'Prospecting Current Network',parts:['LinkedIn','Instagram']},
     {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 5 Contacts']},
     {id:'booking-practice',text:'Booking-System Practice · 45 Minutes'}
@@ -3186,14 +3174,14 @@ const FOCUSED_SCHEDULE={
   4:[
     {id:'talking-videos',text:'Talking Videos'},
     {id:'team-support-focused',text:'Team Support & Training',parts:['Planned Training','New Starters & Active Builders']},
-    {id:'flagged-messages',text:'Reply to Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email']},
+    {id:'flagged-messages',text:'Reply to Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email','LinkedIn']},
     {id:'booking-practice',text:'Booking-System Practice · 45 Minutes'}
   ],
   5:[
     {id:'follow-ups',text:'Old Follow Ups'},
     {id:'current-network',text:'Prospecting Current Network',parts:['LinkedIn','Instagram']},
     {id:'past-client-outreach',text:'Contact Past Travel Clients',parts:['Message 5 Past Clients or Previous Enquirers']},
-    {id:'travel-followups',text:'Follow Up Travel Enquiries & Quotes',parts:['Outstanding Answers','Quotes Sent','Confirm Next Steps']}
+    {id:'travel-followups',text:'Follow Up Travel Enquiries & Quotes'}
   ],
   6:[
     {id:'jetset-content',text:'Create Jet Set Content',parts:['Create Content','Weekly Travel Promotion']},
@@ -3201,7 +3189,7 @@ const FOCUSED_SCHEDULE={
   ],
   0:[
     {id:'crm-update',text:'CRM Update'},
-    {id:'saved-messages',text:'Review Saved & Flagged Conversations',parts:['WhatsApp','Instagram','TikTok','Email']},
+    {id:'saved-messages',text:'Review Saved & Flagged Conversations',parts:['WhatsApp','Instagram','TikTok','Email','LinkedIn']},
     {id:'weekly-review',text:'Weekly Review & Plan Next Week'}
   ]
 };
@@ -3959,7 +3947,6 @@ function renderCEO() {
 
   // Overdue strip
   renderOverdue();
-  window.renderCEOMeetings?.();
 
   // Daily task grid
   renderTaskGrid();
@@ -4961,89 +4948,5 @@ schedule();
 
 </script>
 <!-- DASHBOARD_SYNC_END -->
-<!-- OUTLOOK_MEETINGS_START -->
-<script>
-/* Calendar adapter boundary. Only verified meeting/event records belong here.
- * Never pass Saga tasks, reminders or calendar time blocks into this feed.
- * Feed must come from an authenticated private service, never public GitHub.
- */
-(function(root){
-  'use strict';
-  const doneKey='ceotasks_meetings_done_v1';
-  function todaysEvents(events,now=new Date()){
-    const start=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
-    const end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1).getTime();
-    const unique=new Map();
-    for(const event of events||[]){
-      if(!event.id||!['meeting','event'].includes(event.kind)||event.cancelled||event.completed)continue;
-      const from=Date.parse(event.start),to=Date.parse(event.end);
-      if(!Number.isFinite(from)||!Number.isFinite(to)||to<=from||from>=end||to<=start)continue;
-      const key=(event.uid||String(event.title||'').trim().toLowerCase())+'|'+from;
-      const old=unique.get(key);
-      if(old)unique.set(key,{...old,joinUrl:old.joinUrl||event.joinUrl,ids:[...old.ids,event.id]});
-      else unique.set(key,{...event,ids:[event.id]});
-    }
-    return [...unique.values()].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
-  }
-  function render(container,feed,showDone=false){
-    container.replaceChildren();
-    const heading=document.createElement('h2');heading.textContent='Today’s calls & events';container.append(heading);
-    if(!feed){const note=document.createElement('p');note.textContent='Your private Outlook calendar';container.append(note);return;}
-    let done={};try{done=JSON.parse(localStorage.getItem(doneKey))||{};}catch{}
-    const all=feed.expired?[]:todaysEvents(feed.events);
-    const rows=all.filter(e=>showDone||!e.ids.some(id=>done[id]));
-    const completed=all.filter(e=>e.ids.some(id=>done[id])).length;
-    if(completed){const toggle=document.createElement('button');toggle.type='button';toggle.className='action-btn';toggle.textContent=showDone?'Hide completed':'Show completed ('+completed+')';toggle.onclick=()=>render(container,feed,!showDone);container.append(toggle);}
-    const grid=document.createElement('div');grid.className='meetings-grid';container.append(grid);
-    for(const event of rows){
-      const card=document.createElement('article');card.className='meeting-card';
-      const time=document.createElement('p');time.className='meeting-time';
-      time.textContent=event.allDay?'All day':new Date(event.start).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})+' – '+new Date(event.end).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-      const title=document.createElement('h3');title.textContent=event.title||'Meeting';card.append(time,title);
-      if(event.joinUrl){try{const url=new URL(event.joinUrl);if(url.protocol==='https:'){const link=document.createElement('a');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Join call ↗';card.append(link);}}catch{}}
-      const button=document.createElement('button');button.type='button';button.textContent=event.ids.some(id=>done[id])?'Undo completion':'✓ Done';button.setAttribute('aria-label',(event.ids.some(id=>done[id])?'Undo completion of ':'Complete ')+(event.title||'meeting'));
-      button.onclick=()=>{let latest={};try{latest=JSON.parse(localStorage.getItem(doneKey))||{};}catch{};for(const id of event.ids)latest[id]=!event.ids.some(key=>done[key]);localStorage.setItem(doneKey,JSON.stringify(latest));render(container,feed);};
-      card.append(button);grid.append(card);
-    }
-    if(!rows.length&&!feed.expired){const note=document.createElement('p');note.textContent='No remaining Outlook calls or events today.';grid.append(note);}
-    if(feed.updatedAt){const note=document.createElement('p');note.className='meeting-updated';note.textContent=(Date.now()-Date.parse(feed.updatedAt)>7200000?'Outlook update overdue · ':'Outlook · ')+ 'Last updated '+new Date(feed.updatedAt).toLocaleString('en-GB');container.append(note);}
-  }
-  root.JetSetMeetings={todaysEvents,render};
-})(globalThis);
-
-(()=>{
-'use strict';
-let feed=null,busy=false,account=null,lastRead=0,statusMessage='Loading Outlook…';
-const box=()=>document.getElementById('cs-meetings');
-function paint(message=statusMessage){statusMessage=message;const el=box();if(!el)return;JetSetMeetings.render(el,feed);if(message){const p=document.createElement('p');p.className='meeting-updated';p.textContent=message;el.append(p);}}
-async function refresh(){
- if(busy)return;
- const user=window.DashboardAuth?.session()?.user?.id;
- if(!user){feed=null;account=null;paint('Sign in using the dashboard sync button to see your private calendar.');return;}
- if(user!==account){feed=null;account=user;}
- busy=true;
- try{
-  const jwt=await window.DashboardAuth.token();
-  const response=await fetch(window.CP_CONFIG.supabaseUrl+'/rest/v1/dashboard_agenda?select=updated_at,window_start,window_end,events',{headers:{apikey:window.CP_CONFIG.publishableKey,Authorization:'Bearer '+jwt},cache:'no-store',signal:AbortSignal.timeout(15000)});
-  if(!response.ok)throw Error('Calendar update unavailable.');
-  const [row]=await response.json();
-  if(window.DashboardAuth?.session()?.user?.id!==user)return;
-  if(!row)throw Error('Waiting for the first Outlook update.');
-  const outside=Date.now()<Date.parse(row.window_start)||Date.now()>=Date.parse(row.window_end);
-  feed={events:row.events,updatedAt:row.updated_at,expired:outside};lastRead=Date.now();
-  paint(outside?'Calendar coverage has expired. Check Outlook for today’s meetings.':null);
- }catch(e){paint(feed?'Unable to refresh · showing the last saved Outlook update.':'Outlook connection is being set up.');}
- finally{busy=false;}
-}
-window.renderCEOMeetings=()=>{paint();if(Date.now()-lastRead>60000)refresh();};
-window.addEventListener('dashboard-auth',refresh);
-window.addEventListener('focus',refresh);
-window.addEventListener('storage',()=>paint());
-setInterval(()=>{if(!document.hidden)refresh();},60000);
-refresh();
-})();
-
-</script>
-<!-- OUTLOOK_MEETINGS_END -->
 </body>
 </html>
