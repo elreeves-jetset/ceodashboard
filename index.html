@@ -1106,11 +1106,7 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
     <div class="context-fields"><label>Saves<input id="wr-content-saves" class="form-input" type="number" min="0" placeholder="Optional"></label><label>Replies<input id="wr-content-replies" class="form-input" type="number" min="0" placeholder="Optional"></label></div>
   </details>
   <div class="workspace-intro"><div class="eyebrow">Your life is the starting point</div><h1>Content studio</h1><p>Real moments, useful stories, and more of what your audience responds to.</p></div>
-  <details class="context-panel" open><summary>Where you are &amp; what’s coming up</summary>
-    <p class="muted" id="calendar-status">Calendar checked 28 September 2026: no travel locations found for 21 September–31 October. Add a trip or import a calendar export. This app does not live-sync your calendar.</p>
-    <div class="context-fields"><label>Place / destination<input id="trip-place" class="form-input" placeholder="City, region or home base"></label><label>From<input id="trip-start" class="form-input" type="date"></label><label>Through<input id="trip-end" class="form-input" type="date"></label><button class="action-btn primary" onclick="addTrip()">Add trip</button></div>
-    <label class="import-label">Import a calendar (.ics)<input id="trip-import" type="file" accept=".ics,text/calendar" onchange="importTrips(this.files[0])"></label><p id="trip-message" class="muted" role="status"></p><div id="trip-list"></div>
-  </details>
+
 
 
   <div class="cb-section-title">Ideas for your week</div>
@@ -1221,8 +1217,8 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;margin:5px 0 10px}h2{fon
   <div class="rev-week-nav"><div class="rev-week-nav-title" id="wr-week-title"></div><div class="rev-week-nav-btns"><button class="rev-week-nav-btn" aria-label="Previous reset" onclick="changeReset(-1)">‹</button><button class="action-btn" onclick="changeReset(0)">Latest reset</button><button class="rev-week-nav-btn" aria-label="Next reset" onclick="changeReset(1)">›</button></div></div>
   <div class="reset-steps" role="group" aria-label="Sunday reset steps"><button id="reset-step-0" onclick="selectResetStep(0)">1 · Give yourself credit</button><button id="reset-step-1" onclick="selectResetStep(1)">2 · Close the loop</button><button id="reset-step-2" onclick="selectResetStep(2)">3 · Choose your next moves</button></div>
   <p class="muted" id="wr-week-context"></p>
-  <section id="reset-lookback" class="rev-section planner-section"><h2>You did more than you think.</h2><div id="reset-momentum" class="reset-momentum"></div><p class="muted">From your CEO tracker. The numbers are context, not a grade.</p><h3>What deserves a little credit?</h3><p class="muted">A booking, a brave conversation, someone you helped—or something you finally finished.</p><div class="project-grid"><div><label class="rev-label" for="wr-win-0">Win 1</label><textarea id="wr-win-0" class="rev-input" rows="2" placeholder="A win worth keeping…" oninput="saveWeeklyWin(0,this.value)"></textarea></div><div><label class="rev-label" for="wr-win-1">Win 2</label><textarea id="wr-win-1" class="rev-input" rows="2" placeholder="A win worth keeping…" oninput="saveWeeklyWin(1,this.value)"></textarea></div><div><label class="rev-label" for="wr-win-2">Win 3</label><textarea id="wr-win-2" class="rev-input" rows="2" placeholder="A win worth keeping…" oninput="saveWeeklyWin(2,this.value)"></textarea></div></div><button class="action-btn reset-next" onclick="selectResetStep(1)">Next · close the loop →</button></section>
-  <section id="reset-project-panel" class="rev-section planner-section" hidden><div class="planner-heading"><div><div class="eyebrow">Your monthly projects, in motion</div><h2 id="wr-actions-title"></h2></div><button class="action-btn" onclick="openProjectMonth()">Edit monthly projects ↗</button></div><label class="rev-label" for="wr-project-month">Projects from</label><input class="form-input project-month" id="wr-project-month" type="month" onchange="selectProjectMonth(this.value)"><div id="wr-projects" class="project-grid"></div><button id="reset-project-next" class="action-btn reset-next" onclick="selectResetStep(2)">Next · choose your next moves →</button><div id="reset-ready" hidden><p class="muted">Pick the one action that matters most. These moves will appear on CEO during this plan’s week.</p><button class="action-btn reset-next" onclick="finishReset()">That’s my week →</button><p id="reset-summary" role="status"></p></div></section>
+  <section id="reset-lookback" class="rev-section planner-section"><h2>You did more than you think.</h2><div id="reset-momentum" class="reset-momentum"></div><p class="muted">From your CEO tracker. The numbers are context, not a grade.</p><h3>What deserves a little credit?</h3><p class="muted">A booking, a brave conversation, someone you helped—or something you finally finished.</p><div class="project-grid"><div><label class="rev-label" for="wr-win-0">Win 1</label><textarea id="wr-win-0" class="rev-input" rows="2" placeholder="A win worth keeping…" oninput="saveWeeklyWin(0,this.value)"></textarea></div><div><label class="rev-label" for="wr-win-1">Win 2</label><textarea id="wr-win-1" class="rev-input" rows="2" placeholder="A win worth keeping…" oninput="saveWeeklyWin(1,this.value)"></textarea></div><div><label class="rev-label" for="wr-win-2">Win 3</label><textarea id="wr-win-2" class="rev-input" rows="2" placeholder="A win worth keeping…" oninput="saveWeeklyWin(2,this.value)"></textarea></div></div><details class="context-panel" id="reset-results"><summary>Your business results · CRM check</summary><p class="muted">Copy the totals for this review week from your CRM. Blank means not recorded; enter 0 for none. These figures are entered by you, not automatically imported.</p><p class="muted">Goals: £10,000+ confirmed bookings per month · 3 personal sign-ups per week · 200 additional active team members over three months.</p><div class="planner-grid"><label class="rev-label" for="reset-result-enquiries">New travel enquiries<input class="form-input" id="reset-result-enquiries" type="number" min="0" step="1" placeholder="—" oninput="saveResetResult('enquiries',this)"></label><label class="rev-label" for="reset-result-quotes">Quotes sent<input class="form-input" id="reset-result-quotes" type="number" min="0" step="1" placeholder="—" oninput="saveResetResult('quotes',this)"></label><label class="rev-label" for="reset-result-bookings">Bookings confirmed<input class="form-input" id="reset-result-bookings" type="number" min="0" step="1" placeholder="—" oninput="saveResetResult('bookings',this)"></label><label class="rev-label" for="reset-result-bookingValue">Confirmed booking value (£)<input class="form-input" id="reset-result-bookingValue" type="number" min="0" step="0.01" placeholder="—" oninput="saveResetResult('bookingValue',this)"></label><label class="rev-label" for="reset-result-invites">Business invitations<input class="form-input" id="reset-result-invites" type="number" min="0" step="1" placeholder="—" oninput="saveResetResult('invites',this)"></label><label class="rev-label" for="reset-result-viewed">People who viewed information / attended<input class="form-input" id="reset-result-viewed" type="number" min="0" step="1" placeholder="—" oninput="saveResetResult('viewed',this)"></label><label class="rev-label" for="reset-result-signups">Personal sign-ups<input class="form-input" id="reset-result-signups" type="number" min="0" step="1" placeholder="—" oninput="saveResetResult('signups',this)"></label><label class="rev-label" for="reset-result-teamNet">Net active team change<input class="form-input" id="reset-result-teamNet" type="number" step="1" placeholder="—" oninput="saveResetResult('teamNet',this)"></label></div><p class="muted">Net active team change = active members at the end minus the start of the week, including departures. Count each person once per business stage.</p><label class="rev-label" for="reset-followthrough">Where does follow-through need attention?</label><textarea class="rev-input" id="reset-followthrough" rows="2" placeholder="e.g. Three people watched the overview; agree their next step." oninput="updateWeeklyPlan({followThrough:this.value})"></textarea><p class="muted">Put individual names and next follow-up dates in your CRM.</p></details><button class="action-btn reset-next" onclick="selectResetStep(1)">Next · close the loop →</button></section>
+  <section id="reset-project-panel" class="rev-section planner-section" hidden><div class="planner-heading"><div><div class="eyebrow">Your monthly projects, in motion</div><h2 id="wr-actions-title"></h2></div><button class="action-btn" onclick="openProjectMonth()">Edit monthly projects ↗</button></div><label class="rev-label" for="wr-project-month">Projects from</label><input class="form-input project-month" id="wr-project-month" type="month" onchange="selectProjectMonth(this.value)"><div id="wr-projects" class="project-grid"></div><button id="reset-project-next" class="action-btn reset-next" onclick="selectResetStep(2)">Next · choose your next moves →</button><div id="reset-ready" hidden><p class="muted" id="reset-followthrough-plan"></p><p class="muted">Pick the one action that matters most. These moves will appear on CEO during this plan’s week.</p><button class="action-btn reset-next" onclick="finishReset()">That’s my week →</button><p id="reset-summary" role="status"></p></div></section>
   <p class="muted planner-status" id="wr-plan-status" role="status">Saved as you type · everything is optional</p>
   <details class="context-panel" id="wr-archive" hidden><summary>Previously saved entries</summary><dl></dl></details>
 </div>
@@ -2612,7 +2608,7 @@ function generateContentBrief() {
 
 function renderContentBank() {
   loadContentReview();
-  renderTrips();
+
   renderPersonalIdeas();
   window.ContentPerformance?.renderStudio();
 }
@@ -3197,9 +3193,57 @@ const CLIENT_TOUCHPOINTS=[
   'Follow Up 5 Previous Quotes by Email',
   'Send 3 Relevant Trip Ideas to Past Clients on WhatsApp'
 ];
+const INCOME_SCHEDULE_START='2026-11-23';
+const INCOME_SCHEDULE={
+  1:[
+    {id:'new-conversations',text:'New Conversations with Connections',parts:['LinkedIn','Instagram','TikTok']},
+    {id:'amy-trial-reels',text:'Amy Reels & Trial Reels'},
+    {id:'team-checkins-focused',text:'Team & Leadership',parts:['Checked in with newbies','Checked in with runners','Planned weekly training']},
+    {id:'client-outreach-focused',text:'Client Outreach',parts:['Email 30 Suitable LinkedIn Connections']},
+    {id:'instagram-story-replies',text:'Instagram Story Replies · 10 Minutes'}
+  ],
+  2:[
+    {id:'flagged-messages',text:'Review Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email','LinkedIn']},
+    {id:'current-network',text:'Prospecting Current Network',parts:['LinkedIn','Instagram','TikTok']},
+    {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 10 Contacts']},
+    {id:'travel-training',text:'Travel Training'},
+    {id:'post-engagement',text:'Start Conversations from Post Engagement',parts:['Instagram','TikTok']}
+  ],
+  3:[
+    {id:'marketing-emails',text:'Marketing Emails',parts:['Client','Prospect','Team']},
+    {id:'expand-network',text:'Expanding Network',parts:['LinkedIn','Instagram']},
+    {id:'travel-followups',text:'Travel Enquiries & Follow-Ups',hint:'Progress an enquiry; if none are active, ask five relevant contacts about upcoming travel plans.'},
+    {id:'follow-ups',text:'Old Follow Ups'},
+    {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 10 Contacts']}
+  ],
+  4:[
+    {id:'talking-videos',text:'Talking Videos'},
+    {id:'post-engagement',text:'Start Conversations from Post Engagement',parts:['Instagram','TikTok']},
+    {id:'flagged-messages',text:'Review Flagged Messages',parts:['WhatsApp','Instagram','TikTok','Email','LinkedIn']},
+    {id:'travel-research',text:'Travel Research · 20 Minutes',hint:'Turn one useful finding into a marketing idea, post or relevant client message.'},
+    {id:'booking-practice',text:'Booking-System Practice · 30 Minutes'}
+  ],
+  5:[
+    {id:'follow-ups',text:'Old Follow Ups'},
+    {id:'current-network',text:'Prospecting Current Network',parts:['LinkedIn','Instagram','TikTok']},
+    {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 10 Contacts']},
+    {id:'past-client-outreach',text:'Contact Past Travel Clients'},
+    {id:'travel-followups',text:'Travel Enquiries & Follow-Ups',hint:'Progress an enquiry; if none are active, ask five relevant contacts about upcoming travel plans.'}
+  ],
+  6:[
+    {id:'jetset-content',text:'Create Jet Set Content',parts:['Create Content','Weekly Travel Promotion']},
+    {id:'ela-content',text:'Review & Create Ela Content',parts:['LinkedIn','Instagram','TikTok','Stories']},
+    {id:'talking-videos',text:'Talking Videos'}
+  ],
+  0:[
+    {id:'crm-update',text:'CRM Update',hint:'Update conversations and next follow-up dates before your Sunday Reset.'},
+    {id:'saved-messages',text:'Review Saved & Flagged Conversations',parts:['WhatsApp','Instagram','TikTok','Email','LinkedIn']},
+    {id:'weekly-review',text:'Sunday Reset'}
+  ]
+};
 function focusedTasksForDate(date){
   const week=Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,10,13))/604800000);
-  return FOCUSED_SCHEDULE[date.getDay()].map(task=>{
+  return (dk(date)>=INCOME_SCHEDULE_START?INCOME_SCHEDULE:FOCUSED_SCHEDULE)[date.getDay()].map(task=>{
     // Keep historical flagged-message checklists unchanged when adding a platform.
     if(dk(date)<'2026-11-22' && ['flagged-messages','saved-messages'].includes(task.id))return {...task,parts:task.parts.filter(part=>part!=='LinkedIn')};
     return task.id==='past-client-outreach'?{...task,parts:[CLIENT_TOUCHPOINTS[((week%CLIENT_TOUCHPOINTS.length)+CLIENT_TOUCHPOINTS.length)%CLIENT_TOUCHPOINTS.length]]}:task;
@@ -3738,6 +3782,7 @@ function renderTaskGrid() {
     card.innerHTML = `<div class="ceo4-done-mark">✓</div>
       <div class="ceo4-cat">Task ${index + 1}</div>
       <div class="ceo4-task">${esc(item.text)}</div>
+      ${item.hint?`<p class="muted" style="font-size:12px;margin:8px 0">${esc(item.hint)}</p>`:''}
       <div class="task-parts" role="group" aria-label="${esc(item.text)} checklist"></div>
       <details class="task-note"><summary>Add a note</summary><textarea placeholder="Optional note…">${esc(note)}</textarea><button class="action-btn">Save note</button></details>
       <div class="ceo4-foot"><button class="ceo4-tick" aria-pressed="${isDone}" onclick="toggleCeoTaskDone('${item.id}')">${isDone ? '✓ Done' : item.parts ? 'Mark all done' : 'Mark done'}</button></div>`;
@@ -4168,6 +4213,10 @@ function carryResetAction(index){
   _saveWkRev({...data,plan:{...plan,projectMonth:targetMonth,actions:{...plan.actions,[targetMonth]:entries}},savedAt:new Date().toISOString()},date);
   status.textContent='Carried forward. Your original action stays in this review.';
 }
+function saveResetResult(key,input){
+  if(!input.validity.valid)return;
+  updateWeeklyPlan({results:{...weeklyPlan().results,[key]:input.value}});
+}
 function finishReset(){
   const plan=weeklyPlan(),month=projectMonth(),actions=plan.actions?.[month] || [],n=actions.filter(x=>x?.trim()).length,focus=plan.focusProject?.month===month?actions[plan.focusProject.index]:'';
   document.getElementById('reset-summary').textContent=n?`${n} clear move${n===1?'':'s'} saved for ${_wkLabel(revWeekOff)}.${focus?' Start with: '+focus:''} You’re ready.`:'A lighter week is okay. Add a move whenever you’re ready.';
@@ -4186,6 +4235,9 @@ function renderWeekly(){
   const start=weekStart(_revWkDate(reviewOff));let tasks=0,days=0;
   for(let i=0;i<7;i++){const day=new Date(start);day.setDate(day.getDate()+i);if(dk(day)>dk(new Date()))continue;const progress=getCalendarProgress(day);tasks+=progress.done;if(progress.total&&progress.done>=Math.ceil(progress.total/2))days++;}
   const review=getWkRev(_revWkDate(reviewOff)).plan || {},month=review.projectMonth || mk(_revWkDate(reviewOff));
+  for(const key of ['enquiries','quotes','bookings','bookingValue','invites','viewed','signups','teamNet'])document.getElementById('reset-result-'+key).value=review.results?.[key] ?? '';
+  document.getElementById('reset-followthrough').value=review.followThrough || '';
+  document.getElementById('reset-followthrough-plan').textContent=review.followThrough?'Follow-through to protect: '+review.followThrough:'Check your CRM for conversations due a next step this week.';
   const actionCount=(review.actions?.[month] || []).filter((a,i)=>a?.trim()&&review.actionDone?.[month]?.[i]).length;
   document.getElementById('reset-momentum').innerHTML=[[tasks,'task completions'],[days,'productive days'],[actionCount,'project actions done']].map(([n,label])=>`<div><strong>${n}</strong><span>${label}</span></div>`).join('');
   document.getElementById('wr-plan-status').textContent='Saved as you type · everything is optional';document.getElementById('reset-summary').textContent='';
