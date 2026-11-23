@@ -3282,7 +3282,12 @@ function getCalendarProgress(date){
   initialiseTodayResult(date);
   const done=JSON.parse(localStorage.getItem(onTimeKey(date))||'{}'),tasks=getTasksForDate(date);
   const late=JSON.parse(localStorage.getItem('ceotasks_activity_v1_'+day)||'{}');
-  return {done:tasks.filter(t=>t.parts?.length?t.parts.every(p=>done[taskPartKey(t.id,p)]):done[t.id]).length+Object.values(late).filter(Boolean).length,total:tasks.length};
+  return {done:tasks.filter(t=>{
+    if(!t.parts?.length)return !!done[t.id];
+    // A renamed checklist must not erase credit already earned on this day.
+    const hasCurrentParts=t.parts.some(p=>Object.prototype.hasOwnProperty.call(done,taskPartKey(t.id,p)));
+    return hasCurrentParts?t.parts.every(p=>done[taskPartKey(t.id,p)]):!!done[t.id];
+  }).length+Object.values(late).filter(Boolean).length,total:tasks.length};
 }
 function writeTaskDone(date, done) {
   const previous=getTaskDone(date);
