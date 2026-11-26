@@ -3244,6 +3244,11 @@ const INCOME_SCHEDULE={
 function focusedTasksForDate(date){
   const week=Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,10,13))/604800000);
   return (dk(date)>=INCOME_SCHEDULE_START?INCOME_SCHEDULE:FOCUSED_SCHEDULE)[date.getDay()].map(task=>{
+    if(dk(date)>='2026-11-26'){
+      if(task.id==='travel-training')return {id:'travel-referrals',text:'Ask for Travel Referrals',parts:['Ask 3 Past Clients or Personal Contacts']};
+      if(task.id==='travel-research')return {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 10 Contacts']};
+      if(task.id==='booking-practice')return {id:'instagram-story-replies',text:'Instagram Story Replies · 10 Minutes'};
+    }
     // Keep historical flagged-message checklists unchanged when adding a platform.
     if(dk(date)<'2026-11-22' && ['flagged-messages','saved-messages'].includes(task.id))return {...task,parts:task.parts.filter(part=>part!=='LinkedIn')};
     return task.id==='past-client-outreach'?{...task,parts:[CLIENT_TOUCHPOINTS[((week%CLIENT_TOUCHPOINTS.length)+CLIENT_TOUCHPOINTS.length)%CLIENT_TOUCHPOINTS.length]]}:task;
