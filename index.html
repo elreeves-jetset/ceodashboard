@@ -3245,7 +3245,7 @@ function focusedTasksForDate(date){
   const week=Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,10,13))/604800000);
   return (dk(date)>=INCOME_SCHEDULE_START?INCOME_SCHEDULE:FOCUSED_SCHEDULE)[date.getDay()].map(task=>{
     if(dk(date)>='2026-11-26'){
-      if(task.id==='travel-training')return {id:'travel-referrals',text:'Ask for Travel Referrals',parts:['Ask 3 Past Clients or Personal Contacts']};
+      if(task.id==='travel-training')return {id:'team-groupchat-training',text:'Team Voicenote / Training in Group Chat'};
       if(task.id==='travel-research')return {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 10 Contacts']};
       if(task.id==='booking-practice')return {id:'instagram-story-replies',text:'Instagram Story Replies · 10 Minutes'};
     }
