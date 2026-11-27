@@ -3244,6 +3244,10 @@ const INCOME_SCHEDULE={
 function focusedTasksForDate(date){
   const week=Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,10,13))/604800000);
   return (dk(date)>=INCOME_SCHEDULE_START?INCOME_SCHEDULE:FOCUSED_SCHEDULE)[date.getDay()].map(task=>{
+    if(dk(date)>='2026-11-27'){
+      if(task.id==='current-network')return {...task,parts:task.parts.filter(part=>part!=='TikTok')};
+      if(task.id==='expand-network')return {...task,parts:[...new Set([...task.parts,'TikTok'])]};
+    }
     if(dk(date)>='2026-11-26'){
       if(task.id==='travel-training')return {id:'team-groupchat-training',text:'Team Voicenote / Training in Group Chat'};
       if(task.id==='travel-research')return {id:'phonebook-outreach',text:'Phone-Book Client Outreach',parts:['WhatsApp 10 Contacts']};
